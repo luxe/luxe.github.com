@@ -1,1 +1,9 @@
-hello world!
+<!-- @jules -->
+<!-- I don't think you want to parse the atom site yourself, and you probably don't want to use github's api. -->
+<!-- the easist way in this case, is to run someone elses script to pull from the feed for you.  The script will do a bunch of document writes(inject the html into your site),
+<!-- and you can tweek the html attributes accordingly with your own css or whatever -->
+
+                                                                                                    <!-- you can change some of these values to get different results -->
+                                                                                                    <!-- for example, I have it set to print only the 10 most recent activities -->
+<script language="JavaScript" src="http://itde.vccs.edu/rss2js/feed2js.php?src=http%3A%2F%2Fgithub.com%2Fjuliekirwin.atom&chan=y&num=10&desc=1&date=n&targ=y" type="text/javascript"></script>
+                                                                                                                       <!-- the 'y's and 'n's are boolean values -->

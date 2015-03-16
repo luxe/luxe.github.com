@@ -1,0 +1,1 @@
+var NUMBER_OF_SECONDS_TO_WAIT_BETWEEN_UPDATES=5,ATOM_FEED="https://github.com/luxe.atom",update_time=function(){$.get(ATOM_FEED,function(a){$(a).find("entry").eq(0).each(function(){var a=$(this).find("published").text(),b=moment(a).fromNow();$("h1").html(b)})})};$(function(){update_time(),setInterval(update_time,1e3*NUMBER_OF_SECONDS_TO_WAIT_BETWEEN_UPDATES)});

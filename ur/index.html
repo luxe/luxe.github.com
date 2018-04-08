@@ -88,6 +88,16 @@ function get_random_cat(){
     return "💩"
 }
 
+function play_sound(){
+    number = randomXToY(1,4)
+    if (number == 1){
+         var x = document.getElementById("myAudio");
+         x.play(); 
+	}
+         var y = document.getElementById("myAudio2");
+         y.play(); 
+}
+
 function Calculate() {
   window.setTimeout(function() {
 
@@ -122,31 +132,28 @@ function Calculate() {
 }
 
 </script>
-<div class="container-fluid">
-<form class="form-horizontal">
-<fieldset>
+<div class="container">
+<p>
 
 <!-- Form Name -->
-<legend>Trevor and Katie's Royal Game Of Ur</legend>
+<h2>Trevor and Katie's Royal Game Of Ur</h2>
 
 <!-- Button -->
-<div class="form-group col-md-4">
-  <div class="col-md-4">
     <button id="calculate" name="singlebutton" class="btn btn-primary" onclick="Calculate(); return false;">Roll Them Dice!</button>
-  </div>
-</div>
-
-</fieldset>
-</form>
 
 <div id="result">
 Have Fun!
 </div>
-
+</p>
 </div>
 
 <audio id="myAudio">
   <source src="roll.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<audio id="myAudio2">
+  <source src="roll2.mp3" type="audio/mpeg">
   Your browser does not support the audio element.
 </audio>
 

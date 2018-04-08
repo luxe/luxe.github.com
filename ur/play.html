@@ -116,64 +116,6 @@ function Calculate() {
     }, 50);
 }
 
-function run_simulation(scenarios,supplier_items,desired_lengths)
-{
-  //create all the possible scenarios when evaluating the next cut
-  for (var i = 0; i < desired_lengths.length; ++i){
-    scenarios = derive_possibilities(Copy2(scenarios),supplier_items,desired_lengths[i])
-  }
-  return scenarios
-}
-
-function derive_possibilities(scenarios,supplier_items,desired_length)
-{
-  //expand all the current scenarios based on the next cut
-  var new_scenarios = []
-  var add_these = []
-  
-  for (var i = 0; i < scenarios.length; ++i){
-    add_these = expand_scenarios(scenarios[i],supplier_items,desired_length)
-    new_scenarios = Copy2(new_scenarios.concat(Copy2(add_these)))
-    
-    console.log(new_scenarios.length + " " + $.uniqueSort(new_scenarios).length)
-  }
-  return new_scenarios
-}
-
-function expand_scenarios(s,supplier_items,desired_length){
-  
-  var new_scenarios = []
-  //make cuts on available pieces
-  for (var i = 0; i < s.purchased_items.length; ++i){
-    //if we can cut the piece, create that scenario
-    if (s.purchased_items[i].length >= desired_length){
-     var new_scenario = new scenario(Copy2(s.purchased_items))
-     new_scenario.purchased_items[i].length -= desired_length
-     new_scenario.purchased_items[i].cuts.push(desired_length)
-     //new_scenario.purchased_items[i].cuts.sort()
-     new_scenarios.push(new_scenario)
-     //new_scenarios.sort()
-    }
-  }
-  
-  //buy new pieces and make cuts on them
-  for (var i = 0; i < supplier_items.length; ++i){
-    if (supplier_items[i].length >= desired_length){
-       var new_scenario = new scenario(Copy2(s.purchased_items))
-        
-        //buy and cut the piece
-        var purchased = new purchased_item(supplier_items[i].length,supplier_items[i].price,[])
-        purchased.length -= desired_length
-        purchased.cuts.push(desired_length)
-        new_scenario.purchased_items.push(purchased)
-        //new_scenario.purchased_items.sort()
-        new_scenarios.push(new_scenario)
-        //new_scenarios.sort()
-    }
-  }
-  return Copy2(new_scenarios)
-}
-
 </script>
 <div class="container">
 <form class="form-horizontal">

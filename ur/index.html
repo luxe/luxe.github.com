@@ -166,7 +166,7 @@ function play_loser(){
 function Calculate() {
   window.setTimeout(function() {
 
-   play_sound();
+   
    random_bg_color();
 //set_background_with_flikr('nature')
 
@@ -187,6 +187,10 @@ function Calculate() {
     
     if (score == 0){
         play_loser()
+    }
+    
+    if(score > 0 && score < 4){
+        play_sound()
     }
 
 

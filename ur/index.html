@@ -10,6 +10,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
   <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
@@ -30,6 +31,11 @@ body {
 <body>
   <script>
 
+
+
+var stats = [0, 0, 0, 0, 0]
+var score = 0
+
 /* utility */
 function Copy1(a)
 {
@@ -46,6 +52,53 @@ function randomXToY(minVal,maxVal)
   return Math.round(randVal);
 }
 
+function set_background_with_flikr(keyword){
+
+    $(document).ready(function(){
+
+        $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
+        {
+            tags: keyword,
+            tagmode: "any",
+            format: "json"
+        },
+        function(data) {
+            var rnd = Math.floor(Math.random() * data.items.length);
+
+            var image_src = data.items[rnd]['media']['m'].replace("_m", "_b");
+
+            $('body').css('background-image', "url('" + image_src + "')");
+
+        });
+
+    });
+}
+
+// function set_background_with_google(keyword){
+//     google.load('search', '1');
+//     search = new google.search.ImageSearch();
+//     search.setSearchCompleteCallback(this, searchComplete, null);
+//     search.execute(keyword);
+// }
+
+// function OnLoad(keyword)
+// {
+//     search = new google.search.ImageSearch();
+//     search.setSearchCompleteCallback(this, searchComplete, null);
+//     search.execute(keyword);
+// }
+
+// function searchComplete()
+// {
+//     if (search.results && search.results.length > 0)
+//     {
+//         var rnd = Math.floor(Math.random() * search.results.length);
+
+//         //you will probably use jQuery and something like: $('body').css('background-image', "url('" + search.results[rnd]['url'] + "')");
+//         document.body.style.backgroundImage = "url('" + search.results[rnd]['url'] + "')";
+//     }
+// }
+
 function random_bg_color() {
     var x = Math.floor(Math.random() * 256);
     var y = Math.floor(Math.random() * 256);
@@ -57,7 +110,7 @@ function random_bg_color() {
     }
 
 function get_random_cat(){
-    number = randomXToY(1,9)
+    number = randomXToY(1,10)
     if (number == 1){
         return "😺"
     }
@@ -85,11 +138,14 @@ function get_random_cat(){
      if (number == 9){
         return "😾"
     }
+     if (number == 10){
+        return "💩"
+    }
     return "💩"
 }
 
 function play_sound(){
-    number = randomXToY(1,4)
+    number = randomXToY(1,8)
     if (number == 1){
          var x = document.getElementById("myAudio");
          x.play(); 
@@ -98,31 +154,53 @@ function play_sound(){
          y.play(); 
 }
 
+function play_cena(){
+         var x = document.getElementById("cena");
+         x.play(); 
+}
+function play_loser(){
+         var x = document.getElementById("lose");
+         x.play(); 
+}
+
 function Calculate() {
   window.setTimeout(function() {
 
    play_sound();
+   random_bg_color();
+//set_background_with_flikr('nature')
 
     result = ""
     numbers = ""
     for (i = 0; i < 4; ++i){
         number = randomXToY(1,4)
-        numbers += String(number)
 		if (number == 2){
 		   result += "🐧"
+           score += 1
 		}
 		else{
 		   result += get_random_cat()
 		}
     }
 
+    stats[score] += 1
+    
+    if (score == 0){
+        play_loser()
+    }
 
-    //document.getElementById("result").innerHTML = numbers
+
     document.getElementById("result").innerHTML = result + "<br>"
-    random_bg_color()
+     document.getElementById("score").innerHTML = "0:" + String(stats[0]) + "<br>"
+document.getElementById("score").innerHTML += "1:" + String(stats[1]) + "<br>"
+document.getElementById("score").innerHTML += "2:" + String(stats[2]) + "<br>"
+document.getElementById("score").innerHTML += "3:" + String(stats[3]) + "<br>"
+document.getElementById("score").innerHTML += "4:" + String(stats[4]) + "<br>"
 
+score = 0
 	   if (result == "🐧🐧🐧🐧"){
-	       document.getElementById("result").innerHTML += "<img src='dab.png'>"
+           play_cena()
+	       document.getElementById("result").innerHTML += "<img src='cena.gif'>"
 	   }
 
     }, 50);
@@ -141,6 +219,9 @@ function Calculate() {
 <div id="result">
 Have Fun!
 </div>
+<div id="score">
+</div>
+
 </p>
 </div>
 
@@ -151,6 +232,16 @@ Have Fun!
 
 <audio id="myAudio2">
   <source src="roll2.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<audio id="cena">
+  <source src="cena.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<audio id="lose">
+  <source src="lose.mp3" type="audio/mpeg">
   Your browser does not support the audio element.
 </audio>
 

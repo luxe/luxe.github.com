@@ -1,0 +1,1 @@
+pre:after{$l:"";@for$k from0 to10{@for$i from0 to4+$k{@for$j from0 to40-($k*6+$i*2)/2{$l: $l + ' ';}$l:$l+'/';@for$j from0 to$k*6+$i*2{$l:$l+'*';}$l:$l+"\\\a ";}}@for$i from0 to12{@for$j from0 to35{$l:$l+" ";}@if$i<11{$l:$l+"|--------|\a ";}@else{$l:$l+"|________|";}}content: $l;}

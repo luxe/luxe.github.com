@@ -1,0 +1,3 @@
+#!/bin/zsh
+gulp html css;
+mv s.css s;

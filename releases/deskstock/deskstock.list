@@ -1,1 +1,1 @@
-deb https://github.com/luxe/luxe.github.com/raw/master/releases/deskstock ./
+deb [trusted=yes] https://github.com/luxe/luxe.github.com/raw/master/releases/deskstock /

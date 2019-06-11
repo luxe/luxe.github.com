@@ -137,5 +137,5 @@ The flood gates are open so you can source values through any custom scripts or 
 
 
 ## Effects
-The flood gates are open so you can source values through any custom scripts or programs you want.  
+Once you are sourcing values, there are various ways to effect the system based on the changing value(s).  
 

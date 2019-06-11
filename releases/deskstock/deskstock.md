@@ -1,6 +1,6 @@
 % deskstock
 % Feel the stock market
-% June 10, 2019
+% June 11, 2019
 
 
 # Introduction
@@ -137,4 +137,5 @@ The flood gates are open so you can source values through any custom scripts or 
 
 
 ## Effects
+The flood gates are open so you can source values through any custom scripts or programs you want.  
 

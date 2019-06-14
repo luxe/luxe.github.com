@@ -4,7 +4,13 @@
 
 
 # Introduction
-Deskstock is a tool that monitors changing values over time.  It adjusts your system to reflect the changing value in fun and potentially useful ways.  Don't just watch a value change; have it grow or shrink your mouse cursor.  Have it change the color of your terminal or play sound effects when certain values are reached.  There are different ways to "source" values for monitoring, and lots of built in "effects" to perform on the monitored values.  You can customize how frequently observations and changes are performed on your system.  The tool is designed to be run in the background and reflect changes to you throughout the day.  Write your own configurations and share them with others.  
+Deskstock is a tool that monitors changing values over time.  It adjusts your system to reflect the changing value in fun and potentially useful ways.  Don't just watch a value change; have it grow or shrink your mouse cursor.  Have it change the color of your terminal or play sound effects when certain values are reached.  There are different ways to "source" values for monitoring, and lots of built in "effects" to perform on the monitored values.  You can customize how frequently observations and changes are performed on your system.  The tool is designed to be run in the background and reflect changes to you throughout the day.  Write your own configurations and share them with others.  Here is an example of changing the terminal color based on a chosen stock.  A green terminal when stocks are up.  
+![](img/stock-up-example.png "")
+
+A red terminal when stocks are down.  
+![](img/stock-down-example.png "")
+
+
 
 
 # Installation

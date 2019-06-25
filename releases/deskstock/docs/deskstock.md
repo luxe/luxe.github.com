@@ -1,6 +1,6 @@
 % deskstock
 % Feel the stock market
-% June 14, 2019
+% June 25, 2019
 
 
 # Introduction
@@ -90,6 +90,9 @@ Sourcing values through a web endpoint is possible assuming the endpoint returns
     ]
   },
   "fetch": {
+    "headers": [],
+    "seconds_till_timeout": 10,
+    "show_errors": false,
     "strategy": 0,
     "url": "https://query1.finance.yahoo.com/v7/finance/quote?lang=en-US&region=US&corsDomain=finance.yahoo.com&symbols=UBER"
   }

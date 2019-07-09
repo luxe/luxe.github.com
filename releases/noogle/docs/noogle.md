@@ -34,6 +34,13 @@ like google but you get numbers:
 
 
 
+# Steps
+These are the general phases noogle uses to produce results:  
+![](img/noogle-steps.png "")
+
+
+
+
 # Configuration
 All configuration for noogle will be found in your home directory inside the file **.noogle**.  This is a json file that will be automatically loaded by the program.  If you specify malformed json, or your json does not match the schema known to the program, it will tell you.  The best way to fix this, is to simply delete the configuration file.  The program will automatically re-create it with a valid default configuration.  In the following sections, we will cover more specifically the different areas of configuration.  
 

@@ -1,6 +1,6 @@
 % noogle
 % Like google but you get back numbers
-% July 8, 2019
+% July 9, 2019
 
 
 # Introduction
@@ -20,4 +20,20 @@ To uninstall you can use:
 sudo apt remove noogle
 ```
 
+
+
+# Command Line
+The tool can be used from the command line.  
+```
+like google but you get numbers:
+  --query arg           noogle search query
+  -h [ --help ]         produce this help message
+  -v [ --version ]      display version
+
+```
+
+
+
+# Configuration
+All configuration for noogle will be found in your home directory inside the file **.noogle**.  This is a json file that will be automatically loaded by the program.  If you specify malformed json, or your json does not match the schema known to the program, it will tell you.  The best way to fix this, is to simply delete the configuration file.  The program will automatically re-create it with a valid default configuration.  In the following sections, we will cover more specifically the different areas of configuration.  
 

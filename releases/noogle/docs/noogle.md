@@ -1,6 +1,6 @@
 % noogle
 % Like google but you get back numbers
-% July 9, 2019
+% July 22, 2019
 
 
 # Introduction
@@ -15,7 +15,7 @@ sudo apt update
 sudo apt install noogle
 
 ```
-To uninstall you can use:  
+The debian file can also be installed/uninstalled directly.  To uninstall you can use:  
 ```
 sudo apt remove noogle
 ```

@@ -9,7 +9,7 @@
 sudo apt update
 sudo apt install deskstock
 </code></pre>
-<p>To uninstall you can use:</p>
+<p>The debian file can also be installed/uninstalled directly. To uninstall you can use:</p>
 <pre><code>sudo apt remove deskstock</code></pre>
 <h1 id="configuration">Configuration</h1>
 <p>All configuration for deskstock will be found in your home directory inside the file <strong>.deskstock</strong>. This is a json file that will be automatically reloaded by the program upon saving. Go ahead, you can adjust this configuration while the program is running, and it will pick up the changes in real-time. If you specify malformed json, or your json does not match the schema known to the program, it will tell you. The best way to fix this, is to simply delete the configuration file. The program will automatically re-create it with a valid default configuration. A word of warning on how you configure things. Deskstock does not apply any artificial restrictions. If you want to ping a sever every millisecond, or spawn an infinite amount of processes you can. Its up to you to configure things that are sensible on your machine. In the following sections, we will cover more specifically the different areas of configuration.</p>

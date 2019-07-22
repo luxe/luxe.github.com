@@ -1,6 +1,6 @@
 % deskstock
 % Feel the stock market
-% July 9, 2019
+% July 22, 2019
 
 
 # Introduction
@@ -21,7 +21,7 @@ sudo apt update
 sudo apt install deskstock
 
 ```
-To uninstall you can use:  
+The debian file can also be installed/uninstalled directly.  To uninstall you can use:  
 ```
 sudo apt remove deskstock
 ```

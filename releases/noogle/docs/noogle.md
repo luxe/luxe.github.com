@@ -1,6 +1,6 @@
 % noogle
 % Like google but you get back numbers
-% July 22, 2019
+% July 23, 2019
 
 
 # Introduction

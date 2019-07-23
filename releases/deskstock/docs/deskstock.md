@@ -1,6 +1,6 @@
 % deskstock
 % Feel the stock market
-% July 22, 2019
+% July 23, 2019
 
 
 # Introduction

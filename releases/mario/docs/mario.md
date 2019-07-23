@@ -1,10 +1,10 @@
 % Mario
 % Mario on your desktop
-% July 22, 2019
+% July 23, 2019
 
 
 # Introduction
-You know mario the plummer? well he's back for new adventures on the PC.  This like mario maker but with no restrictions and tons of cool build items.  
+You know mario the plummer? well he's back for new adventures on the PC.  This is like mario maker but with no restrictions and tons of cool build items.  Join the fun.  Play pre-built levels.  Make your own.  Share with friends.  
 
 
 # Installation

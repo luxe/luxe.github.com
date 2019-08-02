@@ -1,0 +1,12 @@
+<h1 id="introduction">Introduction</h1>
+<p>An organization can be represented as a social network. The interactions between individuals occur through many different mediums. One of these mediums is through scheduled meetings. Google calendar can be used to configure meeting rooms as separate calendars used for scheduling. Assuming meetings are scheduled publicly, those who have access to scheduling a room, also have access to the meta information of the meetings that takes place. This includes all of the attendees of a meeting. By scraping google calendar we can construct a graph of iterations between participants of meetings. Doing so may gleam insight into the inter-workings of an organization's social structure.</p>
+<h1 id="installation">Installation</h1>
+<p>Software can be installed through apt-get. The following commands will add the ppa and install the software.</p>
+<pre><code>sudo curl -s --compressed -o /etc/apt/sources.list.d/gcalviz.list &#39;https://raw.githubusercontent.com/luxe/luxe.github.com/master/releases/gcalviz/gcalviz.list&#39;
+sudo apt update
+sudo apt install gcalviz
+</code></pre>
+<p>The debian file can also be installed/uninstalled directly. To uninstall you can use:</p>
+<pre><code>sudo apt remove gcalviz</code></pre>
+<h1 id="setting-up-your-calendar">Setting up your calendar</h1>
+<p>We'll assume you have access to various calendars in which you want to turn into a social network. You can use any number of calendars to form your network. In order for the scraper to detect these calendars however, you have to explicitly add yourself as a subscriber. This can be done by using the &quot;other calendars&quot; panel found on the left side of the google calendar app and selecting various calendars to subscribe to. The calendars do not have to remain visible for the analysis. They only need to be listed in your &quot;other calendars&quot; side panel.</p>

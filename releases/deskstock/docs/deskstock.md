@@ -1,6 +1,6 @@
 % deskstock
 % Feel the stock market
-% July 23, 2019
+% August 2, 2019
 
 
 # Introduction
@@ -91,6 +91,7 @@ Sourcing values through a web endpoint is possible assuming the endpoint returns
   },
   "fetch": {
     "headers": [],
+    "post": false,
     "seconds_till_timeout": 10,
     "show_errors": false,
     "strategy": 0,

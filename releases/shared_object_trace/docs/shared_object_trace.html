@@ -1,0 +1,21 @@
+<h1 id="introduction">Introduction</h1>
+<p>When evaluating the impact that a third party repository has on other third party libraries via shared objects, use this tool. It scans files within external folders to construct a simplified and conceptual view of third party inter-dependence via shared object files.</p>
+<h1 id="installation">Installation</h1>
+<p>Software can be installed through apt-get. The following commands will add the ppa and install the software.</p>
+<pre><code>sudo curl -s --compressed -o /etc/apt/sources.list.d/shared_object_trace.list &#39;https://raw.githubusercontent.com/luxe/luxe.github.com/master/releases/shared_object_trace/shared_object_trace.list&#39;
+sudo apt update
+sudo apt install shared_object_trace
+</code></pre>
+<p>The debian file can also be installed/uninstalled directly. To uninstall you can use:</p>
+<pre><code>sudo apt remove shared_object_trace</code></pre>
+<h1 id="command-line">Command Line</h1>
+<p>The tool can be used from the command line.</p>
+<pre><code>constructs graph for third party dependance on a third party dependency:
+  --dep arg             third party dep name (applied as &#39;@DEP//...&#39;)
+  --run_dir arg         where to run the analysis
+  --output_dir arg      the directory to output graph artifacts
+  --bazel arg           the name of the bazel runner (useful if repo has a 
+                        bazel wrapper or using bazelisk)
+  -h [ --help ]         produce this help message
+  -v [ --version ]      display version
+</code></pre>

@@ -1,23 +1,23 @@
-% external_deps_analysis
-% Bazel Graph Creation on 3rd party library
+% shared_object_trace
+% Bazel Graph Creation on 3rd party libraries that are related through shared objects
 % November 18, 2019
 
 
 # Introduction
-When evaluating the impact that a third party repository has on other third party libraries, use this tool.  It runs various bazel query commands to construct a simplified and conceptual view of third party inter-dependence.  
+When evaluating the impact that a third party repository has on other third party libraries via shared objects, use this tool.  It scans files within external folders to construct a simplified and conceptual view of third party inter-dependence via shared object files.  
 
 
 # Installation
 Software can be installed through apt-get.  The following commands will add the ppa and install the software.  
 ```
-sudo curl -s --compressed -o /etc/apt/sources.list.d/external_deps_analysis.list 'https://raw.githubusercontent.com/luxe/luxe.github.com/master/releases/external_deps_analysis/external_deps_analysis.list'
+sudo curl -s --compressed -o /etc/apt/sources.list.d/shared_object_trace.list 'https://raw.githubusercontent.com/luxe/luxe.github.com/master/releases/shared_object_trace/shared_object_trace.list'
 sudo apt update
-sudo apt install external_deps_analysis
+sudo apt install shared_object_trace
 
 ```
 The debian file can also be installed/uninstalled directly.  To uninstall you can use:  
 ```
-sudo apt remove external_deps_analysis
+sudo apt remove shared_object_trace
 ```
 
 

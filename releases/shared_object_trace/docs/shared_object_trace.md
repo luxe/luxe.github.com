@@ -1,6 +1,6 @@
 % shared_object_trace
 % Bazel Graph Creation on 3rd party libraries that are related through shared objects
-% November 18, 2019
+% December 30, 2019
 
 
 # Introduction

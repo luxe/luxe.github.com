@@ -1,23 +1,23 @@
-% external_deps_analysis
-% Bazel Dependency Graph on 3rd party libraries
+% build_determinism
+% Build determinism analysis for targets
 % December 30, 2019
 
 
 # Introduction
-When evaluating the impact that a third party repository has on other third party libraries, use this tool.  It runs various bazel query commands to construct a simplified and conceptual view of third party inter-dependence.  
+When evaluating the determinism of building certain targets use this tool.  It runs various bazel query commands to construct spawn information for all of the subcommands.  These subcommands are analyzed for nondeterminism.  
 
 
 # Installation
 Software can be installed through apt-get.  The following commands will add the ppa and install the software.  
 ```
-sudo curl -s --compressed -o /etc/apt/sources.list.d/external_deps_analysis.list 'https://raw.githubusercontent.com/luxe/luxe.github.com/master/releases/external_deps_analysis/external_deps_analysis.list'
+sudo curl -s --compressed -o /etc/apt/sources.list.d/build_determinism.list 'https://raw.githubusercontent.com/luxe/luxe.github.com/master/releases/build_determinism/build_determinism.list'
 sudo apt update
-sudo apt install external_deps_analysis
+sudo apt install build_determinism
 
 ```
 The debian file can also be installed/uninstalled directly.  To uninstall you can use:  
 ```
-sudo apt remove external_deps_analysis
+sudo apt remove build_determinism
 ```
 
 

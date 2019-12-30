@@ -10,12 +10,14 @@ sudo apt install build_determinism
 <pre><code>sudo apt remove build_determinism</code></pre>
 <h1 id="command-line">Command Line</h1>
 <p>The tool can be used from the command line.</p>
-<pre><code>constructs graph for third party dependance on a third party dependency:
-  --dep arg             third party dep name (applied as &#39;@DEP//...&#39;)
+<pre><code>test for build determinism on a particular target:
+  --target arg          what you would pass to bazel build
+  --url arg             git url to clone with
   --run_dir arg         where to run the analysis
   --output_dir arg      the directory to output graph artifacts
   --bazel arg           the name of the bazel runner (useful if repo has a 
                         bazel wrapper or using bazelisk)
+  --verbose             show verbose progress
   -h [ --help ]         produce this help message
   -v [ --version ]      display version
 </code></pre>

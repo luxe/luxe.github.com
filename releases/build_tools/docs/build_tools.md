@@ -1,23 +1,23 @@
-% build_determinism
-% Build determinism analysis for targets
+% build_tools
+% Build tool analysis for targets
 % January 7, 2020
 
 
 # Introduction
-When evaluating the determinism of building certain targets use this tool.  It runs various bazel query commands to construct spawn information for all of the subcommands.  These subcommands are analyzed for nondeterminism.  
+When evaluating what tools are used for building certain targets use this tool.  It builds the target and shows which tools were involved in the target's creation.  
 
 
 # Installation
 Software can be installed through apt-get.  The following commands will add the ppa and install the software.  
 ```
-sudo curl -s --compressed -o /etc/apt/sources.list.d/build_determinism.list 'https://raw.githubusercontent.com/luxe/luxe.github.com/master/releases/build_determinism/build_determinism.list'
+sudo curl -s --compressed -o /etc/apt/sources.list.d/build_tools.list 'https://raw.githubusercontent.com/luxe/luxe.github.com/master/releases/build_tools/build_tools.list'
 sudo apt update
-sudo apt install build_determinism
+sudo apt install build_tools
 
 ```
 The debian file can also be installed/uninstalled directly.  To uninstall you can use:  
 ```
-sudo apt remove build_determinism
+sudo apt remove build_tools
 ```
 
 

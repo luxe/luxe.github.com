@@ -1,6 +1,6 @@
 % build_determinism
 % Build determinism analysis for targets
-% January 7, 2020
+% May 17, 2020
 
 
 # Introduction
@@ -28,22 +28,23 @@ The tool can be used from the command line.
 test for build determinism on a particular target:
   --target arg           what you would pass to bazel build
   --url arg              git url to clone with
-  --run_dir arg          where to run the analysis
-  --branch arg           which branch to run the experiment on
+  --run_dirs arg         which directories to run the analysis
+  --branches arg         which branches to run the analysis
   --synthesize_problems  synthesize the nondeterminism problems in a human 
                          friendly way
-  --output_dir arg       the directory to output graph artifacts
-  --bazel arg            the name of the bazel runner (useful if repo has a 
-                         bazel wrapper or using bazelisk)
   --environment_scan arg try the A/B tests in different environments n number 
                          of times to evaluate any flakiness of nondeterminism
   --augment_scan arg     try the A/B tests with different augmentations on the 
                          environment n number of times to evaluate any 
                          flakiness of nondeterminism
+  --output_dir arg       the directory to output artifacts
+  --bazel arg            the name of the bazel runner (useful if repo has a 
+                         bazel wrapper or using bazelisk)
   --verbose              show verbose progress
   -h [ --help ]          produce this help message
   -v [ --version ]       display version
 
 ```
+
 
 

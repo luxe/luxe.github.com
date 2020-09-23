@@ -1,6 +1,6 @@
 % bazel_profile_slow_cc_files
 % Calculates and sorts the slowest c++ files to build
-% September 2, 2020
+% September 23, 2020
 
 
 # Introduction

@@ -1,6 +1,6 @@
 % bazel_network_sync
 % Calculates and sorts the slowest c++ files to build
-% October 1, 2020
+% October 16, 2020
 
 
 # Introduction

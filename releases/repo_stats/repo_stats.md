@@ -3,5 +3,6 @@
 This tool evaluates a repository and publishes metrics about it.  It tries to be agnostic to how the repository is setup and what build system it uses.  Designed specifically for bazel repositories.  
 
 % LDD Results% June 7, 2021
+% LDD Results% June 7, 2021
 
 

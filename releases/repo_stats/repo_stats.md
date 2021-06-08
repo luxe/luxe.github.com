@@ -1,6 +1,6 @@
 % repo_stats
-% Calculates and publishes repository metrics% 
-June 8, 2021
+% Calculates and publishes repository metrics
+% June 8, 2021
 
 
 # Introduction

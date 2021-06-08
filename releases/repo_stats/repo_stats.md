@@ -3,7 +3,7 @@
 This tool evaluates a repository and publishes metrics about it.  It tries to be agnostic to how the repository is setup and what build system it uses.  Designed specifically for bazel repositories.  
 
 
-# LDD Results
+# Ldd Results
 These are the dynamic libraries used by the program.  Use `apt-file search <file>` to figure out what package you may need to install.  
 ```
 linux-vdso.so.1

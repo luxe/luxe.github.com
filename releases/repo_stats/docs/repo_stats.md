@@ -1,6 +1,6 @@
 % repo_stats
 % Calculates and publishes repository metrics
-% June 9, 2021
+% June 20, 2021
 
 
 # Introduction
@@ -10,11 +10,10 @@ This tool evaluates a repository and publishes metrics about it.  It tries to be
 # Command Line
 The tool can be used from the command line.  
 ```
-compute repo stats:
+run a scan of no-remote tests and fix what is possible:
   --url arg             url to clone
   --branch arg          branch to go to after clone
   --run_dir arg         don't clone; use existing dir instead
-  --endpoint arg        host:port to publish metrics to
   -h [ --help ]         produce this help message
   -v [ --version ]      display version
 

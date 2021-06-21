@@ -14,6 +14,7 @@ run a scan of no-remote tests and fix what is possible:
   --url arg             url to clone
   --branch arg          branch to go to after clone
   --run_dir arg         don't clone; use existing dir instead
+  --configs arg         build configs to use
   -h [ --help ]         produce this help message
   -v [ --version ]      display version
 

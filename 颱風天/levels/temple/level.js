@@ -178,8 +178,6 @@
   const fireSound = new Audio("./assets/fire_bg.mp3");
   fireSound.preload = "auto";
   fireSound.loop = true;
-  const flameSound = new Audio("./assets/flame.mp3");
-  flameSound.preload = "auto";
   let active = false;
   let fireFade = 0;
 
@@ -214,13 +212,9 @@
   const flames = new Set();
   // Each throw gets its own copy so overlapping whooshes don't cut each other off.
   function playFlame() {
-    const sound = flameSound.cloneNode();
+    const sound = wanwanAudio.play("./assets/flame.mp3");
     flames.add(sound);
     sound.addEventListener("ended", () => flames.delete(sound), { once: true });
-    sound.play().catch(cause => {
-      flames.delete(sound);
-      console.warn("Flame sound could not play", cause);
-    });
   }
   document.addEventListener("pointerdown", playFire);
 
@@ -348,7 +342,7 @@
       clearTimeout(timer);
       active = false;
       await Promise.all([animateScene(false), fadeFire(700)]);
-      for (const sound of flames) sound.pause();
+      for (const sound of flames) sound.stop();
       flames.clear();
       stop();
     },

@@ -11,8 +11,7 @@
   const power = document.querySelector(".power");
   const status = document.querySelector("#status");
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
-  const clickSound = new Audio("./assets/click.mp3");
-  clickSound.preload = "auto";
+  const clickSound = wanwanAudio.sound("./assets/click.mp3");
 
   let on = false;
   let busy = false;

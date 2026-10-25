@@ -29,12 +29,35 @@
     // street market
     "fish", "ufo", "lottery"];
 
+  // Every short sound effect, decoded at startup so it plays instantly
+  // (see audio.js). Add new effects here.
+  const SOUND_EFFECTS = [
+    "./assets/snd/win1.mp3", "./assets/snd/win2.mp3", "./assets/snd/win3.mp3",
+    "./levels/tv/assets/click.mp3",
+    "./levels/sandwich/assets/bite.mp3",
+    "./levels/elevator/assets/click.mp3", "./levels/elevator/assets/ding.mp3", "./levels/elevator/assets/elevator.mp3",
+    "./levels/umbrella/assets/open.mp3",
+    "./levels/puddles/assets/splash.mp3",
+    "./levels/money/assets/register.mp3",
+    "./levels/cat/assets/meow.mp3",
+    "./levels/temple/assets/flame.mp3",
+    "./levels/lottery/assets/win.mp3",
+  ];
+  // Long loops stay <audio> elements (decoding them would cost tens of MB);
+  // downloading them early still lets them start right away.
+  const PREFETCH = [
+    "./levels/cones/assets/truck.mp3",
+    "./levels/temple/assets/fire_bg.mp3",
+    ...["red", "orange", "yellow", "green", "blue"].map(color => `./levels/metro/assets/${color}.mp3`),
+  ];
+  window.wanwanAudio.preload(SOUND_EFFECTS).then(() => window.wanwanAudio.prefetch(PREFETCH));
+
   const levels = ["intro", ...ORDER].map(name => ({ name, url: `./levels/${name}/index.html` }));
   const game = document.querySelector("#game");
   const error = document.querySelector("#error");
   const music = document.querySelector("#music");
   const rain = document.querySelector("#rain");
-  const winSounds = [...document.querySelectorAll(".win-sound")];
+  const winSounds = ["win1", "win2", "win3"].map(name => window.wanwanAudio.sound(`./assets/snd/${name}.mp3`));
   let nextWinSound = 0;
   const admin = document.querySelector("#admin");
   const levelPicker = document.querySelector("#admin-level");
@@ -94,10 +117,9 @@
     rain.play().catch(cause => console.warn("Rain sound could not start", cause));
   };
   function playWinSound() {
-    if (!winSounds.length) return;
     const winSound = winSounds[nextWinSound];
     nextWinSound = (nextWinSound + 1) % winSounds.length;
-    winSound.currentTime = 0;
+    winSound.stop();
     winSound.play().catch(cause => console.warn("Win sound could not play", cause));
   }
   let current = null;

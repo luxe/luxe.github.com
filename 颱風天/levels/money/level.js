@@ -7,8 +7,7 @@
   const holder = document.querySelector(".notes");
   const status = document.querySelector("#status");
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
-  const registerSound = new Audio("./assets/register.mp3");
-  registerSound.preload = "auto";
+  const registerSound = wanwanAudio.sound("./assets/register.mp3");
   const SVG = "http://www.w3.org/2000/svg";
   const definitions = [
     { value: 1000, length: 160, color: "#bad5e7", ink: "#507b9c", motif: "pheasant", x: 228, y: 393, angle: -9 },

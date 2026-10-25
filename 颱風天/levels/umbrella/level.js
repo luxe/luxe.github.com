@@ -17,9 +17,7 @@
   const rain = document.querySelector(".rain");
   const context = rain.getContext("2d");
   const drops = [];
-  const openSound = new Audio("./assets/open.mp3");
-  openSound.preload = "auto";
-  let openUnlocked = false;
+  const openSound = wanwanAudio.sound("./assets/open.mp3");
   let fadeFrame = 0;
   let rainFrame = 0;
   let rainActive = false;
@@ -39,25 +37,12 @@
     }
   }
 
-  // iOS only allows audio started inside a tap, so prime the sound on touch and play it once the canopy moves.
-  function unlockOpenSound() {
-    if (openUnlocked) return;
-    openUnlocked = true;
-    openSound.muted = true;
-    openSound.play().then(() => {
-      if (!openSound.muted) return;
-      openSound.pause();
-      openSound.currentTime = 0;
-      openSound.muted = false;
-    }, () => { openSound.muted = false; openUnlocked = false; });
-  }
   function playOpenSound() {
     clearTimeout(fadeFrame);
     fadeFrame = 0;
     openSound.volume = 1;
-    if (!openSound.paused && !openSound.muted) return;
-    openSound.muted = false;
-    openSound.currentTime = 0;
+    if (!openSound.paused) return;
+    openSound.stop();
     openSound.play().catch(cause => console.warn("Umbrella sound could not play", cause));
   }
   function fadeOpenSound(duration = 250) {
@@ -69,8 +54,7 @@
       openSound.volume = from * (1 - p);
       if (p < 1) { fadeFrame = setTimeout(step, 30); return; }
       fadeFrame = 0;
-      openSound.pause();
-      openSound.currentTime = 0;
+      openSound.stop();
       openSound.volume = 1;
     };
     fadeFrame = setTimeout(step, 30);
@@ -190,7 +174,6 @@
     if (completed || drag || !event.isPrimary || event.button !== 0) return;
     event.preventDefault();
     playRain();
-    unlockOpenSound();
     drag = {
       id: event.pointerId, y: event.clientY, initial: progress,
       distance: scene.getBoundingClientRect().height * .36,

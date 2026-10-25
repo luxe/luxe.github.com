@@ -6,8 +6,7 @@
   const paw = document.querySelector(".paw");
   const status = document.querySelector("#status");
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
-  const meow = new Audio("./assets/meow.mp3");
-  meow.preload = "auto";
+  const meow = wanwanAudio.sound("./assets/meow.mp3");
   function playMeow() {
     meow.currentTime = 0;
     meow.play().catch(cause => console.warn("Cat meow could not play", cause));

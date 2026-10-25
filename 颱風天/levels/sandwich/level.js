@@ -9,8 +9,7 @@
   const crumbs = document.querySelector(".crumbs");
   const status = document.querySelector("#status");
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
-  const biteSound = new Audio("./assets/bite.mp3");
-  biteSound.preload = "auto";
+  const biteSound = wanwanAudio.sound("./assets/bite.mp3");
 
   // Each bite is one or more jaw-sized circles cut from the sandwich.
   const bites = [

@@ -288,6 +288,19 @@ Sound effects are played as `.mp3`: this nginx serves `.wav`/`.flac` as
 `application/octet-stream`, which Safari/iOS refuses to play. The original
 `.wav`/`.flac` files are kept next to their `.mp3` conversions.
 
+Short sound effects go through `audio.js`, a shared Web Audio engine loaded
+by the root page and every level (`<script src="../../audio.js">` before
+`lifecycle.js`). On startup `game.js` downloads and decodes everything in
+`SOUND_EFFECTS`, then prefetches the long `<audio>` loops in `PREFETCH`, so
+effects play instantly on any level. Without this, iOS fetches media only on
+the first `play()`, so effects started late. The engine unlocks itself on
+the first tap or keypress. Inside a level, use
+`wanwanAudio.sound("./assets/x.mp3")` (with `play()`, `stop()`, `pause()`,
+`volume`, `loop` and `currentTime`) or `wanwanAudio.play(url)` for
+overlapping one-shots. **Add every new effect to `SOUND_EFFECTS`.** Long
+loops (music, rain, fire, metro, truck, TV soundtrack) remain `<audio>`
+elements.
+
 Each level loads `../../lifecycle.js` before its stylesheet and calls:
 
 ```js

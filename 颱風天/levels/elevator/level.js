@@ -10,12 +10,9 @@
   const floorNumber = document.querySelector(".floor-number");
   const status = document.querySelector("#status");
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
-  const rideSound = new Audio("./assets/elevator.mp3");
-  rideSound.preload = "auto";
-  const clickSound = new Audio("./assets/click.mp3");
-  clickSound.preload = "auto";
-  const dingSound = new Audio("./assets/ding.mp3");
-  dingSound.preload = "auto";
+  const rideSound = wanwanAudio.sound("./assets/elevator.mp3");
+  const clickSound = wanwanAudio.sound("./assets/click.mp3");
+  const dingSound = wanwanAudio.sound("./assets/ding.mp3");
 
   const FLOORS = 20;
   const START = 5;
@@ -51,20 +48,8 @@
   }
 
   function playSound(sound) {
-    sound.pause();
-    sound.currentTime = 0;
-    sound.muted = false;
+    sound.stop();
     sound.play().catch(cause => console.warn("Elevator sound could not play", cause));
-  }
-
-  // iOS only lets audio start inside a tap, so unlock the ride sound now and play it after the doors shut.
-  function unlock(sound) {
-    sound.muted = true;
-    return sound.play().then(() => {
-      sound.pause();
-      sound.currentTime = 0;
-      sound.muted = false;
-    }, () => { sound.muted = false; });
   }
 
   async function ride() {
@@ -73,8 +58,7 @@
     status.textContent = "關門";
     car.classList.add("closed");
     playSound(dingSound);
-    const unlocked = unlock(rideSound);
-    await Promise.all([wait(reducedMotion.matches ? 100 : DOOR_MS + 150), Promise.race([unlocked, wait(1500)])]);
+    await wait(reducedMotion.matches ? 100 : DOOR_MS + 150);
 
     playSound(rideSound);
     scene.classList.add("moving");
@@ -160,7 +144,7 @@
     background: "#d9e1e8",
     setup: () => animateScene(true),
     teardown: () => {
-      for (const sound of [rideSound, clickSound, dingSound]) sound.pause();
+      for (const sound of [rideSound, clickSound, dingSound]) sound.stop();
       return animateScene(false);
     },
   });

@@ -8,8 +8,7 @@
   const scene = document.querySelector(".scene");
   const status = document.querySelector("#status");
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
-  const splashSound = new Audio("./assets/splash.mp3");
-  splashSound.preload = "auto";
+  const splashSound = wanwanAudio.sound("./assets/splash.mp3");
   const puddles = [
     { x: 425, y: 250, rx: 48, ry: 29 },
     { x: 160, y: 350, rx: 68, ry: 40 },

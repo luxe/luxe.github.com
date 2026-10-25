@@ -336,7 +336,6 @@
   coinNode.addEventListener("pointerdown", event => {
     if (completed || drag || auto) return;
     event.preventDefault();
-    unlockSound();
     const p = toSvg(event);
     drag = { id: event.pointerId, dx: coin.x - p.x, dy: coin.y - p.y };
     coinNode.setPointerCapture(event.pointerId);
@@ -362,7 +361,6 @@
   // Keyboard: arrows scratch step by step; Enter sweeps the whole window.
   coinNode.addEventListener("keydown", event => {
     if (completed || auto) return;
-    unlockSound();
     const steps = { ArrowLeft: [-16, 0], ArrowRight: [16, 0], ArrowUp: [0, -16], ArrowDown: [0, 16] };
     if (steps[event.key]) {
       event.preventDefault();
@@ -403,23 +401,10 @@
   }
 
   // ---------- Reveal ----------
-  const winSound = new Audio("./assets/win.mp3");
-  winSound.preload = "auto";
-  let soundUnlocked = false;
+  const winSound = wanwanAudio.sound("./assets/win.mp3");
   let soundTimer = 0;
-  function unlockSound() {
-    if (soundUnlocked) return;
-    soundUnlocked = true;
-    winSound.muted = true;
-    winSound.play().then(() => {
-      winSound.pause();
-      winSound.currentTime = 0;
-      winSound.muted = false;
-    }).catch(() => { winSound.muted = false; });
-  }
   function playWinSound() {
-    winSound.muted = false;
-    winSound.currentTime = 0;
+    winSound.stop();
     winSound.play().catch(cause => console.warn("Lottery win sound could not play", cause));
   }
 
@@ -537,6 +522,7 @@
     teardown: async () => {
       clearTimeout(timer);
       clearTimeout(soundTimer);
+      winSound.stop();
       cancelAnimationFrame(auto);
       cancelAnimationFrame(homeFrame);
       await animateScene(false);

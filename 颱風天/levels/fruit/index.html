@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f3d9ae">
+  <title>Wanwan - Fruit offering</title>
+  <script src="../../lifecycle.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./level.js" defer></script>
+</head>
+<body>
+  <main class="scene" aria-label="廟裡的供桌上有一個竹籃，地上散落著水果">
+    <svg class="courtyard" viewBox="0 0 600 820" fill="none">
+      <defs>
+        <pattern id="tiles" width="16" height="12" patternUnits="userSpaceOnUse">
+          <rect width="16" height="12" fill="#3f7d5a"/>
+          <path d="M0 11Q8 5 16 11" stroke="#2f6247" stroke-width="2"/>
+        </pattern>
+        <pattern id="bricks" width="40" height="22" patternUnits="userSpaceOnUse">
+          <rect width="40" height="22" fill="#a9402c"/>
+          <path d="M0 .5H40M0 11.5H40M20 0V11M0 11V22M40 11V22" stroke="#93331f" stroke-width="1.5"/>
+        </pattern>
+        <pattern id="flagstones" width="120" height="60" patternUnits="userSpaceOnUse">
+          <rect width="120" height="60" fill="#e4d2b2"/>
+          <path d="M0 .5H120M60 0V30M0 30.5H120M0 30V60M120 30V60" stroke="#d3bd98" stroke-width="2"/>
+        </pattern>
+        <pattern id="weave" width="24" height="16" patternUnits="userSpaceOnUse" x="150" y="410">
+          <rect width="24" height="16" fill="#d8a75a"/>
+          <rect width="12" height="8" fill="#c99448"/>
+          <rect x="12" y="8" width="12" height="8" fill="#c99448"/>
+          <path d="M0 .5H24M0 8.5H24" stroke="#a8742f" stroke-width="1"/>
+          <path d="M12 0V8M0 8V16M24 8V16" stroke="#e8c27d" stroke-width="1.2" opacity=".7"/>
+        </pattern>
+        <linearGradient id="basket-shade" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#5a3412" stop-opacity=".35"/>
+          <stop offset=".3" stop-color="#5a3412" stop-opacity="0"/>
+          <stop offset=".75" stop-color="#5a3412" stop-opacity="0"/>
+          <stop offset="1" stop-color="#5a3412" stop-opacity=".4"/>
+        </linearGradient>
+        <radialGradient id="g-orange" cx=".35" cy=".3" r=".8">
+          <stop offset="0" stop-color="#ffc067"/><stop offset=".6" stop-color="#f6921e"/><stop offset="1" stop-color="#d86d0e"/>
+        </radialGradient>
+        <radialGradient id="g-apple" cx=".35" cy=".3" r=".8">
+          <stop offset="0" stop-color="#ff7a6a"/><stop offset=".6" stop-color="#df2f35"/><stop offset="1" stop-color="#a81c27"/>
+        </radialGradient>
+        <radialGradient id="g-pear" cx=".35" cy=".3" r=".8">
+          <stop offset="0" stop-color="#fbe2a6"/><stop offset=".65" stop-color="#e2b866"/><stop offset="1" stop-color="#c49340"/>
+        </radialGradient>
+        <radialGradient id="g-persimmon" cx=".35" cy=".35" r=".8">
+          <stop offset="0" stop-color="#ffa258"/><stop offset=".6" stop-color="#f26a1b"/><stop offset="1" stop-color="#c94d0e"/>
+        </radialGradient>
+        <radialGradient id="g-dragon" cx=".35" cy=".3" r=".8">
+          <stop offset="0" stop-color="#ff6aa5"/><stop offset=".6" stop-color="#de2a78"/><stop offset="1" stop-color="#a5164f"/>
+        </radialGradient>
+        <radialGradient id="g-pomelo" cx=".35" cy=".35" r=".8">
+          <stop offset="0" stop-color="#f4f3a8"/><stop offset=".6" stop-color="#cfdc6a"/><stop offset="1" stop-color="#a8b944"/>
+        </radialGradient>
+        <!-- Everything above the rim, plus the basket body below it -->
+        <clipPath id="basket-clip">
+          <path d="M-2000-1000H2600V410H450Q446 474 374 478H226Q154 474 150 410H-2000Z"/>
+        </clipPath>
+        <radialGradient id="candle-glow" cx=".5" cy=".5" r=".5">
+          <stop offset="0" stop-color="#ffd27a" stop-opacity=".7"/>
+          <stop offset="1" stop-color="#ffd27a" stop-opacity="0"/>
+        </radialGradient>
+
+        <!-- Fruit art, centred on the collision circle -->
+        <g id="f-orange">
+          <circle r="24" fill="url(#g-orange)"/>
+          <g fill="#d9740f" opacity=".5"><circle cx="-9" cy="4" r="1.2"/><circle cx="6" cy="10" r="1.2"/><circle cx="11" cy="-4" r="1.2"/><circle cx="-3" cy="15" r="1.2"/><circle cx="-14" cy="-6" r="1.2"/></g>
+          <ellipse cx="-8" cy="-10" rx="6" ry="4" fill="#fff" opacity=".35" transform="rotate(-30 -8 -10)"/>
+          <path d="M0-22V-27" stroke="#6b4a1e" stroke-width="3" stroke-linecap="round"/>
+          <path d="M1-26C8-34 18-32 22-27C14-22 6-22 1-26Z" fill="#4f9a3c"/>
+        </g>
+        <g id="f-apple">
+          <path d="M0-17C10-28 28-22 26-2C25 16 12 27 0 22C-12 27-25 16-26-2C-28-22-10-28 0-17Z" fill="url(#g-apple)"/>
+          <ellipse cx="-11" cy="-7" rx="5" ry="8" fill="#fff" opacity=".3" transform="rotate(20 -11 -7)"/>
+          <path d="M0-16Q2-24 5-29" stroke="#6b4a1e" stroke-width="3" stroke-linecap="round"/>
+          <path d="M4-25C10-34 22-31 24-26C16-21 9-21 4-25Z" fill="#5aa840"/>
+        </g>
+        <g id="f-pear">
+          <circle r="28" fill="url(#g-pear)"/>
+          <g fill="#b98a3a" opacity=".55"><circle cx="-12" cy="2" r="1.3"/><circle cx="-4" cy="12" r="1.3"/><circle cx="8" cy="18" r="1.3"/><circle cx="14" cy="4" r="1.3"/><circle cx="2" cy="-6" r="1.3"/><circle cx="-16" cy="14" r="1.3"/><circle cx="17" cy="-10" r="1.3"/><circle cx="-6" cy="-16" r="1.3"/></g>
+          <ellipse cx="-10" cy="-12" rx="7" ry="5" fill="#fff" opacity=".35" transform="rotate(-30 -10 -12)"/>
+          <path d="M0-26Q-1-31 2-35" stroke="#6b4a1e" stroke-width="3" stroke-linecap="round"/>
+        </g>
+        <g id="f-persimmon">
+          <ellipse rx="25" ry="22" fill="url(#g-persimmon)"/>
+          <ellipse cx="-9" cy="-6" rx="6" ry="4" fill="#fff" opacity=".3" transform="rotate(-25 -9 -6)"/>
+          <path d="M0-20L-10-26L-4-18L-14-14L-2-15L0-6L2-15L14-14L4-18L10-26Z" fill="#4d8a35" stroke="#3a6d27" stroke-width="1.5" stroke-linejoin="round"/>
+          <circle cy="-18" r="3" fill="#6b4a1e"/>
+        </g>
+        <g id="f-dragon">
+          <ellipse rx="26" ry="30" fill="url(#g-dragon)"/>
+          <g fill="#e6417f" stroke="#a5164f" stroke-width="1">
+            <path d="M-20-6Q-30-16-28-28Q-18-20-14-10Z"/>
+            <path d="M20-6Q30-16 28-28Q18-20 14-10Z"/>
+            <path d="M-22 14Q-34 10-36-2Q-24 2-18 8Z"/>
+            <path d="M22 14Q34 10 36-2Q24 2 18 8Z"/>
+            <path d="M-6 6Q-12-6-6-16Q2-8 2 2Z"/>
+            <path d="M-6 26Q-14 18-12 8Q-2 12 0 20Z"/>
+            <path d="M10 22Q8 10 14 2Q20 12 16 20Z"/>
+          </g>
+          <g fill="#8cc04a"><circle cx="-28" cy="-28" r="2.5"/><circle cx="28" cy="-28" r="2.5"/><circle cx="-36" cy="-2" r="2.5"/><circle cx="36" cy="-2" r="2.5"/><circle cx="-6" cy="-16" r="2.2"/><circle cx="-12" cy="8" r="2.2"/><circle cx="14" cy="2" r="2.2"/></g>
+          <path d="M-6-29Q0-38 6-29Z" fill="#8cc04a"/>
+        </g>
+        <g id="f-pomelo">
+          <path d="M0-36C14-36 18-26 24-18C36-6 38 12 30 24C22 36 -22 36 -30 24C-38 12 -36-6 -24-18C-18-26 -14-36 0-36Z" fill="url(#g-pomelo)"/>
+          <g fill="#97a83a" opacity=".45"><circle cx="-10" cy="0" r="1.3"/><circle cx="8" cy="10" r="1.3"/><circle cx="16" cy="-6" r="1.3"/><circle cx="-18" cy="16" r="1.3"/><circle cx="2" cy="22" r="1.3"/><circle cx="-4" cy="-18" r="1.3"/></g>
+          <ellipse cx="-12" cy="-12" rx="7" ry="9" fill="#fff" opacity=".3" transform="rotate(25 -12 -12)"/>
+          <path d="M0-35V-40" stroke="#6b4a1e" stroke-width="3" stroke-linecap="round"/>
+          <path d="M-1-38C-10-48-22-46-26-40C-17-34-8-34-1-38Z" fill="#3f8a34"/>
+        </g>
+      </defs>
+
+      <g aria-hidden="true">
+        <!-- Courtyard -->
+        <rect x="-2000" y="-1000" width="4600" height="2820" fill="url(#flagstones)"/>
+        <rect x="-2000" y="-1000" width="4600" height="1520" fill="url(#bricks)"/>
+        <path d="M-2000 512H2600" stroke="#7d2a1b" stroke-width="10"/>
+        <path d="M-2000 524H2600" stroke="#c7b08a" stroke-width="6"/>
+        <!-- Temple eaves -->
+        <rect x="-2000" y="-1000" width="4600" height="1000" fill="#f3d9ae"/>
+        <path d="M-2000-6Q300-26 2600-6V36H-2000Z" fill="#3f7d5a"/>
+        <path d="M-2000-6Q300-26 2600-6" stroke="#e9b93a" stroke-width="5"/>
+        <path d="M-2000 36H2600V58H-2000Z" fill="url(#tiles)"/>
+        <path d="M-2000 58H2600" stroke="#e9b93a" stroke-width="8"/>
+        <path d="M-2000 70H2600" stroke="#b4382a" stroke-width="10"/>
+        <!-- Plaque without text -->
+        <rect x="206" y="104" width="188" height="58" rx="6" fill="#2b1a12" stroke="#e9b93a" stroke-width="6"/>
+        <rect x="220" y="116" width="160" height="34" rx="3" stroke="#e9b93a" stroke-width="2" opacity=".6"/>
+        <circle cx="300" cy="133" r="9" fill="#e9b93a"/>
+        <!-- Round lattice windows -->
+        <g stroke="#e9b93a" stroke-width="5">
+          <circle cx="76" cy="250" r="58" fill="#5e2117"/>
+          <circle cx="524" cy="250" r="58" fill="#5e2117"/>
+        </g>
+        <g stroke="#c98f2a" stroke-width="4">
+          <path d="M76 192V308M18 250H134M35 209L117 291M117 209L35 291"/>
+          <path d="M524 192V308M466 250H582M483 209L565 291M565 209L483 291"/>
+        </g>
+        <!-- Lanterns -->
+        <g class="lantern" style="--delay: 0s">
+          <path d="M160 74V108" stroke="#5a2d1a" stroke-width="3"/>
+          <rect x="144" y="104" width="32" height="8" rx="2" fill="#e9b93a"/>
+          <ellipse cx="160" cy="136" rx="30" ry="26" fill="#d9352a"/>
+          <path d="M144 136Q148 116 160 112M176 136Q172 116 160 112M144 136Q148 156 160 160M176 136Q172 156 160 160" stroke="#a8241b" stroke-width="2"/>
+          <rect x="144" y="158" width="32" height="8" rx="2" fill="#e9b93a"/>
+          <path d="M154 166V186M160 166V190M166 166V186" stroke="#e9b93a" stroke-width="2"/>
+        </g>
+        <g class="lantern" style="--delay: -1.4s">
+          <path d="M440 74V108" stroke="#5a2d1a" stroke-width="3"/>
+          <rect x="424" y="104" width="32" height="8" rx="2" fill="#e9b93a"/>
+          <ellipse cx="440" cy="136" rx="30" ry="26" fill="#d9352a"/>
+          <path d="M424 136Q428 116 440 112M456 136Q452 116 440 112M424 136Q428 156 440 160M456 136Q452 156 440 160" stroke="#a8241b" stroke-width="2"/>
+          <rect x="424" y="158" width="32" height="8" rx="2" fill="#e9b93a"/>
+          <path d="M434 166V186M440 166V190M446 166V186" stroke="#e9b93a" stroke-width="2"/>
+        </g>
+
+        <!-- Offering table -->
+        <ellipse cx="300" cy="618" rx="250" ry="14" fill="#5a3a20" opacity=".18"/>
+        <rect x="84" y="490" width="432" height="122" fill="#c93a2b"/>
+        <path d="M84 500H516M84 600H516" stroke="#e9b93a" stroke-width="3"/>
+        <circle cx="300" cy="550" r="20" stroke="#e9b93a" stroke-width="3"/>
+        <path d="M300 530V570M280 550H320" stroke="#e9b93a" stroke-width="3"/>
+        <path d="M236 550Q254 536 272 550M328 550Q346 564 364 550" stroke="#e9b93a" stroke-width="3" stroke-linecap="round"/>
+        <rect x="68" y="474" width="464" height="18" rx="4" fill="#6a3218"/>
+        <path d="M72 476H528" stroke="#8d4a26" stroke-width="3"/>
+        <!-- Candles -->
+        <circle class="candle-halo" cx="82" cy="404" r="36" fill="url(#candle-glow)"/>
+        <circle class="candle-halo" cx="518" cy="404" r="36" fill="url(#candle-glow)"/>
+        <rect x="72" y="414" width="20" height="60" rx="3" fill="#d9352a"/>
+        <rect x="508" y="414" width="20" height="60" rx="3" fill="#d9352a"/>
+        <rect x="78" y="430" width="8" height="8" fill="#e9b93a" transform="rotate(45 82 434)"/>
+        <rect x="514" y="430" width="8" height="8" fill="#e9b93a" transform="rotate(45 518 434)"/>
+        <path class="candle-flame" d="M82 414C74 404 78 396 82 386C86 396 90 404 82 414Z" fill="#ffc23d"/>
+        <path class="candle-flame" d="M518 414C510 404 514 396 518 386C522 396 526 404 518 414Z" fill="#ffc23d"/>
+      </g>
+
+      <!-- Basket: back rim, fruit inside, woven front. Shallow so offerings heap above the rim. -->
+      <g class="basket">
+        <g aria-hidden="true">
+          <path d="M138 418Q120 418 120 432Q120 446 140 446" stroke="#a8742f" stroke-width="8" stroke-linecap="round"/>
+          <path d="M462 418Q480 418 480 432Q480 446 460 446" stroke="#a8742f" stroke-width="8" stroke-linecap="round"/>
+          <ellipse cx="300" cy="410" rx="150" ry="20" fill="#6d4219"/>
+          <ellipse cx="300" cy="413" rx="138" ry="14" fill="#593413"/>
+          <path d="M150 410A150 20 0 0 1 450 410" stroke="#c89650" stroke-width="9"/>
+        </g>
+        <g class="inside" clip-path="url(#basket-clip)"></g>
+        <g aria-hidden="true">
+          <path d="M150 410Q154 474 226 478H374Q446 474 450 410A150 20 0 0 1 150 410Z" fill="url(#weave)"/>
+          <path d="M150 410Q154 474 226 478H374Q446 474 450 410A150 20 0 0 1 150 410Z" fill="url(#basket-shade)"/>
+          <path d="M150 410A150 20 0 0 0 450 410" stroke="#e2b56a" stroke-width="10" stroke-linecap="round"/>
+          <path d="M150 410A150 20 0 0 0 450 410" stroke="#f3d494" stroke-width="3" stroke-linecap="round" transform="translate(0 -3)"/>
+          <path d="M226 478H374" stroke="#a8742f" stroke-width="6" stroke-linecap="round"/>
+          <!-- Red paper diamond, no text -->
+          <rect x="288" y="438" width="24" height="24" fill="#d9352a" stroke="#e9b93a" stroke-width="2.5" transform="rotate(45 300 450)"/>
+          <circle cx="300" cy="450" r="4" fill="#e9b93a"/>
+        </g>
+      </g>
+
+      <g class="loose"></g>
+      <g class="sparkles"></g>
+    </svg>
+    <p id="instructions" class="sr-only">把地上的水果都拖進供桌上的竹籃裡。</p>
+    <p id="status" class="sr-only" role="status"></p>
+  </main>
+</body>
+</html>

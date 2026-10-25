@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#dce7e5">
+  <title>Wanwan - Metro card</title>
+  <script src="../../lifecycle.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./level.js" defer></script>
+</head>
+<body>
+  <main class="scene" aria-label="捷運閘門">
+    <svg class="station" viewBox="0 0 600 820" fill="none">
+      <defs>
+        <linearGradient id="floor" x2=".2" y2="1">
+          <stop stop-color="#d6e2df"/><stop offset="1" stop-color="#b8cbc6"/>
+        </linearGradient>
+        <linearGradient id="gate-body" x2="1">
+          <stop stop-color="#e8f0ec"/><stop offset=".55" stop-color="#cbdad4"/><stop offset="1" stop-color="#aec2bb"/>
+        </linearGradient>
+        <linearGradient id="door" x2="1">
+          <stop stop-color="#f6d4ad"/><stop offset="1" stop-color="#e4a879"/>
+        </linearGradient>
+        <filter id="soft-shadow" x="-30%" y="-30%" width="160%" height="170%">
+          <feDropShadow dx="0" dy="8" stdDeviation="7" flood-color="#526d66" flood-opacity=".18"/>
+        </filter>
+        <clipPath id="card-clip"><rect x="-100" y="-63" width="200" height="126" rx="13"/></clipPath>
+      </defs>
+
+      <g class="arrival">
+        <g aria-hidden="true">
+          <rect x="18" y="72" width="564" height="704" rx="44" fill="#c4d3cf" opacity=".42"/>
+          <path d="M18 495H582V732Q582 776 538 776H62Q18 776 18 732Z" fill="url(#floor)"/>
+          <path d="M70 545L22 760M225 545L205 776M375 545L395 776M530 545L578 760" stroke="#eef4ef" stroke-width="5" opacity=".65"/>
+          <rect x="70" y="120" width="460" height="54" rx="27" fill="#eaf1ed" opacity=".72"/>
+          <circle cx="112" cy="147" r="10" fill="#79aebb"/><circle cx="142" cy="147" r="10" fill="#91c47e"/>
+          <circle cx="172" cy="147" r="10" fill="#e9b65d"/><circle cx="202" cy="147" r="10" fill="#d77aa3"/>
+          <path d="M235 147H485" stroke="#c7d5d0" stroke-width="10" stroke-linecap="round"/>
+        </g>
+
+        <g class="gate" aria-hidden="true">
+          <ellipse cx="300" cy="704" rx="246" ry="30" fill="#7c9890" opacity=".2"/>
+          <g class="door door-left">
+            <path d="M226 462H304Q314 462 314 472V516Q314 526 304 526H226Z" fill="url(#door)" stroke="#d29468" stroke-width="3"/>
+            <path d="M244 482H292" stroke="#fff0d7" stroke-width="7" stroke-linecap="round"/>
+          </g>
+          <g class="door door-right">
+            <path d="M374 462H296Q286 462 286 472V516Q286 526 296 526H374Z" fill="url(#door)" stroke="#d29468" stroke-width="3"/>
+            <path d="M356 482H308" stroke="#fff0d7" stroke-width="7" stroke-linecap="round"/>
+          </g>
+          <path d="M70 362Q70 326 106 326H190Q226 326 226 362V685H70Z" fill="url(#gate-body)" filter="url(#soft-shadow)"/>
+          <path d="M374 362Q374 326 410 326H494Q530 326 530 362V685H374Z" fill="url(#gate-body)" filter="url(#soft-shadow)"/>
+          <rect x="88" y="350" width="120" height="34" rx="17" fill="#9eb6ae"/>
+          <rect x="392" y="350" width="120" height="34" rx="17" fill="#9eb6ae"/>
+          <path d="M85 560H211M389 560H515" stroke="#f3f7f2" stroke-width="7" stroke-linecap="round" opacity=".75"/>
+          <rect x="226" y="485" width="148" height="56" rx="12" fill="#8ea8a1" opacity=".22"/>
+        </g>
+
+        <g class="sensor" aria-hidden="true">
+          <rect x="400" y="391" width="102" height="76" rx="18" fill="#6c8f88"/>
+          <rect class="sensor-pad" x="413" y="402" width="76" height="54" rx="13" fill="#9bc7bf" stroke="#e5f2ea" stroke-width="3"/>
+          <path class="wave" d="M436 429Q451 414 466 429M428 429Q451 401 474 429M420 429Q451 388 482 429" stroke="#f5fbf5" stroke-width="4" stroke-linecap="round"/>
+          <circle class="sensor-light" cx="451" cy="386" r="7" fill="#e7b55e"/>
+        </g>
+
+        <g class="card" tabindex="0" role="button" aria-label="悠遊卡，拖到感應區" aria-describedby="instructions">
+          <g class="card-art">
+            <rect class="card-shadow" x="-98" y="-55" width="200" height="126" rx="13" fill="#59736c" opacity=".18"/>
+            <g clip-path="url(#card-clip)">
+              <rect x="-100" y="-63" width="200" height="126" fill="#fffef9"/>
+              <path d="M-100-63H-32Q-12-48-10-27Q-38-16-69-29Q-88-37-100-31Z" fill="#f2ad52"/>
+              <path d="M-1-63H69Q53-32 35-23Q25-17 23-5Q17 9 8 17Q-3-2-4-24Q-6-46-1-63Z" fill="#0b78c4"/>
+              <path d="M-100 63V18Q-82-7-51-15Q-34-18-24-6Q-14 0-7 8Q-10 25-18 36Q-30 51-37 63Z" fill="#df0b82"/>
+              <path d="M1 32Q22 5 63 1Q85-1 100 4V63H1Q-4 49 1 32Z" fill="#109a3a"/>
+              <circle cx="49" cy="-35" r="2.5" fill="#f2ad52" opacity=".8"/>
+              <circle cx="58" cy="-38" r="2.5" fill="#0b78c4" opacity=".8"/>
+              <circle cx="66" cy="-31" r="2.5" fill="#df0b82" opacity=".8"/>
+              <circle cx="58" cy="-24" r="2.5" fill="#109a3a" opacity=".8"/>
+            </g>
+            <rect x="-100" y="-63" width="200" height="126" rx="13" stroke="#d8ded8" stroke-width="2"/>
+            <rect class="focus-ring" x="-108" y="-71" width="216" height="142" rx="20" stroke="#fff6d5" stroke-width="5"/>
+          </g>
+        </g>
+      </g>
+    </svg>
+    <p id="instructions" class="sr-only">把悠遊卡拖到右邊閘門的感應區。鍵盤可按 Enter 或空白鍵感應。</p>
+    <p id="status" class="sr-only" role="status"></p>
+  </main>
+</body>
+</html>

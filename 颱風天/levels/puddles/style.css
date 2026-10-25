@@ -1,0 +1,25 @@
+:root { color-scheme: light; background: #d7e3e1; -webkit-tap-highlight-color: transparent; }
+* { box-sizing: border-box; }
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+body { display: grid; place-items: center; user-select: none; -webkit-user-select: none; }
+.embedded, .embedded body { background: transparent; }
+.scene { width: min(98vw, 71svh, 580px); aspect-ratio: 30 / 41; position: relative; }
+[data-phase="ready"] .scene, [data-phase="hidden"] .scene { visibility: hidden; }
+.street { display: block; width: 100%; height: 100%; touch-action: none; overflow: visible; }
+.rain { position: fixed; inset: 0; pointer-events: none; opacity: 0; overflow: hidden; transition: opacity .6s; }
+.rain.active { opacity: 1; }
+.rain i { position: absolute; top: -30px; width: 1.5px; height: 15px; border-radius: 2px; background: #779c9d; opacity: .4; animation: falling linear infinite; }
+@keyframes falling { to { transform: translate(-20px, calc(100svh + 60px)); } }
+.leaf { cursor: grab; outline: none; }
+.leaf.held { cursor: grabbing; filter: drop-shadow(0 9px 4px rgb(65 89 80 / .25)); }
+.leaf:focus-visible .outline { opacity: 1; }
+.outline { opacity: 0; stroke: #fff5d5; stroke-width: 4; fill: none; }
+.puddle { cursor: pointer; outline: none; }
+.puddle.chosen .rim, .puddle:focus-visible .rim { stroke: #fff5d5; stroke-width: 4; }
+.complete .leaf { cursor: default; }
+.splash ellipse { transform-box: fill-box; transform-origin: center; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) {
+  .rain i { animation: none; top: var(--still-y); }
+  .rain { transition: none; }
+}

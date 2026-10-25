@@ -1,0 +1,124 @@
+:root { color-scheme: light; background: #d9e1e8; -webkit-tap-highlight-color: transparent; }
+* { box-sizing: border-box; }
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+body { display: grid; place-items: center; user-select: none; -webkit-user-select: none; }
+.embedded, .embedded body { background: transparent; }
+[data-phase="ready"] .scene, [data-phase="hidden"] .scene { visibility: hidden; }
+
+/* Sized in container units (scene is 100cqw wide, ~167cqw tall) so it all scales together. */
+.scene { position: relative; width: min(94vw, 58svh, 460px); aspect-ratio: 3 / 5; container-type: size; }
+.car {
+  position: absolute; inset: 0; overflow: hidden; border-radius: 7cqw;
+  background:
+    linear-gradient(90deg, transparent 0 64.6cqw, rgb(140 120 100 / .12) 64.6cqw 65.2cqw, transparent 65.2cqw),
+    linear-gradient(#f6eee3, #eadccb 80%, #e2d1bc);
+  box-shadow: inset 0 0 0 1.4cqw #fbf6ef, 0 2.4cqw 0 rgb(80 90 110 / .14);
+}
+
+.indicator {
+  position: absolute; left: 20cqw; top: 8cqw; width: 30cqw; height: 13cqw;
+  display: flex; align-items: center; justify-content: center; gap: 2.4cqw;
+  border-radius: 4cqw; background: #3d3a3f; box-shadow: inset 0 .8cqw 0 #2c2a2e, 0 0 0 1cqw #d8c4a6;
+  color: #ffbf6b; font: 700 8.6cqw/1 ui-rounded, "SF Pro Rounded", "Nunito", system-ui, sans-serif;
+  text-shadow: 0 0 2cqw rgb(255 170 80 / .8);
+}
+.floor-number { min-width: 5cqw; text-align: center; font-variant-numeric: tabular-nums; }
+.arrow { width: 0; height: 0; border: 2.6cqw solid transparent; border-top: 3.4cqw solid #ffbf6b; border-bottom: 0; opacity: .14; }
+.moving .arrow { opacity: 1; filter: drop-shadow(0 0 1.2cqw rgb(255 170 80 / .9)); animation: arrow 0.9s ease-in-out infinite; }
+@keyframes arrow { 0%, 100% { transform: translateY(-.6cqw); } 50% { transform: translateY(.8cqw); } }
+
+.doorway {
+  position: absolute; left: 7cqw; top: 26cqw; width: 56cqw; height: 128cqw; overflow: hidden;
+  border-radius: 2cqw 2cqw 0 0; background: #cfc2b1;
+  box-shadow: 0 0 0 1.6cqw #d8c4a6, 0 0 0 2.2cqw #c4ad8c;
+}
+.door {
+  position: absolute; top: 0; bottom: 0; width: 50%;
+  background:
+    linear-gradient(90deg, rgb(255 255 255 / .35) 0 8%, transparent 30% 70%, rgb(120 100 80 / .12) 92%),
+    linear-gradient(#ece3d7, #dcccb7);
+  transition: transform 1s cubic-bezier(.45, 0, .25, 1);
+}
+.door-left { left: 0; box-shadow: inset -.3cqw 0 0 #b9a68b; transform: translateX(-100%); }
+.door-right { right: 0; box-shadow: inset .3cqw 0 0 #b9a68b; transform: translateX(100%); }
+.closed .door-left, .closed .door-right { transform: translateX(0); }
+
+/* What waits beyond the doors: a cool hallway on 5樓, a rainy lobby on 1樓. */
+.outside { position: absolute; inset: 0; background: linear-gradient(#cfdbe6 0 72%, #b7c5d2 72%); }
+.outside[data-floor="1"] { background: linear-gradient(#fbe8c6 0 72%, #e9c99a 72%); }
+.plaque {
+  position: absolute; left: 50%; top: 14cqw; transform: translateX(-50%); padding: 1.6cqw 3.4cqw; border-radius: 2.4cqw;
+  background: #fffaf1; color: #7b6a86; font: 700 7cqw/1 ui-rounded, "SF Pro Rounded", "Nunito", system-ui, sans-serif;
+  box-shadow: 0 .8cqw 0 rgb(80 80 110 / .15);
+}
+.outside[data-floor="1"] .plaque { color: #b26b3b; }
+.window {
+  position: absolute; left: 9cqw; top: 36cqw; width: 18cqw; height: 26cqw; border-radius: 9cqw 9cqw 1.4cqw 1.4cqw;
+  background: linear-gradient(#e8f1f8, #c8d9e7); box-shadow: 0 0 0 1.4cqw #f4f7fa;
+}
+.outside[data-floor="1"] .window {
+  left: 6cqw; width: 26cqw; height: 40cqw; top: 30cqw;
+  overflow: hidden;
+  background: linear-gradient(#94aab8, #bdcdd1 65%, #a4beb2);
+  box-shadow: 0 0 0 1.4cqw #fff6e6, inset 0 0 3cqw rgb(94 122 139 / .2);
+}
+.outside[data-floor="1"] .window::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  /* Each loop moves exactly one tile along the streak slant (6:28), so it never jumps. */
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 280'%3E%3Cpath d='M20.5 1.9l-5.6 26M28.0 49.6l-5.6 26M12.7 100.8l-5.6 26M52.2 154.9l-5.6 26M45.1 190.8l-5.6 26M34.5 238.5l-5.6 26' stroke='%23eef7fb' stroke-opacity='0.75' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") 0 0 / 6cqw 28cqw;
+  animation: window-rain-near .55s linear infinite;
+}
+.outside[data-floor="1"] .window::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 90 420'%3E%3Cpath d='M22.1 3.8l-4.7 22M25.3 93.4l-4.7 22M72.8 149.0l-4.7 22M70.6 187.0l-4.7 22M32.7 262.6l-4.7 22M65.3 330.8l-4.7 22M76.7 363.1l-4.7 22' stroke='%23eef7fb' stroke-opacity='0.45' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") 4cqw 11cqw / 9cqw 42cqw;
+  opacity: .8;
+  animation: window-rain-back 1.6s linear infinite;
+}
+@keyframes window-rain-near { to { background-position: -6cqw 28cqw; } }
+/* The farther layer uses a 9:42 tile, same slant. */
+@keyframes window-rain-back { to { background-position: -5cqw 53cqw; } }
+@media (prefers-reduced-motion: reduce) {
+  .outside[data-floor="1"] .window::after, .outside[data-floor="1"] .window::before { animation: none; }
+}
+.plant { position: absolute; right: 8cqw; bottom: 30cqw; width: 12cqw; height: 22cqw; }
+.plant::after {
+  content: ""; position: absolute; left: 1.5cqw; right: 1.5cqw; bottom: 0; height: 8cqw;
+  border-radius: .8cqw .8cqw 2.4cqw 2.4cqw; background: #d48e6a; box-shadow: inset 0 1.2cqw 0 #e6a786;
+}
+.plant i { position: absolute; bottom: 6cqw; left: 50%; width: 5cqw; height: 13cqw; margin-left: -2.5cqw; border-radius: 50%; background: #7fb48d; transform-origin: 50% 100%; }
+.plant i:nth-child(1) { transform: rotate(-30deg); }
+.plant i:nth-child(2) { height: 15cqw; background: #8fc49b; }
+.plant i:nth-child(3) { transform: rotate(30deg); }
+.mat { position: absolute; left: 50%; bottom: 8cqw; width: 30cqw; height: 6cqw; margin-left: -15cqw; border-radius: 3cqw; background: #a6b5c6; opacity: 0; }
+.outside[data-floor="1"] .mat { opacity: 1; background: repeating-linear-gradient(90deg, #d98f73 0 2.4cqw, #e6a98f 2.4cqw 4.8cqw); }
+
+.panel-arrival { position: absolute; left: 67cqw; top: 20cqw; width: 28cqw; }
+.panel {
+  display: grid; gap: 3cqw; padding: 3cqw 2.6cqw 3.4cqw; border-radius: 4cqw;
+  background: linear-gradient(135deg, #f0dcb6, #d9bc8c 60%, #e6cfa6);
+  box-shadow: inset 0 .6cqw 0 #fbf0d9, inset 0 -.8cqw 0 #c4a170, 0 1.2cqw 0 rgb(120 90 50 / .2);
+}
+.floors { display: grid; grid-template-columns: 1fr 1fr; gap: 1.8cqw 3.2cqw; justify-items: center; }
+.doors-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 3.2cqw; justify-items: center; padding-top: 2.4cqw; border-top: .4cqw solid rgb(150 115 70 / .3); }
+
+.floor, .control {
+  position: relative; display: grid; place-items: center; width: 9.4cqw; height: 9.4cqw; padding: 0; border: 0; border-radius: 50%;
+  background: radial-gradient(circle at 40% 32%, #fffdf7, #efe6d8 70%);
+  box-shadow: 0 0 0 .5cqw #c9ab7c, 0 .8cqw 0 .5cqw #b08f60;
+  color: #8a7564; font: 700 4.2cqw/1 ui-rounded, "SF Pro Rounded", "Nunito", system-ui, sans-serif;
+  cursor: pointer; outline: none; touch-action: manipulation;
+  transition: color .25s, background .25s, box-shadow .25s, transform .08s;
+}
+.control svg { width: 6cqw; height: 6cqw; fill: currentColor; }
+.floor:active, .control:active { transform: translateY(.5cqw); }
+.lit {
+  color: #fffaf0; text-shadow: 0 0 1.4cqw #fff3c9;
+  background: radial-gradient(circle at 40% 32%, #ffe2a6, #ffb45e 75%);
+  box-shadow: 0 0 0 .5cqw #e0973f, 0 .8cqw 0 .5cqw #b9762c, 0 0 4cqw 1cqw rgb(255 190 100 / .75);
+}
+.floor:focus-visible, .control:focus-visible { box-shadow: 0 0 0 .5cqw #c9ab7c, 0 .8cqw 0 .5cqw #b08f60, 0 0 0 1.6cqw #fff, 0 0 0 2.2cqw #8f84b4; }
+.complete .floor, .complete .control, .moving .floor, .moving .control { cursor: default; }
+
+.floor-strip { position: absolute; left: 0; right: 0; bottom: 0; height: 13cqw; background: linear-gradient(#b9a184, #a68d70); box-shadow: inset 0 .8cqw 0 #c9b293; }
+
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

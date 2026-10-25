@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#d7e3e1">
+  <title>Wanwan - Traffic cones</title>
+  <script src="../../lifecycle.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./level.js" defer></script>
+</head>
+<body>
+  <div class="rain" aria-hidden="true"></div>
+  <main class="scene" aria-label="雨中的交通錐">
+    <div class="road-arrival">
+      <svg class="road" viewBox="0 0 600 820" fill="none" aria-label="三個位置的交通錐拼圖">
+        <defs>
+          <linearGradient id="pavement" x1="0" y1="440" x2="0" y2="800" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#aabeb9"/><stop offset="1" stop-color="#8da7a1"/>
+          </linearGradient>
+          <linearGradient id="orange" x1="-40" y1="0" x2="40" y2="0" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#dc8a59"/><stop offset=".4" stop-color="#f3b17a"/><stop offset="1" stop-color="#ce784c"/>
+          </linearGradient>
+          <symbol id="cone-art" viewBox="-80 -148 160 180">
+            <ellipse cy="25" rx="75" ry="10" fill="#65867f" opacity=".22"/>
+            <rect x="-74" y="4" width="148" height="25" rx="11" fill="#a9684b"/>
+            <rect x="-74" y="-2" width="148" height="23" rx="10" fill="#d58a5e" stroke="#be794f" stroke-width="2"/>
+            <path d="M-57 1L-12-132Q0-145 12-132L57 1Q0 25-57 1Z" fill="url(#orange)" stroke="#c77f53" stroke-width="2"/>
+            <path d="M-26-91L-34-67Q0-57 34-67L26-91Q0-83-26-91ZM-43-42L-51-18Q0-1 51-18L43-42Q0-29-43-42Z" fill="#fff1d4"/>
+            <path d="M-8-126L-46-7" stroke="#ffcb91" stroke-width="4" stroke-linecap="round" opacity=".65"/>
+            <ellipse cy="-132" rx="11" ry="4" fill="#c58157"/>
+          </symbol>
+        </defs>
+        <g aria-hidden="true">
+          <path d="M40 437V305Q40 288 58 288H125V437M470 437V333Q470 316 488 316H560V437" fill="#c0d0c8"/>
+          <path d="M54 309H110M484 338H545" stroke="#e5eee2" stroke-width="12" stroke-linecap="round"/>
+          <rect x="10" y="444" width="580" height="349" rx="37" fill="#77968d" opacity=".2"/>
+          <rect x="10" y="435" width="580" height="349" rx="37" fill="url(#pavement)"/>
+          <path d="M24 476H576" stroke="#dce5d6" stroke-width="9" stroke-linecap="round"/>
+          <path d="M30 745H570" stroke="#e7e5bc" stroke-width="5" stroke-dasharray="36 30" opacity=".7"/>
+          <ellipse cx="140" cy="700" rx="63" ry="10" fill="#c7dcd7" opacity=".5"/>
+          <ellipse cx="443" cy="536" rx="60" ry="8" fill="#c7dcd7" opacity=".4"/>
+        </g>
+        <g class="spots">
+          <ellipse class="spot" data-spot="0" cx="110" cy="666" rx="86" ry="23" tabindex="0" role="button" aria-label="左邊位置"/>
+          <ellipse class="spot" data-spot="1" cx="300" cy="666" rx="86" ry="23" tabindex="0" role="button" aria-label="中間位置"/>
+          <ellipse class="spot" data-spot="2" cx="490" cy="666" rx="86" ry="23" tabindex="0" role="button" aria-label="右邊位置"/>
+        </g>
+        <g class="cones"></g>
+      </svg>
+    </div>
+    <p id="instructions" class="sr-only">把四個交通錐疊在同一個位置，由大到小。一次只能移動最上面的錐，大錐不能放在小錐上。可拖曳，或點選交通錐再點位置。鍵盤按 Enter 選取，方向鍵選位置，Enter 放下，Escape 取消。</p>
+    <p id="status" class="sr-only" role="status"></p>
+  </main>
+</body>
+</html>

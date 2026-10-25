@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#d9e1e8">
+  <title>Wanwan - Elevator</title>
+  <script src="../../lifecycle.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./level.js" defer></script>
+</head>
+<body>
+  <main class="scene" aria-label="電梯">
+    <div class="car">
+      <div class="indicator" aria-hidden="true">
+        <span class="arrow"></span>
+        <span class="floor-number">5</span>
+      </div>
+      <div class="doorway">
+        <div class="outside" data-floor="5" aria-hidden="true">
+          <span class="plaque">5樓</span>
+          <span class="window"></span>
+          <span class="plant"><i></i><i></i><i></i></span>
+          <span class="mat"></span>
+        </div>
+        <div class="door door-left" aria-hidden="true"></div>
+        <div class="door door-right" aria-hidden="true"></div>
+      </div>
+      <div class="panel-arrival">
+        <div class="panel" role="group" aria-label="電梯按鈕">
+          <div class="floors"></div>
+          <div class="doors-buttons">
+            <button class="control" type="button" data-action="open" aria-label="開門">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 7 5 12l5 5ZM14 7l5 5-5 5Z"/><rect x="11.2" y="5" width="1.6" height="14" rx=".8"/></svg>
+            </button>
+            <button class="control" type="button" data-action="close" aria-label="關門">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7l5 5-5 5ZM21 7l-5 5 5 5Z"/><rect x="11.2" y="5" width="1.6" height="14" rx=".8"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <span class="floor-strip" aria-hidden="true"></span>
+    </div>
+    <p id="status" class="sr-only" role="status" aria-live="polite"></p>
+  </main>
+</body>
+</html>

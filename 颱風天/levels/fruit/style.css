@@ -1,0 +1,28 @@
+:root { color-scheme: light; background: #e4d2b2; -webkit-tap-highlight-color: transparent; }
+* { box-sizing: border-box; }
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+body { display: grid; place-items: center; user-select: none; -webkit-user-select: none; }
+.embedded, .embedded body { background: transparent; }
+.scene { width: min(98vw, 71svh, 580px); aspect-ratio: 30 / 41; position: relative; }
+[data-phase="ready"] .scene, [data-phase="hidden"] .scene { visibility: hidden; }
+.courtyard { display: block; width: 100%; height: 100%; touch-action: none; overflow: visible; }
+.basket { transform-box: view-box; transform-origin: 300px 478px; }
+.fruit { cursor: grab; outline: none; }
+.fruit.held { cursor: grabbing; }
+.fruit .lift { transition: transform .15s ease-out; }
+.fruit.held .lift { transform: translateY(-6px) scale(1.06); }
+.fruit.inside { cursor: default; pointer-events: none; }
+.fruit.inside .shadow { display: none; }
+.focus-ring { opacity: 0; stroke: #fff6d0; stroke-width: 4; fill: none; }
+.fruit:focus-visible .focus-ring { opacity: 1; }
+.pointer .focus-ring { display: none; }
+.lantern { transform-box: fill-box; transform-origin: 50% 0; animation: sway 4s ease-in-out var(--delay) infinite alternate; }
+@keyframes sway { from { transform: rotate(-3deg); } to { transform: rotate(3deg); } }
+.candle-flame { transform-box: fill-box; transform-origin: 50% 100%; animation: flicker .9s ease-in-out infinite alternate; }
+.candle-flame + .candle-flame { animation-delay: -.45s; }
+@keyframes flicker { from { transform: scale(.92, .9) skewX(-4deg); } to { transform: scale(1.05, 1.1) skewX(4deg); } }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) {
+  .lantern, .candle-flame { animation: none; }
+  .fruit .lift { transition: none; }
+}

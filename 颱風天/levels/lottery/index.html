@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ffe39a">
+  <title>Wanwan - Lottery</title>
+  <script src="../../lifecycle.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./level.js" defer></script>
+</head>
+<body>
+  <main class="scene" aria-label="刮刮樂彩券和硬幣">
+    <div class="stage">
+      <svg class="art" viewBox="0 0 600 820" fill="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#ffb12f"/>
+            <stop offset=".5" stop-color="#ff732c"/>
+            <stop offset="1" stop-color="#ff406f"/>
+          </linearGradient>
+          <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fff0a8"/>
+            <stop offset=".45" stop-color="#f7c534"/>
+            <stop offset="1" stop-color="#d98a0c"/>
+          </linearGradient>
+          <linearGradient id="gold-six" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fff6c4"/>
+            <stop offset=".35" stop-color="#ffd23f"/>
+            <stop offset=".7" stop-color="#f0a613"/>
+            <stop offset="1" stop-color="#c97a08"/>
+          </linearGradient>
+          <linearGradient id="bag" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#f05545"/>
+            <stop offset="1" stop-color="#b8202a"/>
+          </linearGradient>
+          <linearGradient id="note" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#8fb4f0"/>
+            <stop offset="1" stop-color="#6b93dc"/>
+          </linearGradient>
+          <radialGradient id="prize" cx=".5" cy=".55" r=".7">
+            <stop offset="0" stop-color="#fffbe6"/>
+            <stop offset=".6" stop-color="#ffeaa3"/>
+            <stop offset="1" stop-color="#ffd15e"/>
+          </radialGradient>
+          <radialGradient id="glow" cx=".5" cy=".5" r=".5">
+            <stop offset="0" stop-color="#fff7c2" stop-opacity=".95"/>
+            <stop offset="1" stop-color="#fff7c2" stop-opacity="0"/>
+          </radialGradient>
+          <clipPath id="card-clip"><rect x="70" y="70" width="460" height="630" rx="20"/></clipPath>
+          <clipPath id="prize-clip"><rect x="120" y="335" width="360" height="210" rx="8"/></clipPath>
+          <g id="sparkle"><path d="M0 -10Q1.6 -1.6 10 0Q1.6 1.6 0 10Q-1.6 1.6 -10 0Q-1.6 -1.6 0 -10Z" fill="#fff"/></g>
+          <g id="cash-coin">
+            <circle r="17" fill="url(#gold)" stroke="#c98612" stroke-width="2.5"/>
+            <circle r="12" stroke="#fff3b8" stroke-width="2"/>
+            <rect x="-4.5" y="-4.5" width="9" height="9" fill="#d48d14"/>
+          </g>
+        </defs>
+
+        <g class="backdrop">
+          <rect x="-400" y="-400" width="1400" height="1620" fill="#ffe39a"/>
+          <g class="rays" fill="#fff3c4" opacity=".75"></g>
+          <circle cx="300" cy="380" r="330" fill="url(#glow)"/>
+          <g class="confetti"></g>
+        </g>
+
+        <g class="ticket">
+          <rect x="74" y="78" width="460" height="630" rx="20" fill="#c2412a" opacity=".22"/>
+          <rect x="70" y="70" width="460" height="630" rx="20" fill="url(#card)"/>
+          <g clip-path="url(#card-clip)">
+            <g class="card-rays" fill="#ffd66a" opacity=".38"></g>
+            <circle cx="300" cy="205" r="120" fill="url(#glow)" opacity=".8"/>
+            <path d="M70 570Q300 520 530 570V700H70Z" fill="#ff2f63" opacity=".35"/>
+          </g>
+          <rect x="84" y="84" width="432" height="602" rx="12" stroke="#ffe680" stroke-width="3.5" stroke-dasharray="1 10" stroke-linecap="round"/>
+          <rect x="70" y="70" width="460" height="630" rx="20" stroke="#fff" stroke-width="7"/>
+
+          <!-- price badge and serial barcode -->
+          <circle cx="118" cy="118" r="22" fill="#d92b3a" stroke="url(#gold)" stroke-width="5"/>
+          <path d="M118 104L122 113.5L132 114L124.5 120.5L127 130L118 124.8L109 130L111.5 120.5L104 114L114 113.5Z" fill="#ffe27a"/>
+          <rect x="384" y="100" width="122" height="26" rx="5" fill="#fff"/>
+          <g class="barcode top-code"></g>
+
+          <!-- header art: coin stack, lucky bag, banknote bundle -->
+          <g class="coin-stack"></g>
+          <g class="bundle" transform="translate(450 236) rotate(-8)">
+            <rect x="-48" y="-6" width="96" height="44" rx="4" fill="#4f78c4"/>
+            <rect x="-50" y="-14" width="96" height="44" rx="4" fill="#6b93dc"/>
+            <rect x="-52" y="-22" width="96" height="44" rx="4" fill="url(#note)" stroke="#fff" stroke-width="2.5"/>
+            <circle cx="-4" cy="0" r="12" stroke="#e8f0ff" stroke-width="2.5"/>
+            <rect x="-14" y="-23" width="20" height="46" fill="#f6f1e2" stroke="#d6c9a8" stroke-width="1.5"/>
+          </g>
+          <g class="bag">
+            <ellipse cx="300" cy="284" rx="72" ry="10" fill="#9b2a1c" opacity=".25"/>
+            <path d="M268 166Q228 196 222 236Q216 282 300 284Q384 282 378 236Q372 196 332 166Z" fill="url(#bag)" stroke="#8e1620" stroke-width="3"/>
+            <path d="M266 160Q250 136 268 128Q284 140 300 130Q316 140 332 128Q350 136 334 160Z" fill="url(#bag)" stroke="#8e1620" stroke-width="3"/>
+            <path d="M262 164Q300 176 338 164" stroke="url(#gold)" stroke-width="9" stroke-linecap="round"/>
+            <circle cx="300" cy="168" r="7" fill="#f7c534" stroke="#c98612" stroke-width="2"/>
+            <path d="M246 214Q240 240 256 262" stroke="#ff8b7a" stroke-width="5" stroke-linecap="round" opacity=".6"/>
+            <use href="#cash-coin" transform="translate(300 228) scale(1.75)"/>
+          </g>
+          <g class="flying-coins">
+            <use href="#cash-coin" transform="translate(206 142) rotate(-20) scale(.85 .6)"/>
+            <use href="#cash-coin" transform="translate(396 160) rotate(25) scale(.75 .55)"/>
+            <use href="#cash-coin" transform="translate(372 286) rotate(-10) scale(.7)"/>
+          </g>
+          <use href="#sparkle" transform="translate(186 108) scale(.9)"/>
+          <use href="#sparkle" transform="translate(352 128) scale(.6)"/>
+          <use href="#sparkle" transform="translate(500 186) scale(.8)"/>
+          <use href="#sparkle" transform="translate(110 210) scale(.6)"/>
+
+          <!-- scratch window: the prize sits underneath the foil canvas -->
+          <rect x="104" y="318" width="392" height="244" rx="16" fill="url(#gold)" stroke="#fff" stroke-width="4"/>
+          <rect x="112" y="327" width="376" height="226" rx="11" fill="#c96a0a" opacity=".35"/>
+          <g class="prize">
+            <rect x="120" y="335" width="360" height="210" rx="8" fill="url(#prize)"/>
+            <g clip-path="url(#prize-clip)">
+              <g class="prize-rays" fill="#fff" opacity=".45"></g>
+              <g class="sixes">
+                <g class="six" transform="translate(186 440)"><g class="six-art"><text y="58" fill="#c25b08" opacity=".35" transform="translate(4 5)">6</text><text y="58">6</text></g></g>
+                <g class="six" transform="translate(300 440)"><g class="six-art"><text y="58" fill="#c25b08" opacity=".35" transform="translate(4 5)">6</text><text y="58">6</text></g></g>
+                <g class="six" transform="translate(414 440)"><g class="six-art"><text y="58" fill="#c25b08" opacity=".35" transform="translate(4 5)">6</text><text y="58">6</text></g></g>
+              </g>
+              <rect class="shine" x="40" y="300" width="60" height="300" fill="#fff" opacity="0" transform="rotate(20 300 440)"/>
+            </g>
+          </g>
+
+          <!-- lower prize table and barcode -->
+          <g class="symbols"></g>
+          <rect x="214" y="656" width="172" height="30" rx="5" fill="#fff"/>
+          <g class="barcode bottom-code"></g>
+        </g>
+      </svg>
+
+      <canvas class="foil" width="1080" height="630" aria-hidden="true"></canvas>
+
+      <svg class="top" viewBox="0 0 600 820" fill="none">
+        <g class="flakes" aria-hidden="true"></g>
+        <g class="celebrate" aria-hidden="true"></g>
+        <g class="coin-drop">
+          <g class="coin" tabindex="0" role="button" aria-label="50 元硬幣" aria-describedby="instructions">
+            <circle class="focus-ring" r="45"/>
+            <circle class="hit" r="54" fill="transparent"/>
+            <g class="coin-art" pointer-events="none">
+              <ellipse class="coin-shadow" cx="4" cy="8" rx="36" ry="34" fill="#7a4a12" opacity=".25"/>
+              <circle r="36" fill="#e7bf55" stroke="#b98d2c" stroke-width="3"/>
+              <circle r="30" stroke="#f6dc8c" stroke-width="2.5"/>
+              <g class="blossom"></g>
+              <path d="M-20 -16Q-7 -29 9 -25" stroke="#fff" stroke-width="2.5" stroke-linecap="round" opacity=".55"/>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <p id="instructions" class="sr-only">拖動硬幣在彩券的銀色刮刮區來回刮，刮掉大部分就會出現獎號。鍵盤：用方向鍵移動硬幣刮，或按 Enter 自動刮開。</p>
+    <p id="status" class="sr-only" role="status"></p>
+  </main>
+</body>
+</html>

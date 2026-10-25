@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ecdcc0">
+  <title>Wanwan - Temple furnace</title>
+  <script src="../../lifecycle.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./level.js" defer></script>
+</head>
+<body>
+  <main class="scene" aria-label="廟口的金爐和一疊金紙">
+    <svg class="temple" viewBox="0 0 600 820" fill="none">
+      <defs>
+        <clipPath id="mouth-clip">
+          <path d="M236 482V404A64 64 0 0 1 364 404V482Z"/>
+        </clipPath>
+        <radialGradient id="glow" cx=".5" cy=".5" r=".5">
+          <stop offset="0" stop-color="#ffb347" stop-opacity=".75"/>
+          <stop offset=".55" stop-color="#ff7a2a" stop-opacity=".25"/>
+          <stop offset="1" stop-color="#ff7a2a" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="mouth-depth" cx=".5" cy=".8" r=".8">
+          <stop offset="0" stop-color="#6b2412"/>
+          <stop offset="1" stop-color="#1e0d08"/>
+        </radialGradient>
+        <linearGradient id="foil" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#fbe58a"/>
+          <stop offset=".45" stop-color="#e3ad2a"/>
+          <stop offset=".7" stop-color="#f8d860"/>
+          <stop offset="1" stop-color="#d79a1c"/>
+        </linearGradient>
+        <pattern id="tiles" width="16" height="12" patternUnits="userSpaceOnUse">
+          <rect width="16" height="12" fill="#3f7d5a"/>
+          <path d="M0 11Q8 5 16 11" stroke="#2f6247" stroke-width="2"/>
+        </pattern>
+        <pattern id="bricks" width="40" height="22" patternUnits="userSpaceOnUse">
+          <rect width="40" height="22" fill="#a9402c"/>
+          <path d="M0 .5H40M0 11.5H40M20 0V11M0 11V22M40 11V22" stroke="#93331f" stroke-width="1.5"/>
+        </pattern>
+        <pattern id="flagstones" width="120" height="60" patternUnits="userSpaceOnUse">
+          <rect width="120" height="60" fill="#e4d2b2"/>
+          <path d="M0 .5H120M60 0V30M0 30.5H120M0 30V60M120 30V60" stroke="#d3bd98" stroke-width="2"/>
+        </pattern>
+        <!-- Joss paper: pale yellow sheet, red frame, gold foil square with red ornaments -->
+        <g id="bill">
+          <rect x="-50" y="-50" width="100" height="100" rx="2" fill="#f3dc8c"/>
+          <path d="M-50-32H50M-50 6H50M-50 38H50" stroke="#e6c870" stroke-width="1" opacity=".7"/>
+          <rect x="-41" y="-41" width="82" height="82" fill="#d8361f"/>
+          <rect x="-35" y="-35" width="70" height="70" fill="#f08a2a"/>
+          <rect x="-30" y="-30" width="60" height="60" fill="url(#foil)"/>
+          <g stroke="#c22a1a" stroke-width="2.2" stroke-linecap="round">
+            <circle cy="-6" r="11"/>
+            <circle cy="-6" r="5" fill="#c22a1a"/>
+            <path d="M-20 14Q-14 6-6 12Q0 18 6 12Q14 6 20 14"/>
+            <path d="M-22-22Q-16-26-14-20Q-12-14-18-15M22-22Q16-26 14-20Q12-14 18-15"/>
+            <path d="M-20 22H20"/>
+          </g>
+          <path d="M-46 46V-46H46" stroke="#fff6d0" stroke-width="1.5" opacity=".6"/>
+        </g>
+      </defs>
+
+      <g aria-hidden="true">
+        <!-- Courtyard -->
+        <rect x="-2000" y="-1000" width="4600" height="2820" fill="url(#flagstones)"/>
+        <rect x="-2000" y="-1000" width="4600" height="1520" fill="url(#bricks)"/>
+        <path d="M-2000 512H2600" stroke="#7d2a1b" stroke-width="10"/>
+        <path d="M-2000 524H2600" stroke="#c7b08a" stroke-width="6"/>
+        <!-- Temple eaves -->
+        <rect x="-2000" y="-1000" width="4600" height="1000" fill="#f3d9ae"/>
+        <path d="M-2000-6Q300-26 2600-6V36H-2000Z" fill="#3f7d5a"/>
+        <path d="M-2000-6Q300-26 2600-6" stroke="#e9b93a" stroke-width="5"/>
+        <path d="M-2000 36H2600V58H-2000Z" fill="url(#tiles)"/>
+        <path d="M-2000 58H2600" stroke="#e9b93a" stroke-width="8"/>
+        <path d="M-2000 70H2600" stroke="#b4382a" stroke-width="10"/>
+        <!-- Round lattice windows -->
+        <g stroke="#e9b93a" stroke-width="5">
+          <circle cx="76" cy="230" r="58" fill="#5e2117"/>
+          <circle cx="524" cy="230" r="58" fill="#5e2117"/>
+        </g>
+        <g stroke="#c98f2a" stroke-width="4">
+          <path d="M76 172V288M18 230H134M35 189L117 271M117 189L35 271"/>
+          <path d="M524 172V288M466 230H582M483 189L565 271M565 189L483 271"/>
+        </g>
+        <!-- Lanterns -->
+        <g class="lantern" style="--delay: 0s">
+          <path d="M60 74V108" stroke="#5a2d1a" stroke-width="3"/>
+          <rect x="44" y="104" width="32" height="8" rx="2" fill="#e9b93a"/>
+          <ellipse cx="60" cy="136" rx="30" ry="26" fill="#d9352a"/>
+          <path d="M44 136Q48 116 60 112M76 136Q72 116 60 112M44 136Q48 156 60 160M76 136Q72 156 60 160" stroke="#a8241b" stroke-width="2"/>
+          <rect x="44" y="158" width="32" height="8" rx="2" fill="#e9b93a"/>
+          <path d="M54 166V186M60 166V190M66 166V186" stroke="#e9b93a" stroke-width="2"/>
+        </g>
+        <g class="lantern" style="--delay: -1.4s">
+          <path d="M540 74V108" stroke="#5a2d1a" stroke-width="3"/>
+          <rect x="524" y="104" width="32" height="8" rx="2" fill="#e9b93a"/>
+          <ellipse cx="540" cy="136" rx="30" ry="26" fill="#d9352a"/>
+          <path d="M524 136Q528 116 540 112M556 136Q552 116 540 112M524 136Q528 156 540 160M556 136Q552 156 540 160" stroke="#a8241b" stroke-width="2"/>
+          <rect x="524" y="158" width="32" height="8" rx="2" fill="#e9b93a"/>
+          <path d="M534 166V186M540 166V190M546 166V186" stroke="#e9b93a" stroke-width="2"/>
+        </g>
+
+        <!-- Smoke from the chimney -->
+        <g class="smoke">
+          <circle cx="300" cy="104" r="16" style="--delay: 0s"/>
+          <circle cx="300" cy="104" r="16" style="--delay: -1.3s"/>
+          <circle cx="300" cy="104" r="16" style="--delay: -2.6s"/>
+        </g>
+
+        <!-- Gold furnace (金爐) -->
+        <ellipse class="ground-glow" cx="300" cy="566" rx="250" ry="56" fill="url(#glow)"/>
+        <rect x="150" y="518" width="300" height="40" rx="6" fill="#9b9488"/>
+        <path d="M150 530H450" stroke="#b4ada1" stroke-width="3"/>
+        <rect x="186" y="300" width="228" height="224" rx="6" fill="#a9402c"/>
+        <rect x="186" y="300" width="228" height="224" rx="6" fill="url(#bricks)" opacity=".6"/>
+        <path d="M186 316H414M186 508H414" stroke="#e9b93a" stroke-width="6"/>
+        <rect x="186" y="300" width="22" height="224" fill="#8e3021"/>
+        <rect x="392" y="300" width="22" height="224" fill="#8e3021"/>
+        <!-- Small upper tier and chimney -->
+        <rect x="246" y="192" width="108" height="72" fill="#a9402c"/>
+        <path d="M246 206H354" stroke="#e9b93a" stroke-width="4"/>
+        <circle cx="300" cy="234" r="16" fill="#5e2117" stroke="#e9b93a" stroke-width="4"/>
+        <path d="M288 222L312 246M312 222L288 246" stroke="#c98f2a" stroke-width="3"/>
+        <path d="M206 196Q238 182 300 180Q362 182 394 196L404 184Q378 196 368 196H232Q222 196 196 184Z" fill="url(#tiles)"/>
+        <path d="M196 184Q222 196 232 196H368Q378 196 404 184" stroke="#e9b93a" stroke-width="4" stroke-linecap="round"/>
+        <rect x="282" y="120" width="36" height="62" rx="4" fill="#8e3021"/>
+        <path d="M274 124H326" stroke="#e9b93a" stroke-width="7" stroke-linecap="round"/>
+        <!-- Main roof with swallowtail eaves -->
+        <path d="M168 300Q200 268 300 264Q400 268 432 300L452 278Q440 300 420 304H180Q160 300 148 278Z" fill="url(#tiles)"/>
+        <path d="M148 278Q160 300 180 304H420Q440 300 452 278" stroke="#e9b93a" stroke-width="5" stroke-linecap="round"/>
+        <path d="M200 270Q300 252 400 270" stroke="#e9b93a" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="300" cy="256" r="9" fill="#e9b93a"/>
+        <!-- Mouth -->
+        <path d="M226 488V404A74 74 0 0 1 374 404V488Z" fill="#e9b93a"/>
+        <path d="M236 482V404A64 64 0 0 1 364 404V482Z" fill="url(#mouth-depth)"/>
+      </g>
+
+      <g clip-path="url(#mouth-clip)" aria-hidden="true">
+        <g class="coals">
+          <ellipse cx="300" cy="480" rx="62" ry="12" fill="#3a1408"/>
+          <circle cx="262" cy="474" r="9" fill="#d8501c"/>
+          <circle cx="284" cy="478" r="8" fill="#f07a24"/>
+          <circle cx="306" cy="474" r="10" fill="#c8401a"/>
+          <circle cx="330" cy="478" r="8" fill="#f2902c"/>
+          <circle cx="348" cy="473" r="7" fill="#d8501c"/>
+        </g>
+        <g class="flames"></g>
+      </g>
+      <path d="M226 488H374" stroke="#c98f2a" stroke-width="6" aria-hidden="true"/>
+      <ellipse class="mouth-glow" cx="300" cy="420" rx="150" ry="120" fill="url(#glow)" aria-hidden="true"/>
+      <g class="bursts" aria-hidden="true"></g>
+
+      <!-- Offering table -->
+      <g aria-hidden="true">
+        <rect x="-2000" y="614" width="4600" height="16" fill="#7d2a1b" opacity=".18"/>
+        <rect x="40" y="600" width="520" height="24" rx="5" fill="#9a3a22"/>
+        <rect x="40" y="600" width="520" height="8" rx="4" fill="#b8503a"/>
+        <path d="M52 624H548V780Q548 790 538 790H62Q52 790 52 780Z" fill="#c8342a"/>
+        <path d="M52 640H548" stroke="#e9b93a" stroke-width="6"/>
+        <path d="M52 772H548" stroke="#e9b93a" stroke-width="4"/>
+      </g>
+      <g class="bills"></g>
+      <g class="sparks" aria-hidden="true"></g>
+    </svg>
+    <p id="instructions" class="sr-only">點一張金紙，它會自己飛進金爐裡燒掉。把所有金紙都燒完。</p>
+    <p id="status" class="sr-only" role="status"></p>
+  </main>
+</body>
+</html>

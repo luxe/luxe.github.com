@@ -1,0 +1,13 @@
+Taiwan administrative region geometry
+Copyright (c) 2024 Pareto Software, LLC DBA Simplemaps.com
+Source: https://simplemaps.com/svg/country/tw
+SVG: https://simplemaps.com/static/svg/country/tw/admin1/tw.svg
+License: https://simplemaps.com/resources/svg-license
+
+Free for personal and commercial use in websites and software.
+Do not redistribute the unmodified map library as your own collection.
+Provided as-is, without guarantees of reliability or fitness.
+
+Used here as the geometry for an interactive county/city jigsaw puzzle.
+Game rendering changes the colors, scale, borders and placement; geometry
+includes all 22 regions, including Penghu, Kinmen and the Matsu Islands.

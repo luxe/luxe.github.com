@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#5b4a3e">
+  <title>Wanwan - Fish</title>
+  <script src="../../lifecycle.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./level.js" defer></script>
+</head>
+<body>
+  <main class="scene" aria-label="市場的魚攤，冰上排著七條大小不同的魚">
+    <svg class="stall" viewBox="0 0 600 820" fill="none">
+      <defs>
+        <pattern id="awning" width="80" height="120" patternUnits="userSpaceOnUse" x="-20">
+          <rect width="40" height="120" fill="#d9483a"/>
+          <rect x="40" width="40" height="120" fill="#fbf1e2"/>
+        </pattern>
+        <pattern id="scallop" width="80" height="24" patternUnits="userSpaceOnUse" x="-20" y="96">
+          <path d="M0 0H40V2A20 20 0 0 1 0 2Z" fill="#d9483a"/>
+          <path d="M40 0H80V2A20 20 0 0 1 40 2Z" fill="#fbf1e2"/>
+        </pattern>
+        <pattern id="ice" width="64" height="56" patternUnits="userSpaceOnUse">
+          <rect width="64" height="56" fill="#e6f3f8"/>
+          <path d="M6 8L18 4L22 14L10 18Z M34 6L46 10L42 20L30 16Z M50 28L60 26L62 38L52 40Z M12 32L24 30L26 42L14 46Z M36 38L46 36L44 48L34 50Z" fill="#fbfeff" stroke="#c9e2ec" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M26 24L30 22L32 27L28 29Z M54 12L58 11L58 16L54 16Z M4 50L8 48L9 53L5 54Z" fill="#cfe6ef"/>
+        </pattern>
+        <pattern id="tiles" width="34" height="34" patternUnits="userSpaceOnUse" x="-4" y="724">
+          <rect width="34" height="34" fill="#9cc6cf"/>
+          <rect x="2" y="2" width="30" height="30" rx="3" fill="#cfe7ea"/>
+          <path d="M9 11H25M9 17H25M9 23H25" stroke="#b6d8dd" stroke-width="2"/>
+        </pattern>
+        <radialGradient id="bulb-glow" cx=".5" cy=".5" r=".5">
+          <stop offset="0" stop-color="#ffe2a0" stop-opacity=".75"/>
+          <stop offset="1" stop-color="#ffe2a0" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="steel" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#dfe6ea"/>
+          <stop offset="1" stop-color="#a9b5bc"/>
+        </linearGradient>
+        <linearGradient id="leaf" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#6fb05a"/>
+          <stop offset="1" stop-color="#3f8a3c"/>
+        </linearGradient>
+        <filter id="soft" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="3"/></filter>
+      </defs>
+
+      <!-- Market behind the stall -->
+      <rect x="-2000" y="-1000" width="4600" height="2820" fill="#5b4a3e"/>
+      <g filter="url(#soft)" opacity=".75">
+        <rect x="-200" y="150" width="1000" height="120" fill="#4a3b31"/>
+        <path d="M-60 150H140L120 186H-40Z" fill="#3e8f8a"/>
+        <path d="M180 156H300L292 184H188Z" fill="#e3a23c"/>
+        <path d="M330 152H500L486 186H344Z" fill="#3e8f8a"/>
+        <path d="M530 150H700L680 186H550Z" fill="#c95b3c"/>
+      </g>
+
+      <!-- Awning -->
+      <rect x="-2000" y="-1000" width="4600" height="1096" fill="url(#awning)"/>
+      <rect x="-2000" y="96" width="4600" height="24" fill="url(#scallop)"/>
+      <rect x="-2000" y="90" width="4600" height="8" fill="#8f2a22"/>
+      <!-- Posts -->
+      <rect x="14" y="98" width="16" height="630" fill="#6b4a32"/>
+      <rect x="570" y="98" width="16" height="630" fill="#6b4a32"/>
+
+      <!-- Hanging bulbs -->
+      <g class="bulb" style="--delay: 0s">
+        <circle class="glow" cx="170" cy="164" r="56" fill="url(#bulb-glow)"/>
+        <path d="M170 98V146" stroke="#2c211b" stroke-width="2.5"/>
+        <path d="M162 144H178V154H162Z" fill="#3a2e26"/>
+        <circle cx="170" cy="164" r="11" fill="#fff1c4"/>
+      </g>
+      <g class="bulb" style="--delay: -1.4s">
+        <circle class="glow" cx="430" cy="164" r="56" fill="url(#bulb-glow)"/>
+        <path d="M430 98V146" stroke="#2c211b" stroke-width="2.5"/>
+        <path d="M422 144H438V154H422Z" fill="#3a2e26"/>
+        <circle cx="430" cy="164" r="11" fill="#fff1c4"/>
+      </g>
+
+      <!-- Tiled counter -->
+      <rect x="-2000" y="724" width="4600" height="1100" fill="url(#tiles)"/>
+      <rect x="-2000" y="716" width="4600" height="12" fill="#7e8c94"/>
+      <!-- Steel tray of crushed ice -->
+      <rect x="40" y="186" width="520" height="536" rx="16" fill="url(#steel)" stroke="#7d8b93" stroke-width="3"/>
+      <rect x="56" y="200" width="488" height="508" rx="10" fill="url(#ice)"/>
+      <rect x="56" y="200" width="488" height="508" rx="10" stroke="#bcd7e2" stroke-width="3"/>
+      <g class="leaves"></g>
+      <!-- Garnish: parsley and lemon in the corners -->
+      <g class="garnish">
+        <g fill="#5aa84a" stroke="#3f8a3c" stroke-width="1.5">
+          <circle cx="80" cy="226" r="12"/><circle cx="96" cy="218" r="11"/><circle cx="94" cy="234" r="10"/>
+          <circle cx="520" cy="684" r="12"/><circle cx="504" cy="690" r="11"/><circle cx="510" cy="674" r="10"/>
+        </g>
+        <circle cx="516" cy="226" r="15" fill="#f6dc5a" stroke="#e0b63a" stroke-width="3"/>
+        <path d="M516 214V238M504 226H528M507 217L525 235M525 217L507 235" stroke="#fff5bf" stroke-width="1.5"/>
+        <circle cx="84" cy="682" r="15" fill="#f6dc5a" stroke="#e0b63a" stroke-width="3"/>
+        <path d="M84 670V694M72 682H96M75 673L93 691M93 673L75 691" stroke="#fff5bf" stroke-width="1.5"/>
+      </g>
+      <g class="fishes"></g>
+      <g class="sparkles"></g>
+    </svg>
+    <p id="instructions" class="sr-only">點一條魚，再點另一條魚，兩條魚就會交換位置。把魚從小排到大，或從大排到小。</p>
+    <p id="status" class="sr-only" role="status"></p>
+  </main>
+</body>
+</html>

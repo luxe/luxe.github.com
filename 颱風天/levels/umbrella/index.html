@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#dce7e5">
+  <title>Wanwan - Umbrella</title>
+  <script src="../../lifecycle.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./level.js" defer></script>
+</head>
+<body>
+  <audio class="rain-sound" src="./assets/rain.mp3" preload="none" loop></audio>
+  <canvas class="rain" aria-hidden="true"></canvas>
+  <main class="scene" aria-label="雨傘">
+    <div class="umbrella-arrival">
+      <svg class="umbrella" viewBox="0 0 480 800" fill="none" role="slider" tabindex="0"
+           aria-label="Swipe up to open the umbrella" aria-valuemin="0" aria-valuemax="100"
+           aria-valuenow="0" aria-valuetext="Closed" aria-describedby="instructions">
+        <defs>
+          <linearGradient id="fabric" x1="110" y1="190" x2="370" y2="510" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#eab7ad"/>
+            <stop offset=".5" stop-color="#d89690"/>
+            <stop offset="1" stop-color="#c38280"/>
+          </linearGradient>
+          <linearGradient id="handle" x1="209" y1="610" x2="250" y2="700" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#c49e76"/>
+            <stop offset="1" stop-color="#a87a56"/>
+          </linearGradient>
+        </defs>
+        <g aria-hidden="true">
+          <ellipse class="shadow" cx="235" cy="718" rx="42" ry="7" fill="#b3c4bf" opacity=".45"/>
+          <path d="M240 182V650" stroke="#9caaa5" stroke-width="7" stroke-linecap="round"/>
+          <path d="M238 193V645" stroke="#eff2e9" stroke-width="2" stroke-linecap="round"/>
+          <path d="M240 638v31q0 30-23 30-22 0-22-22" stroke="url(#handle)" stroke-width="15" stroke-linecap="round"/>
+          <path d="M237 643v26q0 22-17 25" stroke="#dfbd95" stroke-width="3" stroke-linecap="round"/>
+          <path class="supports" fill="none" stroke="#9e9b8b" stroke-width="3" stroke-linecap="round"/>
+          <path class="canopy" fill="url(#fabric)" stroke="#b97d79" stroke-width="2.5" stroke-linejoin="round"/>
+          <path class="panel" fill="#f6d2bb" opacity=".22"/>
+          <path class="ribs" fill="none" stroke="#a96f70" stroke-opacity=".5" stroke-width="2" stroke-linecap="round"/>
+          <path class="seam-light" fill="none" stroke="#ffe7d4" stroke-opacity=".65" stroke-width="2" stroke-linecap="round"/>
+          <rect class="runner" x="231" y="525" width="18" height="28" rx="6" fill="#c1a482" stroke="#a78c70" stroke-width="1.5"/>
+          <path d="M240 173v18" stroke="#a78064" stroke-width="6" stroke-linecap="round"/>
+        </g>
+      </svg>
+    </div>
+    <p id="instructions" class="sr-only">Hold the umbrella and drag upward to open it. You can use several swipes. Or press the up arrow. Once fully open, it stays open.</p>
+    <p id="status" class="sr-only" role="status"></p>
+  </main>
+</body>
+</html>

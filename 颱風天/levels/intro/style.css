@@ -1,0 +1,37 @@
+@font-face {
+  font-family: "Wanwan Intro";
+  src: url("./assets/lxgw-wenkai-tc-intro.ttf") format("truetype");
+  font-display: block;
+}
+:root { color-scheme: light; background: #cfdadd; -webkit-tap-highlight-color: transparent; }
+* { box-sizing: border-box; }
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+body { display: grid; place-items: center; user-select: none; -webkit-user-select: none; }
+.embedded, .embedded body { background: transparent; }
+.scene {
+  display: flex; flex-direction: column; align-items: center; gap: clamp(20px, 5svh, 44px);
+  font-family: "Wanwan Intro", serif; color: #5d4637;
+}
+[data-phase="ready"] .scene, [data-phase="hidden"] .scene { visibility: hidden; }
+.title {
+  margin: 0; font-size: clamp(56px, min(22vw, 20svh), 150px); font-weight: 400; line-height: 1;
+  letter-spacing: .08em; padding-left: .08em;
+  text-shadow: 0 3px 0 #f4ece2, 0 10px 22px rgb(80 98 104 / .18);
+}
+.play .title { animation: sway 4.5s ease-in-out infinite; }
+.start {
+  font: inherit; font-size: clamp(22px, min(6.5vw, 5.5svh), 34px); line-height: 1; color: #6b4c3a;
+  padding: .55em 1.35em .6em; border: 2.5px solid #b98f71; border-radius: 999px; cursor: pointer;
+  background: linear-gradient(#fff8ee, #f3e3d1);
+  box-shadow: 0 5px 0 #cfae93, 0 12px 22px rgb(80 98 104 / .2);
+  transition: translate .15s ease, box-shadow .15s ease; touch-action: manipulation;
+}
+.start:hover { translate: 0 -2px; box-shadow: 0 7px 0 #cfae93, 0 15px 24px rgb(80 98 104 / .22); }
+.start:active { translate: 0 4px; box-shadow: 0 1px 0 #cfae93, 0 6px 12px rgb(80 98 104 / .18); }
+.start:focus { outline: none; }
+@keyframes sway { 0%, 100% { rotate: -1.5deg; } 50% { rotate: 1.5deg; } }
+@media (prefers-reduced-motion: reduce) {
+  .play .title { animation: none; }
+  .start { transition: none; }
+}
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

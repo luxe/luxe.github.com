@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#d7e3e1">
+  <title>Wanwan - Puddles</title>
+  <script src="../../lifecycle.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./level.js" defer></script>
+</head>
+<body>
+  <div class="rain" aria-hidden="true"></div>
+  <main class="scene" aria-label="雨中的落葉和水窪">
+    <svg class="street" viewBox="0 0 600 820" fill="none">
+      <defs>
+        <linearGradient id="road" x2=".3" y2="1">
+          <stop stop-color="#b5c6bf"/><stop offset="1" stop-color="#8da7a1"/>
+        </linearGradient>
+        <linearGradient id="water" x2=".2" y2="1">
+          <stop stop-color="#85b7bf"/><stop offset="1" stop-color="#b9d9d5"/>
+        </linearGradient>
+        <linearGradient id="leaf" x2="1" y2="1">
+          <stop stop-color="#d6b569"/><stop offset="1" stop-color="#a58449"/>
+        </linearGradient>
+        <g id="leaf-art">
+          <path d="M-52 22Q-68-44 53-26Q64 40-52 22Z" fill="url(#leaf)" stroke="#957b48" stroke-width="2"/>
+          <path d="M-65 31L42-20M-30 15L-37-13M-9 4L-14-23M10-6L12 17" stroke="#eee0a0" stroke-width="2.5" stroke-linecap="round"/>
+        </g>
+      </defs>
+      <g aria-hidden="true">
+        <rect x="12" y="112" width="576" height="670" rx="42" fill="#76948c" opacity=".22"/>
+        <rect x="12" y="102" width="576" height="670" rx="42" fill="url(#road)"/>
+        <path d="M30 143H570" stroke="#dce5d6" stroke-width="14" stroke-linecap="round"/>
+        <path d="M40 742H560" stroke="#eee5bd" stroke-width="5" stroke-dasharray="35 27" opacity=".6"/>
+        <path d="M30 170H570M25 580H575" stroke="#7f9c94" opacity=".3"/>
+        <rect x="450" y="670" width="85" height="32" rx="8" fill="#7b948d"/>
+        <path d="M465 677V695M480 677V695M495 677V695M510 677V695M525 677V695" stroke="#acc0b5" stroke-width="5"/>
+      </g>
+      <g class="puddles"></g>
+      <g class="splashes" aria-hidden="true" pointer-events="none"></g>
+      <g class="leaves"></g>
+    </svg>
+    <p id="instructions" class="sr-only">把落葉拖到大小相同的水窪。鍵盤按 Enter 選取，方向鍵選擇水窪，再按 Enter 放下，Escape 取消。</p>
+    <p id="status" class="sr-only" role="status"></p>
+  </main>
+</body>
+</html>

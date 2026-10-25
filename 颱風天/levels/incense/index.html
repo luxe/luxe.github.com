@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#7f2a20">
+  <title>Wanwan - Incense</title>
+  <script src="../../lifecycle.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./level.js" defer></script>
+</head>
+<body>
+  <main class="scene" aria-label="供桌上的香、蠟燭和香爐">
+    <svg class="altar" viewBox="0 0 600 820" fill="none">
+      <defs>
+        <radialGradient id="ember-glow" cx=".5" cy=".5" r=".5">
+          <stop offset="0" stop-color="#ffb347" stop-opacity=".95"/>
+          <stop offset=".45" stop-color="#ff6a22" stop-opacity=".45"/>
+          <stop offset="1" stop-color="#ff6a22" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="candle-glow" cx=".5" cy=".5" r=".5">
+          <stop offset="0" stop-color="#ffd27a" stop-opacity=".6"/>
+          <stop offset=".5" stop-color="#ff9a3a" stop-opacity=".18"/>
+          <stop offset="1" stop-color="#ff9a3a" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="bronze" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#8a5a1c"/>
+          <stop offset=".35" stop-color="#e2b04a"/>
+          <stop offset=".6" stop-color="#c58d2c"/>
+          <stop offset="1" stop-color="#7a4c16"/>
+        </linearGradient>
+        <linearGradient id="candle-wax" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#a81f1a"/>
+          <stop offset=".4" stop-color="#e2412f"/>
+          <stop offset="1" stop-color="#9c1c16"/>
+        </linearGradient>
+        <pattern id="panel" width="60" height="60" patternUnits="userSpaceOnUse">
+          <rect width="60" height="60" fill="#8a2c21"/>
+          <path d="M30 6L54 30L30 54L6 30Z" stroke="#9e3a2b" stroke-width="3"/>
+          <circle cx="30" cy="30" r="5" fill="#9e3a2b"/>
+        </pattern>
+        <filter id="soften" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="1.6"/>
+        </filter>
+      </defs>
+
+      <g aria-hidden="true">
+        <!-- Temple wall -->
+        <rect x="-2000" y="-1000" width="4600" height="2820" fill="#7f2a20"/>
+        <rect x="70" y="96" width="460" height="480" fill="url(#panel)"/>
+        <rect x="70" y="96" width="460" height="480" stroke="#d9a63a" stroke-width="6"/>
+        <rect x="84" y="110" width="432" height="452" stroke="#d9a63a" stroke-width="2" opacity=".6"/>
+        <path d="M-2000 52H2600" stroke="#5e1d16" stroke-width="40"/>
+        <path d="M-2000 76H2600" stroke="#d9a63a" stroke-width="6"/>
+        <path d="M-2000 30H2600" stroke="#d9a63a" stroke-width="4"/>
+        <rect x="-40" y="72" width="66" height="1000" fill="#5e1d16"/>
+        <rect x="574" y="72" width="66" height="1000" fill="#5e1d16"/>
+        <path d="M26 72V1000M574 72V1000" stroke="#d9a63a" stroke-width="4"/>
+        <!-- Hanging lanterns -->
+        <g class="lantern" style="--delay: 0s">
+          <path d="M150 76V104" stroke="#3e1810" stroke-width="3"/>
+          <rect x="136" y="100" width="28" height="7" rx="2" fill="#d9a63a"/>
+          <ellipse cx="150" cy="128" rx="26" ry="23" fill="#e04a32"/>
+          <path d="M136 128Q140 110 150 106M164 128Q160 110 150 106M136 128Q140 146 150 150M164 128Q160 146 150 150" stroke="#b02c1f" stroke-width="2"/>
+          <rect x="136" y="148" width="28" height="7" rx="2" fill="#d9a63a"/>
+          <path d="M145 155V172M150 155V176M155 155V172" stroke="#d9a63a" stroke-width="2"/>
+        </g>
+        <g class="lantern" style="--delay: -1.6s">
+          <path d="M450 76V104" stroke="#3e1810" stroke-width="3"/>
+          <rect x="436" y="100" width="28" height="7" rx="2" fill="#d9a63a"/>
+          <ellipse cx="450" cy="128" rx="26" ry="23" fill="#e04a32"/>
+          <path d="M436 128Q440 110 450 106M464 128Q460 110 450 106M436 128Q440 146 450 150M464 128Q460 146 450 150" stroke="#b02c1f" stroke-width="2"/>
+          <rect x="436" y="148" width="28" height="7" rx="2" fill="#d9a63a"/>
+          <path d="M445 155V172M450 155V176M455 155V172" stroke="#d9a63a" stroke-width="2"/>
+        </g>
+
+        <!-- Altar table -->
+        <rect x="-2000" y="596" width="4600" height="1300" fill="#5e1d16"/>
+        <rect x="-2000" y="596" width="4600" height="22" fill="#6e3a1e"/>
+        <rect x="-2000" y="596" width="4600" height="6" fill="#8a5130"/>
+        <path d="M30 618H570V770L540 800H60L30 770Z" fill="#c8342a"/>
+        <path d="M30 636H570" stroke="#e9b93a" stroke-width="7"/>
+        <path d="M44 760H556" stroke="#e9b93a" stroke-width="3"/>
+        <circle cx="300" cy="700" r="34" fill="#e9b93a"/>
+        <circle cx="300" cy="700" r="25" fill="#c8342a"/>
+        <path d="M300 680V720M280 700H320" stroke="#e9b93a" stroke-width="5" stroke-linecap="round"/>
+        <path d="M180 700Q200 684 220 700T260 700M340 700Q360 684 380 700T420 700" stroke="#e9b93a" stroke-width="4" stroke-linecap="round"/>
+      </g>
+
+      <!-- Candle -->
+      <g aria-hidden="true">
+        <ellipse class="candle-halo" cx="95" cy="398" rx="90" ry="90" fill="url(#candle-glow)"/>
+        <rect x="75" y="430" width="40" height="164" rx="4" fill="url(#candle-wax)"/>
+        <path d="M75 434Q85 444 88 434Q95 452 102 436Q108 446 115 434" stroke="#f05a44" stroke-width="5" stroke-linecap="round"/>
+        <path d="M95 470L104 480L95 490L86 480Z" fill="#e9b93a"/>
+        <path d="M95 504V566" stroke="#e9b93a" stroke-width="3"/>
+        <path d="M95 430V420" stroke="#2a1a14" stroke-width="2.5" stroke-linecap="round"/>
+        <ellipse cx="95" cy="596" rx="44" ry="9" fill="#a8752a"/>
+        <rect x="58" y="588" width="74" height="10" rx="4" fill="url(#bronze)"/>
+        <g class="candle-flame"></g>
+      </g>
+      <g class="candle-target" tabindex="0" role="button" aria-label="蠟燭的火" aria-describedby="instructions">
+        <circle class="focus-ring" cx="95" cy="400" r="40"/>
+      </g>
+
+      <!-- Incense cup with spare sticks -->
+      <g class="bundle-sticks" aria-hidden="true"></g>
+      <g class="held-low"></g>
+      <g class="bundle" tabindex="0" role="button" aria-label="一束香" aria-describedby="instructions">
+        <rect class="focus-ring" x="458" y="356" width="92" height="248" rx="14"/>
+        <rect x="458" y="356" width="92" height="248" fill="transparent"/>
+        <g pointer-events="none">
+          <path d="M470 476H538L532 594H476Z" fill="#c8342a"/>
+          <path d="M470 476H538L536 504H472Z" fill="#a8241b"/>
+          <rect x="466" y="470" width="76" height="10" rx="4" fill="#e9b93a"/>
+          <rect x="472" y="588" width="64" height="9" rx="3" fill="#e9b93a"/>
+          <circle cx="504" cy="540" r="15" fill="#e9b93a"/>
+          <circle cx="504" cy="540" r="9" fill="#c8342a"/>
+        </g>
+      </g>
+
+      <!-- Censer: back rim and ash, planted sticks, then the front of the bowl -->
+      <g aria-hidden="true">
+        <ellipse cx="300" cy="604" rx="128" ry="10" fill="#3e1810" opacity=".35"/>
+        <path d="M192 526Q300 496 408 526" stroke="url(#bronze)" stroke-width="12" stroke-linecap="round"/>
+        <path d="M200 526A100 15 0 0 1 400 526Z" fill="#c4bfb6"/>
+        <g fill="#9f9890"><circle cx="246" cy="520" r="2"/><circle cx="352" cy="519" r="2.4"/><circle cx="318" cy="516" r="1.6"/></g>
+      </g>
+      <g class="planted"></g>
+      <g class="censer" tabindex="0" role="button" aria-label="香爐" aria-describedby="instructions">
+        <rect class="focus-ring" x="176" y="490" width="248" height="130" rx="18"/>
+        <g pointer-events="none">
+          <path d="M200 526A100 15 0 0 0 400 526Z" fill="#b7b1a7"/>
+          <g fill="#9f9890"><circle cx="266" cy="532" r="2"/><circle cx="338" cy="534" r="1.8"/></g>
+          <path d="M188 526Q300 556 412 526L396 576Q386 596 360 598H240Q214 596 204 576Z" fill="url(#bronze)"/>
+          <path d="M188 526Q300 556 412 526" stroke="#f0c862" stroke-width="7" stroke-linecap="round"/>
+          <path d="M206 566Q300 584 394 566" stroke="#a8241b" stroke-width="7"/>
+          <circle cx="300" cy="566" r="12" fill="#e9b93a" stroke="#a8241b" stroke-width="3"/>
+          <path d="M190 534Q166 532 168 550Q170 566 196 560" stroke="url(#bronze)" stroke-width="8" stroke-linecap="round"/>
+          <path d="M410 534Q434 532 432 550Q430 566 404 560" stroke="url(#bronze)" stroke-width="8" stroke-linecap="round"/>
+          <path d="M236 596L228 612M300 600V614M364 596L372 612" stroke="#7a4c16" stroke-width="9" stroke-linecap="round"/>
+        </g>
+      </g>
+
+      <g class="held"></g>
+      <g class="smoke" filter="url(#soften)" aria-hidden="true"></g>
+    </svg>
+    <p id="instructions" class="sr-only">從香筒拿一支香，拿到蠟燭的火上點燃，再拿到香爐上方放手，讓它掉進香灰裡。沒對準的話香會掉下去，要再拿一支。鍵盤：依序在香筒、蠟燭、香爐上按 Enter。</p>
+    <p id="status" class="sr-only" role="status"></p>
+  </main>
+</body>
+</html>

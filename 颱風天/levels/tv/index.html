@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#e7dbe8">
+  <title>Wanwan - TV</title>
+  <script src="../../lifecycle.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./level.js" defer></script>
+</head>
+<body>
+  <main class="scene" aria-label="電視">
+    <div class="tv-arrival">
+      <div class="tv">
+        <span class="antenna antenna-left" aria-hidden="true"></span>
+        <span class="antenna antenna-right" aria-hidden="true"></span>
+        <div class="tv-body">
+          <div class="screen">
+            <div class="picture">
+              <video src="./assets/tv.mp4" playsinline loop preload="auto" aria-label="電視節目"></video>
+            </div>
+            <span class="spark" aria-hidden="true"></span>
+            <span class="glass" aria-hidden="true"></span>
+          </div>
+          <div class="panel" aria-hidden="true">
+            <span class="grille"></span>
+            <span class="led"></span>
+            <span class="knob"></span>
+            <span class="knob"></span>
+          </div>
+        </div>
+        <span class="feet" aria-hidden="true"></span>
+      </div>
+    </div>
+    <div class="remote-arrival">
+      <div class="remote">
+        <button class="power" type="button" aria-label="電源" aria-pressed="false"></button>
+        <span class="buttons" aria-hidden="true">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </span>
+        <span class="dpad" aria-hidden="true"></span>
+      </div>
+    </div>
+    <p id="status" class="sr-only" role="status" aria-live="polite"></p>
+  </main>
+</body>
+</html>

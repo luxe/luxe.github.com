@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f1dcc3">
+  <title>Wanwan - Sandwich</title>
+  <script src="../../lifecycle.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./level.js" defer></script>
+</head>
+<body>
+  <main class="scene" aria-label="三明治">
+    <div class="plate-arrival">
+      <svg class="plate" viewBox="0 0 400 400" aria-hidden="true">
+        <defs>
+          <radialGradient id="plate-fill" cx=".45" cy=".4" r=".65">
+            <stop offset="0" stop-color="#fffdf8"/>
+            <stop offset=".75" stop-color="#f6f1e8"/>
+            <stop offset="1" stop-color="#e7ded1"/>
+          </radialGradient>
+          <linearGradient id="bread-fill" x1="80" y1="90" x2="300" y2="330" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#fffaf0"/>
+            <stop offset=".6" stop-color="#fbf0db"/>
+            <stop offset="1" stop-color="#f3e2c4"/>
+          </linearGradient>
+          <g id="remaining-bread">
+            <rect width="400" height="400" fill="#000"/>
+            <path d="M60 95H340L200 345Z" fill="#fff" stroke="#fff" stroke-width="22" stroke-linejoin="round"/>
+            <g class="bites" data-inset="0" fill="#000"></g>
+          </g>
+          <filter id="grow-5" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400" color-interpolation-filters="sRGB">
+            <feGaussianBlur stdDeviation="3.33"/>
+            <feComponentTransfer>
+              <feFuncR type="linear" slope="60" intercept="-3.5"/>
+              <feFuncG type="linear" slope="60" intercept="-3.5"/>
+              <feFuncB type="linear" slope="60" intercept="-3.5"/>
+            </feComponentTransfer>
+          </filter>
+          <filter id="grow-10" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400" color-interpolation-filters="sRGB">
+            <feGaussianBlur stdDeviation="6.67"/>
+            <feComponentTransfer>
+              <feFuncR type="linear" slope="60" intercept="-3.5"/>
+              <feFuncG type="linear" slope="60" intercept="-3.5"/>
+              <feFuncB type="linear" slope="60" intercept="-3.5"/>
+            </feComponentTransfer>
+          </filter>
+          <filter id="grow-24" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400" color-interpolation-filters="sRGB">
+            <feGaussianBlur stdDeviation="16.0"/>
+            <feComponentTransfer>
+              <feFuncR type="linear" slope="60" intercept="-3.5"/>
+              <feFuncG type="linear" slope="60" intercept="-3.5"/>
+              <feFuncB type="linear" slope="60" intercept="-3.5"/>
+            </feComponentTransfer>
+          </filter>
+          <mask id="bread-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+            <use href="#remaining-bread"/>
+          </mask>
+          <mask id="ham-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+            <use href="#remaining-bread" filter="url(#grow-5)"/>
+          </mask>
+          <mask id="egg-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+            <use href="#remaining-bread" filter="url(#grow-10)"/>
+          </mask>
+          <mask id="lettuce-near-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+            <use href="#remaining-bread" filter="url(#grow-24)"/>
+          </mask>
+          <mask id="lettuce-bite-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+            <rect width="400" height="400" fill="#fff"/>
+            <g class="bites" data-inset="15" fill="#000"></g>
+          </mask>
+        </defs>
+        <ellipse cx="203" cy="208" rx="178" ry="174" fill="#d8bfa3" opacity=".45"/>
+        <circle cx="200" cy="200" r="176" fill="url(#plate-fill)"/>
+        <circle cx="200" cy="200" r="138" fill="none" stroke="#ece3d6" stroke-width="3"/>
+        <g class="crumbs"></g>
+      </svg>
+      <svg class="sandwich" viewBox="0 0 400 400" role="button" tabindex="0" aria-label="三明治 Tap to take a bite">
+        <g class="sandwich-body" aria-hidden="true">
+          <path mask="url(#bread-mask)" d="M66 104H340L206 344Z" fill="#cdb79c" opacity=".35"
+                stroke="#cdb79c" stroke-width="30" stroke-linejoin="round" transform="translate(5 9)"/>
+          <g mask="url(#lettuce-near-mask)">
+            <g mask="url(#lettuce-bite-mask)">
+              <path d="M60 95H340L200 345Z" fill="#9cc56e" stroke="#9cc56e" stroke-width="36" stroke-linejoin="round"/>
+              <path d="M60 95H340L200 345Z" fill="none" stroke="#a9cf7a" stroke-width="44"
+                    stroke-linecap="round" stroke-dasharray="0 19" stroke-linejoin="round"/>
+              <path d="M60 95H340L200 345Z" fill="none" stroke="#c4e09a" stroke-width="3"
+                    stroke-dasharray="10 14" transform="translate(0 2)"/>
+            </g>
+          </g>
+          <path mask="url(#egg-mask)" d="M60 95H340L200 345Z" fill="#f7d77e" stroke="#f7d77e" stroke-width="22" stroke-linejoin="round"/>
+          <path mask="url(#ham-mask)" d="M64 97H336L200 340Z" fill="#eea7a1" stroke="#eea7a1" stroke-width="31" stroke-linejoin="round"/>
+          <g mask="url(#bread-mask)">
+            <path d="M60 95H340L200 345Z" fill="url(#bread-fill)" stroke="#fbf1de" stroke-width="22" stroke-linejoin="round"/>
+            <path d="M60 95H340L200 345Z" fill="none" stroke="#f1dfc0" stroke-width="20" stroke-linejoin="round" opacity=".55"/>
+            <path d="M60 95H340L200 345Z" fill="url(#bread-fill)" stroke="url(#bread-fill)" stroke-width="12" stroke-linejoin="round"/>
+            <g fill="#ead7b6" opacity=".7">
+              <circle cx="140" cy="128" r="2.2"/><circle cx="214" cy="118" r="1.8"/><circle cx="268" cy="140" r="2"/>
+              <circle cx="176" cy="172" r="1.6"/><circle cx="236" cy="190" r="2.1"/><circle cx="196" cy="236" r="1.8"/>
+              <circle cx="120" cy="114" r="1.5"/><circle cx="292" cy="116" r="1.6"/><circle cx="208" cy="282" r="1.7"/>
+            </g>
+            <path d="M92 108Q170 104 250 107" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".55"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <p id="status" class="sr-only" role="status"></p>
+  </main>
+</body>
+</html>

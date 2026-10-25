@@ -1,0 +1,29 @@
+:root { color-scheme: light; background: #5b4a3e; -webkit-tap-highlight-color: transparent; }
+* { box-sizing: border-box; }
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+body { display: grid; place-items: center; user-select: none; -webkit-user-select: none; }
+.embedded, .embedded body { background: transparent; }
+.scene { width: min(98vw, 71svh, 580px); aspect-ratio: 30 / 41; position: relative; }
+[data-phase="ready"] .scene, [data-phase="hidden"] .scene { visibility: hidden; }
+.stall { display: block; width: 100%; height: 100%; touch-action: manipulation; overflow: visible; }
+.fish { cursor: pointer; outline: none; }
+.busy .fish, .complete .fish { cursor: default; pointer-events: none; }
+.fish .body { transform-box: view-box; transition: filter .2s ease; }
+.fish:hover .body { filter: brightness(1.06); }
+.fish.selected .body { filter: drop-shadow(0 0 5px #fff4b8) drop-shadow(0 0 2px #ffd34d); }
+.fish .wiggle { transform-box: fill-box; transform-origin: 50% 50%; }
+.fish.selected .wiggle { animation: wiggle .5s ease-in-out infinite alternate; }
+@keyframes wiggle { from { transform: rotate(-3deg); } to { transform: rotate(3deg); } }
+.complete .fish .wiggle { animation: flop .32s ease-in-out var(--delay) 4 alternate; }
+@keyframes flop { from { transform: rotate(0) translateY(0); } to { transform: rotate(-8deg) translateY(-8px); } }
+.focus-ring { opacity: 0; stroke: #fff6d0; stroke-width: 4; fill: none; }
+.fish:focus-visible .focus-ring { opacity: 1; }
+.pointer .focus-ring { display: none; }
+.bulb .glow { animation: glow 2.6s ease-in-out var(--delay) infinite alternate; }
+@keyframes glow { from { opacity: .75; } to { opacity: 1; } }
+.bulb { transform-box: fill-box; transform-origin: 50% 0; animation: sway 4.5s ease-in-out var(--delay) infinite alternate; }
+@keyframes sway { from { transform: rotate(-2deg); } to { transform: rotate(2deg); } }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) {
+  .bulb, .bulb .glow, .fish.selected .wiggle, .complete .fish .wiggle { animation: none; }
+}

@@ -1,0 +1,17 @@
+:root { color-scheme: light; background: #dce3df; -webkit-tap-highlight-color: transparent; }
+* { box-sizing: border-box; }
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+body { display: grid; place-items: center; user-select: none; -webkit-user-select: none; }
+.embedded, .embedded body { background: transparent; }
+.scene { width: min(98vw, 58svh, 480px); aspect-ratio: 24 / 41; position: relative; }
+[data-phase="ready"] .scene, [data-phase="hidden"] .scene { visibility: hidden; }
+.map-arrival, .map { display: block; width: 100%; height: 100%; }
+.map { touch-action: none; }
+.train { cursor: grab; outline: none; }
+.train.held { cursor: grabbing; }
+.train .train-body { transform-box: fill-box; transform-origin: center; }
+.train.held .train-body { filter: drop-shadow(0 6px 3px rgb(73 96 90 / .23)); }
+.train .focus-ring { opacity: 0; }
+.train:focus-visible .focus-ring { opacity: 1; }
+.complete .train { cursor: default; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

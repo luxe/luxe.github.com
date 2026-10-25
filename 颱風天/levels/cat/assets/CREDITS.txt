@@ -1,0 +1,14 @@
+Lucky cat artwork: "business-lucky-cat" by Streamline.
+Collection: Ultimate color icons.
+Creator: https://github.com/webalys-hq/streamline-vectors
+Source: https://icon-sets.iconify.design/streamline-ultimate-color/business-lucky-cat/
+Downloaded SVG: https://api.iconify.design/streamline-ultimate-color/business-lucky-cat.svg
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+License terms: https://creativecommons.org/licenses/by/4.0/
+
+Adapted for Wanwan: warmer ceramic, ink, and gold colors; separated body
+and raised arm so the arm can beckon toward the camera using a 3D hinge.
+Original: lucky-cat-source.svg
+Adaptations: cat-body.svg, cat-paw.svg
+
+No endorsement by Streamline is implied.

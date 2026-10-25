@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ead9c7">
+  <title>Wanwan - Lucky cat</title>
+  <script src="../../lifecycle.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./level.js" defer></script>
+</head>
+<body>
+  <main class="scene" aria-label="招財貓">
+    <div class="table" aria-hidden="true"></div>
+    <div class="cat">
+      <img class="cat-body" src="./assets/cat-body.svg" alt="A lucky cat sitting on a table" draggable="false">
+      <div class="paw" role="slider" tabindex="0" aria-label="Pull the lucky cat's raised paw down and release"
+           aria-valuemin="0" aria-valuemax="65" aria-valuenow="0" aria-describedby="instructions">
+        <img src="./assets/cat-paw.svg" alt="" draggable="false">
+      </div>
+    </div>
+    <p id="instructions" class="sr-only">Pull the raised paw down, then release it to make it wave. Or press the down arrow, then release.</p>
+    <p id="status" class="sr-only" role="status"></p>
+    <p class="sr-only">Lucky cat artwork by Streamline, adapted under
+      <a href="./assets/CREDITS.txt">Creative Commons Attribution 4.0</a>.
+    </p>
+  </main>
+</body>
+</html>

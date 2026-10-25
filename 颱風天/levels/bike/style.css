@@ -1,0 +1,28 @@
+:root { color-scheme: light; background: #d7e3e1; -webkit-tap-highlight-color: transparent; }
+* { box-sizing: border-box; }
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+body { display: grid; place-items: center; user-select: none; -webkit-user-select: none; }
+.embedded, .embedded body { background: transparent; }
+.scene { width: min(98vw, 71svh, 580px); aspect-ratio: 30 / 41; position: relative; }
+[data-phase="ready"] .scene, [data-phase="hidden"] .scene { visibility: hidden; }
+.street { display: block; width: 100%; height: 100%; touch-action: none; overflow: visible; }
+.rain { position: fixed; inset: 0; pointer-events: none; opacity: 0; overflow: hidden; transition: opacity .6s; z-index: 1; }
+.rain.active { opacity: 1; }
+.rain i { position: absolute; top: -30px; width: 1.5px; height: 15px; border-radius: 2px; background: #779c9d; opacity: .4; animation: falling linear infinite; }
+@keyframes falling { to { transform: translate(-20px, calc(100svh + 60px)); } }
+.walker, .glow { opacity: 0; transition: opacity .7s ease-out; }
+.walking .walker { opacity: 1; }
+.walking .glow { opacity: .55; }
+.bike { cursor: grab; outline: none; }
+.bike.held { cursor: grabbing; }
+.bike.held .bike-art { filter: drop-shadow(0 8px 4px rgb(55 74 70 / .25)); }
+.bike:focus-visible:not(.held, .pointer) .focus-ring { opacity: 1; }
+.focus-ring { opacity: 0; stroke: #fff5d5; stroke-width: 4; fill: none; }
+.crashing .bike, .complete .bike { cursor: default; }
+.complete .focus-ring { display: none; }
+.bike-art, .car-art { transform-box: fill-box; transform-origin: 50% 100%; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) {
+  .rain i { animation: none; top: var(--still-y); }
+  .rain, .walker, .glow { transition: none; }
+}

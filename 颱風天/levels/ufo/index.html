@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#232444">
+  <title>Wanwan - UFO</title>
+  <script src="../../lifecycle.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./level.js" defer></script>
+</head>
+<body>
+  <main class="scene" aria-label="夜市的蚵炱攤，有蔥花、蚵仔、麵糊、炸鍋和一支圓勺">
+    <svg class="stand" viewBox="0 0 600 820" fill="none">
+      <defs>
+        <pattern id="slats" width="600" height="34" patternUnits="userSpaceOnUse" y="100">
+          <rect width="600" height="34" fill="#c98a4b"/>
+          <rect y="30" width="600" height="4" fill="#a86c35"/>
+          <path d="M40 12Q80 8 120 14M300 20Q360 16 420 22" stroke="#b97a40" stroke-width="2" stroke-linecap="round"/>
+        </pattern>
+        <pattern id="awning" width="70" height="80" patternUnits="userSpaceOnUse" x="-5">
+          <rect width="35" height="80" fill="#e5483b"/>
+          <rect x="35" width="35" height="80" fill="#f6c845"/>
+        </pattern>
+        <pattern id="scallop" width="70" height="22" patternUnits="userSpaceOnUse" x="-5" y="84">
+          <path d="M0 0H35V2A17.5 17.5 0 0 1 0 2Z" fill="#e5483b"/>
+          <path d="M35 0H70V2A17.5 17.5 0 0 1 35 2Z" fill="#f6c845"/>
+        </pattern>
+        <pattern id="bricks" width="60" height="30" patternUnits="userSpaceOnUse" y="652">
+          <rect width="60" height="30" fill="#5a3b2e"/>
+          <rect x="1" y="1" width="58" height="13" rx="2" fill="#6b4636"/>
+          <rect x="-29" y="16" width="58" height="13" rx="2" fill="#6b4636"/>
+          <rect x="31" y="16" width="58" height="13" rx="2" fill="#6b4636"/>
+        </pattern>
+        <linearGradient id="steel-top" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#e6ebee"/>
+          <stop offset="1" stop-color="#b9c3c9"/>
+        </linearGradient>
+        <linearGradient id="ladle-steel" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#e2e7ea"/>
+          <stop offset="1" stop-color="#8e989e"/>
+        </linearGradient>
+        <radialGradient id="oil" cx=".45" cy=".4" r=".7">
+          <stop offset="0" stop-color="#f6c45a"/>
+          <stop offset=".6" stop-color="#e1a03a"/>
+          <stop offset="1" stop-color="#b8741f"/>
+        </radialGradient>
+        <radialGradient id="flame-glow" cx=".5" cy=".5" r=".5">
+          <stop offset="0" stop-color="#ffb347" stop-opacity=".85"/>
+          <stop offset="1" stop-color="#ff7a2a" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="bulb-glow" cx=".5" cy=".5" r=".5">
+          <stop offset="0" stop-color="#ffe6a8" stop-opacity=".8"/>
+          <stop offset="1" stop-color="#ffe6a8" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="oyster" cx=".4" cy=".35" r=".75">
+          <stop offset="0" stop-color="#f3ede4"/>
+          <stop offset=".6" stop-color="#cfc4b5"/>
+          <stop offset="1" stop-color="#8e8273"/>
+        </radialGradient>
+        <radialGradient id="batter-shine" cx=".4" cy=".25" r=".6">
+          <stop offset="0" stop-color="#fff" stop-opacity=".55"/>
+          <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Inside of the ladle bowl, in ladle space. -->
+        <clipPath id="ladle-in"><ellipse cx="0" cy="3" rx="72" ry="44"/></clipPath>
+        <g id="ring">
+          <circle r="5.5" fill="#d8f0b4" stroke="#4f9d3e" stroke-width="2.6"/>
+          <circle r="1.8" fill="#9ccf6f"/>
+        </g>
+        <g id="oyster-piece">
+          <path d="M-17 -2C-18 -12 -6 -15 4 -13C14 -12 19 -5 17 3C15 11 4 13 -6 12C-14 11 -16 6 -17 -2Z" fill="url(#oyster)" stroke="#7a6f62" stroke-width="1.6"/>
+          <path d="M-12 -4C-10 -9 0 -10 8 -8C13 -6 14 0 10 4" stroke="#5f554a" stroke-width="2.2" stroke-linecap="round" opacity=".65"/>
+          <ellipse cx="-2" cy="2" rx="6" ry="4" fill="#f8f3ea" opacity=".7"/>
+        </g>
+      </defs>
+
+      <!-- Night sky and the stall -->
+      <rect x="-2000" y="-1000" width="4600" height="2820" fill="#232444"/>
+      <g fill="#fff6d0">
+        <circle cx="-120" cy="40" r="2"/><circle cx="700" cy="60" r="2"/><circle cx="-60" cy="300" r="1.5"/><circle cx="660" cy="260" r="1.5"/>
+      </g>
+      <rect x="0" y="100" width="600" height="300" fill="url(#slats)"/>
+      <rect x="-2000" y="-1000" width="4600" height="1084" fill="url(#awning)"/>
+      <rect x="-2000" y="84" width="4600" height="22" fill="url(#scallop)"/>
+      <rect x="-2000" y="80" width="4600" height="6" fill="#b5332a"/>
+      <rect x="-2000" y="100" width="2000" height="560" fill="#2d2e52"/>
+      <rect x="600" y="100" width="2000" height="560" fill="#2d2e52"/>
+      <rect x="0" y="100" width="12" height="560" fill="#7a4a28"/>
+      <rect x="588" y="100" width="12" height="560" fill="#7a4a28"/>
+      <!-- String lights -->
+      <path d="M0 122Q150 162 300 128Q450 162 600 122" stroke="#2c211b" stroke-width="2"/>
+      <g class="lights">
+        <g style="--delay: 0s"><circle cx="70" cy="144" r="18" fill="url(#bulb-glow)"/><circle cx="70" cy="144" r="6" fill="#ffd36b"/></g>
+        <g style="--delay: -.7s"><circle cx="160" cy="150" r="18" fill="url(#bulb-glow)"/><circle cx="160" cy="150" r="6" fill="#ff8f6b"/></g>
+        <g style="--delay: -1.4s"><circle cx="240" cy="138" r="18" fill="url(#bulb-glow)"/><circle cx="240" cy="138" r="6" fill="#a7e07a"/></g>
+        <g style="--delay: -2.1s"><circle cx="360" cy="138" r="18" fill="url(#bulb-glow)"/><circle cx="360" cy="138" r="6" fill="#ffd36b"/></g>
+        <g style="--delay: -.35s"><circle cx="440" cy="150" r="18" fill="url(#bulb-glow)"/><circle cx="440" cy="150" r="6" fill="#ff8f6b"/></g>
+        <g style="--delay: -1.05s"><circle cx="530" cy="144" r="18" fill="url(#bulb-glow)"/><circle cx="530" cy="144" r="6" fill="#a7e07a"/></g>
+      </g>
+      <!-- Menu board without text, showing a fritter -->
+      <g transform="translate(300 250)">
+        <rect x="-110" y="-62" width="220" height="124" rx="12" fill="#fbf1dc" stroke="#7a4a28" stroke-width="6"/>
+        <rect x="-96" y="-48" width="192" height="96" rx="8" stroke="#e5483b" stroke-width="2.5" stroke-dasharray="7 6"/>
+        <!-- Same fritter as the finished one in level.js, at its fully fried colors -->
+        <g transform="translate(0 16)">
+          <ellipse cx="0" cy="6" rx="62" ry="14" fill="#fdfbf6" stroke="#5a7fa8" stroke-width="2.5"/>
+          <g transform="translate(0 -18) scale(.66)">
+            <path d="M-72 3A72 44 0 0 0 72 3C70 -6 -70 -6 -72 3Z" fill="#a35a24"/>
+            <path d="M-72 3C-70 -52 70 -52 72 3C50 14 -50 14 -72 3Z" fill="#c47630"/>
+            <path d="M-72 3C-50 14 50 14 72 3" stroke="#83451a" stroke-width="3" stroke-linecap="round"/>
+            <path d="M2.7 -29.5q3 -3 6 0M15.1 -29.1q3 -3 6 0M-24.1 -26.0q3 -3 6 0M-48.1 -23.1q3 -3 6 0M24.5 -20.5q3 -3 6 0M40.0 -20.4q3 -3 6 0M-8.6 -20.0q3 -3 6 0M42.1 -19.5q3 -3 6 0M1.3 -17.4q3 -3 6 0M13.7 -17.1q3 -3 6 0M6.3 -16.1q3 -3 6 0M18.6 -14.9q3 -3 6 0M-58.5 -14.7q3 -3 6 0M6.6 -13.8q3 -3 6 0M-44.8 -12.4q3 -3 6 0M-56.0 -11.7q3 -3 6 0M28.7 -9.1q3 -3 6 0M-33.7 -9.0q3 -3 6 0M-41.3 -8.7q3 -3 6 0M-25.3 -8.6q3 -3 6 0M20.4 -8.2q3 -3 6 0M-6.1 -5.4q3 -3 6 0M-58.3 -5.3q3 -3 6 0M32.3 -4.0q3 -3 6 0M-55.7 -3.9q3 -3 6 0M-12.8 -1.7q3 -3 6 0M-26.0 0.6q3 -3 6 0M-12.1 1.1q3 -3 6 0M0.0 3.0q3 -3 6 0M12.3 5.9q3 -3 6 0" stroke="#8a4a1c" stroke-width="2" stroke-linecap="round"/>
+            <g opacity=".7"><use href="#ring" transform="translate(-32.6 -24.1) scale(.75)"/><use href="#ring" transform="translate(28.3 -23.2) scale(.75)"/><use href="#ring" transform="translate(-36.9 -19.2) scale(.75)"/><use href="#ring" transform="translate(-42.0 -18.9) scale(.75)"/><use href="#ring" transform="translate(-10.1 -14.0) scale(.75)"/><use href="#ring" transform="translate(28.1 -9.3) scale(.75)"/><use href="#ring" transform="translate(-9.6 -9.1) scale(.75)"/><use href="#ring" transform="translate(4.4 -8.8) scale(.75)"/></g>
+            <path d="M-72 3C-70 -52 70 -52 72 3C50 14 -50 14 -72 3Z" fill="url(#batter-shine)"/>
+          </g>
+        </g>
+        <path d="M-80 -30L-70 -38M-80 -38L-70 -30M70 -38L80 -30M80 -38L70 -30" stroke="#f6c845" stroke-width="3" stroke-linecap="round"/>
+      </g>
+
+      <!-- Steel counter -->
+      <rect x="-2000" y="380" width="4600" height="280" fill="url(#steel-top)"/>
+      <rect x="-2000" y="376" width="4600" height="8" fill="#8e989e"/>
+      <path d="M-2000 640H2600" stroke="#a7b1b7" stroke-width="3"/>
+
+      <!-- Ingredient bowls -->
+      <g class="bowl" data-item="onion" tabindex="0" role="button" aria-label="蔥花">
+        <g class="bowl-art" transform="translate(105 430)">
+          <ellipse cx="0" cy="40" rx="66" ry="10" fill="#3b2414" opacity=".18"/>
+          <path d="M-74 -4C-70 30 -48 42 0 42C48 42 70 30 74 -4Z" fill="#f7f4ee" stroke="#5a7fa8" stroke-width="3"/>
+          <path d="M-64 18C-40 28 40 28 64 18" stroke="#5a7fa8" stroke-width="5" stroke-dasharray="10 8" opacity=".75"/>
+          <ellipse cx="0" cy="-4" rx="74" ry="24" fill="#e9eef2" stroke="#5a7fa8" stroke-width="3"/>
+          <g class="heap"></g>
+        </g>
+        <rect class="hit" x="25" y="390" width="160" height="96" rx="20" fill="transparent"/>
+        <rect class="focus-ring" x="21" y="386" width="168" height="104" rx="22"/>
+      </g>
+      <g class="bowl" data-item="oyster" tabindex="0" role="button" aria-label="蚵仔">
+        <g class="bowl-art" transform="translate(300 430)">
+          <ellipse cx="0" cy="40" rx="66" ry="10" fill="#3b2414" opacity=".18"/>
+          <path d="M-74 -4C-70 30 -48 42 0 42C48 42 70 30 74 -4Z" fill="#f7f4ee" stroke="#5a7fa8" stroke-width="3"/>
+          <path d="M-64 18C-40 28 40 28 64 18" stroke="#5a7fa8" stroke-width="5" stroke-dasharray="10 8" opacity=".75"/>
+          <ellipse cx="0" cy="-4" rx="74" ry="24" fill="#cfe1ea" stroke="#5a7fa8" stroke-width="3"/>
+          <g class="heap"></g>
+        </g>
+        <rect class="hit" x="220" y="390" width="160" height="96" rx="20" fill="transparent"/>
+        <rect class="focus-ring" x="216" y="386" width="168" height="104" rx="22"/>
+      </g>
+      <g class="bowl" data-item="batter" tabindex="0" role="button" aria-label="麵糊">
+        <g class="bowl-art" transform="translate(495 430)">
+          <ellipse cx="0" cy="40" rx="66" ry="10" fill="#3b2414" opacity=".18"/>
+          <path d="M-74 -4C-70 30 -48 42 0 42C48 42 70 30 74 -4Z" fill="#f7f4ee" stroke="#5a7fa8" stroke-width="3"/>
+          <path d="M-64 18C-40 28 40 28 64 18" stroke="#5a7fa8" stroke-width="5" stroke-dasharray="10 8" opacity=".75"/>
+          <ellipse cx="0" cy="-4" rx="74" ry="24" fill="#e9eef2" stroke="#5a7fa8" stroke-width="3"/>
+          <ellipse cx="0" cy="-2" rx="64" ry="18" fill="#f3e6c4"/>
+          <path d="M-36 -8C-20 -14 10 -14 30 -8" stroke="#fff8e6" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="-22" cy="2" r="2.5" fill="#e7d3a4"/><circle cx="18" cy="4" r="2" fill="#e7d3a4"/>
+          <path d="M26 -2L58 -54" stroke="#9aa3a9" stroke-width="6" stroke-linecap="round"/>
+          <path d="M52 -44L64 -64" stroke="#7a4a28" stroke-width="10" stroke-linecap="round"/>
+          <ellipse cx="22" cy="2" rx="14" ry="6" fill="#d8c79f"/>
+        </g>
+        <rect class="hit" x="415" y="370" width="160" height="116" rx="20" fill="transparent"/>
+        <rect class="focus-ring" x="411" y="366" width="168" height="124" rx="22"/>
+      </g>
+
+      <!-- Plate for the finished fritter -->
+      <g class="plate" transform="translate(88 566)">
+        <ellipse cx="0" cy="10" rx="64" ry="18" fill="#3b2414" opacity=".16"/>
+        <ellipse cx="0" cy="0" rx="66" ry="28" fill="#fdfbf6" stroke="#5a7fa8" stroke-width="3"/>
+        <ellipse cx="0" cy="2" rx="48" ry="18" stroke="#5a7fa8" stroke-width="2" stroke-dasharray="4 6"/>
+        <path d="M-34 -6L-6 -14L30 -8L38 10L4 16L-30 12Z" fill="#f4ead2" opacity=".9"/>
+      </g>
+
+      <!-- Stove and wok -->
+      <rect x="-2000" y="652" width="4600" height="1170" fill="url(#bricks)"/>
+      <rect x="-2000" y="646" width="4600" height="10" fill="#3e2a21"/>
+      <ellipse class="flame-glow" cx="300" cy="782" rx="240" ry="52" fill="url(#flame-glow)"/>
+      <g class="wok" tabindex="0" role="button" aria-label="炸鍋">
+        <path d="M48 712C60 800 160 818 300 818C440 818 540 800 552 712Z" fill="#26282a"/>
+        <path d="M80 760C140 800 460 800 520 760" stroke="#3d4144" stroke-width="4" opacity=".7"/>
+        <ellipse cx="300" cy="712" rx="252" ry="80" fill="#3a3d40" stroke="#6b7075" stroke-width="6"/>
+        <ellipse class="oil" cx="300" cy="716" rx="232" ry="66" fill="url(#oil)"/>
+        <g class="shimmer" stroke="#fff3c4" stroke-width="3" stroke-linecap="round" opacity=".55">
+          <path d="M120 700Q150 694 180 700"/>
+          <path d="M400 730Q430 724 460 730"/>
+          <path d="M150 742Q170 738 190 742"/>
+          <path d="M430 692Q450 688 470 692"/>
+        </g>
+        <path d="M44 700Q20 690 26 676M556 700Q580 690 574 676" stroke="#26282a" stroke-width="10" stroke-linecap="round"/>
+        <rect class="focus-ring" x="44" y="628" width="512" height="170" rx="40"/>
+      </g>
+
+      <!-- Ladle with the fritter; level.js moves it between rest and the oil. -->
+      <g class="ladle" tabindex="-1" role="button" aria-label="圓勺">
+        <ellipse class="ladle-shadow" cx="4" cy="18" rx="84" ry="44" fill="#3b2414" opacity=".2"/>
+        <path d="M70 -10L236 -70" stroke="#a7b1b7" stroke-width="9" stroke-linecap="round"/>
+        <path d="M70 -10L236 -70" stroke="#e6ebee" stroke-width="3" stroke-linecap="round"/>
+        <path d="M186 -52L240 -72" stroke="#7a4a28" stroke-width="17" stroke-linecap="round"/>
+        <path d="M192 -58L232 -72" stroke="#a36a3c" stroke-width="5" stroke-linecap="round"/>
+        <ellipse cx="0" cy="0" rx="82" ry="52" fill="url(#ladle-steel)" stroke="#5f686e" stroke-width="3"/>
+        <ellipse cx="0" cy="3" rx="72" ry="44" fill="#59636a"/>
+        <ellipse cx="-10" cy="-6" rx="46" ry="22" fill="#7d878e" opacity=".55"/>
+        <g class="food">
+          <g clip-path="url(#ladle-in)">
+            <g class="layer onion-1"></g>
+            <g class="layer oysters"></g>
+            <g class="layer onion-2"></g>
+          </g>
+          <g class="layer batter" opacity="0">
+            <path class="batter-base" d="M-72 3A72 44 0 0 0 72 3C70 -6 -70 -6 -72 3Z"/>
+            <path class="batter-dome" d="M-72 3C-70 -52 70 -52 72 3C50 14 -50 14 -72 3Z"/>
+            <path class="batter-rim" d="M-72 3C-50 14 50 14 72 3" stroke-width="3" stroke-linecap="round"/>
+            <g class="crisp"></g>
+            <g class="peek"></g>
+            <path d="M-72 3C-70 -52 70 -52 72 3C50 14 -50 14 -72 3Z" fill="url(#batter-shine)"/>
+          </g>
+        </g>
+        <ellipse class="ready-ring" cx="0" cy="-8" rx="96" ry="66" fill="none" stroke="#fff3b0" stroke-width="5" opacity="0"/>
+        <ellipse class="hit" cx="0" cy="-8" rx="96" ry="66" fill="transparent"/>
+        <ellipse class="focus-ring" cx="0" cy="-8" rx="100" ry="70"/>
+      </g>
+      <!-- Oil meniscus and bubbles drawn over the ladle while frying. -->
+      <ellipse class="oil-lip" rx="88" ry="54" fill="none" stroke="#e8a83f" stroke-width="12" opacity="0"/>
+      <g class="bubbles"></g>
+      <g class="flying"></g>
+      <g class="steam"></g>
+      <g class="sparkles"></g>
+    </svg>
+    <p id="instructions" class="sr-only">做蚵炱：依序把蔥花、蚵仔、再一次蔥花、麵糊加進圓勺，然後放進炸鍋炸。炸好之後點它起鍋。順序錯了要重來。</p>
+    <p id="status" class="sr-only" role="status"></p>
+  </main>
+</body>
+</html>

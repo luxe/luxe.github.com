@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#fbe94a">
+  <title>Wanwan - Milk tea</title>
+  <script src="../../lifecycle.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./level.js" defer></script>
+</head>
+<body>
+  <main class="scene" aria-label="手搖飲料店：做一杯珍珠奶茶">
+    <svg class="shop" viewBox="0 0 600 820" fill="none">
+      <defs>
+        <clipPath id="cup-clip">
+          <path d="M-52-160H52L41 0Q40 4 36 4H-36Q-40 4-41 0Z"/>
+        </clipPath>
+        <clipPath id="tank-clip"><rect x="288" y="168" width="84" height="74" rx="14"/></clipPath>
+        <pattern id="wall-stripes" width="80" height="80" x="-10" patternUnits="userSpaceOnUse">
+          <rect width="22" height="80" fill="#f6df35"/>
+        </pattern>
+        <g id="pearl">
+          <circle r="7" fill="#3a2219"/>
+          <circle cx="-2.4" cy="-2.6" r="2" fill="#a07a62" opacity=".7"/>
+        </g>
+      </defs>
+
+      <g aria-hidden="true">
+        <rect x="-2000" y="-1000" width="4600" height="2820" fill="#fbe94a"/>
+        <rect x="-2000" y="-1000" width="4600" height="1520" fill="url(#wall-stripes)"/>
+        <!-- Store sign: the blue oval of the logo with a little cup instead of lettering -->
+        <g transform="translate(300 58) scale(.82) translate(-300 -96)">
+        <ellipse cx="300" cy="96" rx="138" ry="62" fill="#0b6db5"/>
+        <ellipse cx="300" cy="96" rx="126" ry="51" stroke="#fff" stroke-width="3" opacity=".35"/>
+        <path d="M276 70H324L318 128Q317 132 313 132H287Q283 132 282 128Z" fill="#fff"/>
+        <path d="M273 66H327" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
+        <path d="M306 66L318 40" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="292" cy="122" r="4.5" fill="#0b6db5"/><circle cx="302" cy="124" r="4.5" fill="#0b6db5"/><circle cx="311" cy="120" r="4.5" fill="#0b6db5"/>
+        <path d="M218 96Q232 78 246 96Q232 114 218 96Z" fill="#fbe94a"/>
+        <path d="M382 96Q368 78 354 96Q368 114 382 96Z" fill="#fbe94a"/>
+        </g>
+
+        <!-- Picture menu -->
+        <rect x="34" y="214" width="196" height="196" rx="16" fill="#0b6db5"/>
+        <rect x="46" y="226" width="172" height="172" rx="10" fill="#fffbe6"/>
+        <g fill="#fbe94a" stroke="#0b6db5" stroke-width="2.5">
+          <path d="M66 248H106L102 300H70Z"/><path d="M158 248H198L194 300H162Z"/>
+          <path d="M66 326H106L102 378H70Z"/><path d="M158 326H198L194 378H162Z"/>
+        </g>
+        <g fill="#3a2219"><circle cx="80" cy="294" r="3"/><circle cx="88" cy="295" r="3"/><circle cx="96" cy="293" r="3"/><circle cx="172" cy="372" r="3"/><circle cx="180" cy="373" r="3"/><circle cx="188" cy="371" r="3"/></g>
+        <g fill="#0b6db5"><circle cx="122" cy="274" r="9"/><circle cx="142" cy="274" r="5"/><circle cx="122" cy="352" r="9"/><circle cx="142" cy="352" r="5"/></g>
+
+        <!-- Counter top -->
+        <path d="M-2000 500H2600V664H-2000Z" fill="#fff6d2"/>
+        <path d="M-2000 500H2600" stroke="#e8d79a" stroke-width="4"/>
+        <path d="M-2000 664H2600V1820H-2000Z" fill="#0b6db5"/>
+        <path d="M-2000 664H2600V682H-2000Z" fill="#095a96"/>
+        <path d="M-2000 724H2600M-2000 790H2600" stroke="#fbe94a" stroke-width="12"/>
+        <g fill="#fff" opacity=".5"><circle cx="60" cy="757" r="5"/><circle cx="180" cy="757" r="5"/><circle cx="300" cy="757" r="5"/><circle cx="420" cy="757" r="5"/><circle cx="540" cy="757" r="5"/></g>
+      </g>
+
+      <!-- Tea dispenser -->
+      <g transform="translate(0 -40)">
+      <g class="dispenser" tabindex="0" role="button" aria-label="倒茶" aria-describedby="instructions">
+        <rect class="focus-ring" x="260" y="150" width="140" height="278" rx="22"/>
+        <rect x="262" y="152" width="136" height="274" rx="20" fill="transparent"/>
+        <g class="dispenser-art" pointer-events="none">
+          <path d="M282 160H378" stroke="#d9c26a" stroke-width="5" stroke-linecap="round"/>
+          <rect x="284" y="164" width="92" height="82" rx="17" fill="#fff8de" stroke="#0b6db5" stroke-width="4"/>
+          <g clip-path="url(#tank-clip)">
+            <path d="M282 196Q306 190 330 196T380 196V250H282Z" fill="#b8804e" opacity=".88"/>
+            <path d="M296 206Q300 222 296 236" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".55"/>
+          </g>
+          <rect x="272" y="242" width="116" height="150" rx="16" fill="#0b6db5"/>
+          <rect x="272" y="268" width="116" height="16" fill="#fbe94a"/>
+          <circle class="pour-button" cx="330" cy="334" r="25" fill="#fbe94a" stroke="#fff" stroke-width="4"/>
+          <path d="M330 320Q342 336 337 343Q330 350 323 343Q318 336 330 320Z" fill="#0b6db5"/>
+          <rect x="318" y="388" width="24" height="14" rx="4" fill="#d6d4cc"/>
+          <rect x="324" y="398" width="12" height="16" rx="3" fill="#b5b2a8"/>
+        </g>
+      </g>
+      </g>
+
+      <!-- Seal and shake machine, back half -->
+      <g class="sealer sealer-back" aria-hidden="true">
+        <rect x="436" y="362" width="118" height="228" fill="#dce9f4"/>
+        <path d="M452 380V572" stroke="#fff" stroke-width="10" opacity=".6"/>
+      </g>
+
+      <rect class="stream" x="326" y="372" width="8" height="188" rx="4" fill="#b8804e" opacity="0"/>
+      <g class="cup-layer"></g>
+
+      <!-- Seal and shake machine, front half -->
+      <g class="sealer sealer-front" aria-hidden="true">
+        <rect x="420" y="288" width="16" height="310" rx="5" fill="#0b6db5"/>
+        <rect x="554" y="288" width="16" height="310" rx="5" fill="#0b6db5"/>
+        <g class="press">
+          <rect x="444" y="352" width="102" height="18" rx="5" fill="#c9ccd1"/>
+          <rect x="452" y="366" width="86" height="6" rx="3" fill="#fbe94a"/>
+        </g>
+        <rect x="414" y="282" width="162" height="76" rx="14" fill="#0b6db5"/>
+        <rect x="414" y="306" width="162" height="14" fill="#fbe94a"/>
+        <circle class="lamp" cx="548" cy="337" r="8" fill="#9ec2e2"/>
+        <circle cx="440" cy="337" r="5" fill="#fff" opacity=".7"/>
+        <rect x="408" y="588" width="174" height="18" rx="6" fill="#0b6db5"/>
+      </g>
+
+      <ellipse cx="150" cy="646" rx="122" ry="20" fill="#d9c48a" opacity=".55" aria-hidden="true"/>
+      <ellipse cx="150" cy="640" rx="118" ry="22" fill="#b98352" aria-hidden="true"/>
+      <ellipse cx="150" cy="636" rx="108" ry="17" fill="#d5a06a" aria-hidden="true"/>
+      <g class="boba"></g>
+    </svg>
+    <p id="instructions" class="sr-only">依序完成：把每一小堆珍珠放進杯子，再把杯子移到茶桶下面並點一下倒茶，最後把杯子放進封口機封口搖一搖。順序錯了要重新開始。鍵盤：杯子用左右方向鍵移動，珍珠和茶桶按 Enter。</p>
+    <p id="status" class="sr-only" role="status"></p>
+  </main>
+</body>
+</html>

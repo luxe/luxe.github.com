@@ -1,0 +1,21 @@
+:root { color-scheme: light; background: #dce7e5; -webkit-tap-highlight-color: transparent; }
+* { box-sizing: border-box; }
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+body { display: grid; place-items: center; user-select: none; -webkit-user-select: none; }
+.embedded, .embedded body { background: transparent; }
+.scene { width: min(98vw, 71svh, 580px); aspect-ratio: 30 / 41; position: relative; }
+[data-phase="ready"] .scene, [data-phase="hidden"] .scene { visibility: hidden; }
+.station { display: block; width: 100%; height: 100%; overflow: visible; touch-action: none; }
+.card { cursor: grab; outline: none; }
+.card.held { cursor: grabbing; }
+.card.held .card-shadow { transform: translate(5px, 9px); opacity: .25; }
+.focus-ring { opacity: 0; }
+.card:focus-visible .focus-ring { opacity: 1; }
+.sensor-pad, .sensor-light, .wave { transition: fill .18s, stroke .18s, opacity .18s; }
+.wave { opacity: .55; }
+.near .sensor-pad { fill: #b8e1d2; stroke: #fff7d7; }
+.near .wave { opacity: 1; }
+.accepted .sensor-pad { fill: #a5daaf; }
+.accepted .sensor-light { fill: #75bd6c; }
+.complete .card { cursor: default; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

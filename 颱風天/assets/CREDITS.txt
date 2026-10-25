@@ -1,0 +1,52 @@
+WANWAN - ASSET CREDITS
+
+Previously used sign font: Ma Shan Zheng by Ma Shan Zheng and Cyreal.
+https://fonts.google.com/specimen/Ma+Shan+Zheng
+Locally hosted Google Fonts subset containing the sign's characters.
+SIL Open Font License 1.1: archive/fonts/ma-shan-zheng-OFL.txt
+
+Current sign font: LXGW WenKai TC, The LXGW WenKai Project Authors.
+https://github.com/lxgw/LxgwWenkaiTC
+Locally hosted Google Fonts subset containing the sign's characters.
+SIL Open Font License 1.1: ../levels/store/assets/OFL.txt
+Intro title and button use ../levels/intro/assets/lxgw-wenkai-tc-intro.ttf, another subset
+of the same font (颱風天開始吧！), under the same license.
+
+The store level uses custom inline SVG artwork only: a glass door and wooden
+sign. The cat level uses a CC BY 4.0 lucky-cat image by Streamline; see
+../levels/cat/assets/CREDITS.txt for its source and adaptations.
+The downloaded sprite packs
+and earlier raster compositions below are retained for possible future use;
+their license restrictions still apply to those asset files.
+
+Previous raster store artwork: Sprout Lands Basic Pack by Cup Nooble
+https://cupnooble.itch.io/sprout-lands-asset-pack
+
+The archived archive/store-raster/ PNG imagery was composed from this pack.
+
+archive/store-raster/storefront.png and storefront-complete.png:
+  Composed from Tilesets/Grass.png, Wooden_House_Walls_Tilset.png,
+  Wooden_House_Roof_Tilset.png, Doors.png, Objects/Basic_Plants.png,
+  Basic_Furniture.png, and Basic_Grass_Biom_things.png.
+archive/store-raster/sign.png:
+  Cropped and resized wooden sign from Basic_Grass_Biom_things.png,
+  with rasterized Traditional Chinese lettering added.
+archive/store-raster/petal.png:
+  Cropped from the flower sprite in Basic_Grass_Biom_things.png.
+
+NON-COMMERCIAL USE ONLY under the free Basic Pack license.
+Credit Cup Nooble. Full supplied terms: archive/licenses/sprout-lands.txt
+Do not redistribute the source pack separately.
+NFT use and AI training prohibited.
+Obtain the appropriate paid license before a commercial release.
+
+Earlier store prop crops under archive/props/ are no longer used in the scene.
+The Kenney crops there are CC0; see archive/licenses/kenney-modern-city.txt.
+
+Source packs and reproducible composition script are outside the website:
+/home/thickey/Desktop/code/workspace/wanwan-asset-library/
+Run build-level-one.sh there to rebuild the level-one PNG files.
+
+Tiny Town and Roguelike Modern City by Kenney: CC0; future-level library.
+Cats by Pop Shop Packs: future-level library, not used or submitted to AI.
+See the source library's README.txt for the full source links and restrictions.

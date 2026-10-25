@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#e5d9ca">
+  <title>Wanwan - Money tray</title>
+  <script src="../../lifecycle.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./level.js" defer></script>
+</head>
+<body>
+  <main class="scene" aria-label="整理鈔票">
+    <div class="table-arrival">
+      <svg class="table" viewBox="0 0 480 840" fill="none" aria-label="桌上的鈔票和收銀托盤">
+        <defs>
+          <linearGradient id="wood" x1="0" y1="0" x2="480" y2="840" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#ead0ae"/><stop offset="1" stop-color="#d5b18d"/>
+          </linearGradient>
+          <linearGradient id="tray-rim" x1="70" y1="25" x2="400" y2="290" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#dce9df"/><stop offset=".55" stop-color="#b6cec1"/><stop offset="1" stop-color="#98b9aa"/>
+          </linearGradient>
+          <pattern id="tray-grip" width="9" height="9" patternUnits="userSpaceOnUse">
+            <circle cx="4.5" cy="4.5" r="1.2" fill="#799e8c" opacity=".22"/>
+          </pattern>
+          <symbol id="blossom" viewBox="-24 -24 48 48">
+            <g fill="currentColor" opacity=".35">
+              <ellipse cy="-11" rx="7" ry="10"/><ellipse cy="-11" rx="7" ry="10" transform="rotate(72)"/>
+              <ellipse cy="-11" rx="7" ry="10" transform="rotate(144)"/><ellipse cy="-11" rx="7" ry="10" transform="rotate(216)"/>
+              <ellipse cy="-11" rx="7" ry="10" transform="rotate(288)"/>
+            </g>
+            <circle r="4" fill="#fff5df"/>
+          </symbol>
+          <symbol id="hall" viewBox="-70 -45 140 90">
+            <path d="M-65 35H65V1H-65Z" fill="currentColor" opacity=".2"/>
+            <path d="M-69 0H69L50-12H-50ZM-40-16H40L28-29H-28Z" fill="currentColor" opacity=".7"/>
+            <path d="M-34-16V30H34V-16" fill="#fff5e1" opacity=".65"/>
+            <path d="M-18 30V6H18V30M-56 12H-48M-56 24H-48M48 12H56M48 24H56" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+            <path d="M-60 35H60M-52 41H52" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          </symbol>
+          <symbol id="office" viewBox="-70 -45 140 90">
+            <path d="M-65 36V0H65V36Z" fill="currentColor" opacity=".3"/>
+            <path d="M-13 36V-33H13V36" fill="currentColor" opacity=".55"/>
+            <path d="M-19-30H19L0-42Z" fill="currentColor" opacity=".8"/>
+            <path d="M-6 35V17H6V35M-5-20V-12M5-20V-12M-5-3V5M5-3V5M-52 10V17M-36 10V17M-23 10V17M23 10V17M36 10V17M52 10V17" stroke="#f4fae7" stroke-width="5" stroke-linecap="round"/>
+            <path d="M-67 36H67" stroke="currentColor" stroke-width="3"/>
+          </symbol>
+          <symbol id="deer" viewBox="-70 -45 140 90">
+            <path d="M-70 34L-37-19-7 34 25-34 67 34" fill="currentColor" opacity=".13"/>
+            <ellipse cx="-2" cy="12" rx="29" ry="18" fill="currentColor" opacity=".65"/>
+            <path d="M-19 23L-21 40M11 23L13 40M22 12L29-16" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
+            <ellipse cx="32" cy="-18" rx="15" ry="12" fill="currentColor" opacity=".8"/>
+            <path d="M23-25Q8-44 25-35M38-27Q52-44 48-28" fill="currentColor" opacity=".65"/>
+            <circle cx="38" cy="-19" r="2.2" fill="#473d33"/>
+            <path d="M-34 9L-43 0" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+            <g fill="#fff5e1"><circle cx="-16" cy="7" r="3"/><circle cx="-3" cy="3" r="3"/><circle cx="8" cy="13" r="3"/><circle cx="-10" cy="18" r="3"/></g>
+          </symbol>
+          <symbol id="pheasant" viewBox="-70 -45 140 90">
+            <path d="M-70 34L-34-29-9 4 13-39 63 34" fill="currentColor" opacity=".18"/>
+            <path d="M-5 18Q-45 27-66 9Q-39 45 3 29" fill="currentColor" opacity=".7"/>
+            <ellipse cx="8" cy="15" rx="28" ry="18" fill="currentColor" opacity=".85"/>
+            <path d="M19 6Q22-28 36-25Q51-19 38-6L34 14" fill="currentColor"/>
+            <path d="M41-17L54-13 41-9" fill="#e3b989"/>
+            <circle cx="36" cy="-17" r="2.4" fill="#fff5df"/>
+            <path d="M-4 13Q5 2 20 13M-37 22L-32 32M-25 24L-21 34" stroke="#e6f0ed" stroke-width="3" stroke-linecap="round"/>
+            <path d="M8 31V41M23 29L28 40" stroke="currentColor" stroke-width="3"/>
+          </symbol>
+          <symbol id="salmon" viewBox="-70 -45 140 90">
+            <path d="M-65-4L-25-35 5-5 30-37 65-4" fill="currentColor" opacity=".15"/>
+            <path d="M-66 34Q-45 23-24 34T18 34T60 34" stroke="currentColor" opacity=".3" stroke-width="3"/>
+            <path d="M-39 8Q-6-22 39 6L60-9V28L39 15Q-9 43-39 8Z" fill="currentColor" opacity=".65"/>
+            <path d="M-10-3L5-18 14-1M-5 28L12 39 20 23" fill="currentColor" opacity=".5"/>
+            <path d="M-10 4Q8 17 32 7" stroke="#fff1ec" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="-23" cy="7" r="3" fill="#49354f"/>
+            <g fill="#fff1ec"><circle cx="0" cy="2" r="2"/><circle cx="13" cy="0" r="2"/><circle cx="23" cy="3" r="2"/></g>
+          </symbol>
+        </defs>
+        <g aria-hidden="true">
+          <rect x="8" y="12" width="464" height="820" rx="35" fill="#a7886a" opacity=".23"/>
+          <rect x="8" y="4" width="464" height="820" rx="35" fill="url(#wood)"/>
+          <path d="M12 321Q201 308 467 330M12 562Q220 579 468 552M70 16Q87 144 69 300M413 343Q397 441 416 540M64 590Q82 698 62 808" stroke="#b98e66" stroke-opacity=".18" stroke-width="3" stroke-linecap="round"/>
+          <rect x="45" y="33" width="390" height="274" rx="39" fill="#8b9f8b" opacity=".35"/>
+          <rect class="tray" x="45" y="24" width="390" height="274" rx="39" fill="url(#tray-rim)" stroke="#e3ede0" stroke-width="3"/>
+          <rect x="64" y="44" width="352" height="232" rx="23" fill="#a6c1b2" stroke="#8dad9b" stroke-width="2"/>
+          <rect x="66" y="46" width="348" height="228" rx="21" fill="url(#tray-grip)"/>
+          <path d="M190 287H290" stroke="#e2ece1" stroke-width="4" stroke-linecap="round"/>
+        </g>
+        <g class="notes"></g>
+      </svg>
+    </div>
+    <p id="instructions" class="sr-only">把鈔票由大到小放進托盤，最大的放最下面。放錯時可拖出重排。鍵盤按 Enter 或空白鍵放入或取出鈔票，方向鍵移動。</p>
+    <p id="status" class="sr-only" role="status"></p>
+  </main>
+</body>
+</html>

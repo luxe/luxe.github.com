@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#dfe8dc">
+  <title>Wanwan - Taiwan puzzle</title>
+  <script src="../../lifecycle.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./level.js" defer></script>
+</head>
+<body>
+  <div class="rain" aria-hidden="true"></div>
+  <main class="scene" aria-label="臺灣拼圖">
+    <div class="puzzle-arrival">
+      <svg class="puzzle" viewBox="0 0 600 960" fill="none" aria-label="拼出完整的臺灣">
+        <defs>
+          <linearGradient id="sea" x1="0" y1="0" x2="600" y2="960" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#eef3e9"/><stop offset="1" stop-color="#d4e5df"/>
+          </linearGradient>
+        </defs>
+        <rect x="12" y="20" width="576" height="925" rx="42" fill="#9eb9ac" opacity=".2"/>
+        <rect x="12" y="12" width="576" height="925" rx="42" fill="url(#sea)" stroke="#f9fbf2" stroke-width="3"/>
+        <g class="water" aria-hidden="true" stroke="#adc9c3" stroke-width="3" stroke-linecap="round" opacity=".35">
+          <path d="M45 330q12 7 24 0t24 0M455 125q12 7 24 0t24 0M75 810q12 7 24 0t24 0M445 770q12 7 24 0t24 0"/>
+        </g>
+        <g class="typhoon" transform="translate(500 785)" aria-hidden="true" pointer-events="none">
+          <g class="typhoon-spin">
+            <circle r="61" fill="#edf5ef" opacity=".55"/>
+            <path d="M-6-4C-14-37 16-60 47-48C65-41 72-24 68-9C51-31 24-35 6-17" fill="#b6d2cd" opacity=".9"/>
+            <path d="M5 5C38 0 62 25 52 54C47 69 34 76 20 76C38 54 33 28 9 17" fill="#c9ded9" opacity=".95"/>
+            <path d="M0 8C-25 34-56 34-68 7C-74-8-70-22-61-32C-60-7-37 7-11 3" fill="#a9c8c4" opacity=".9"/>
+            <circle r="15" fill="#e9f2ec" stroke="#f9faf2" stroke-width="5"/>
+            <circle r="6" fill="#b8d3cd"/>
+          </g>
+        </g>
+        <g class="outline" aria-hidden="true"></g>
+        <g class="placed-pieces"></g>
+        <g class="pieces"></g>
+      </svg>
+    </div>
+    <p id="instructions" class="sr-only">拖曳縣市拼出臺灣。位置接近時會吸附，接好的拼圖可一起移動。方向鍵移動，Enter 或空白鍵放下，Escape 取消拖曳。</p>
+    <p id="status" class="sr-only" role="status"></p>
+  </main>
+</body>
+</html>

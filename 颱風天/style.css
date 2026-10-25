@@ -1,0 +1,11 @@
+:root { color-scheme: light; background: #cfdadd; }
+* { box-sizing: border-box; }
+html, body, #game { margin: 0; width: 100%; height: 100%; overflow: hidden; }
+#game { background: #cfdadd; }
+.level-frame { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; opacity: 0; pointer-events: none; }
+.level-frame.active { pointer-events: auto; }
+#admin:not([hidden]) { position: fixed; top: max(8px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); z-index: 4; display: flex; align-items: center; gap: 8px; padding: 6px 10px; max-width: calc(100% - 16px); border: 1px solid #d6cec0; border-radius: 12px; background: rgb(255 250 240 / .94); color: #665e52; box-shadow: 0 2px 8px rgb(70 65 55 / .1); font: 13px/1.4 system-ui, sans-serif; }
+#admin label { white-space: nowrap; }
+#admin select { min-height: 32px; min-width: 115px; padding: 4px 8px; border: 1px solid #c9cbbd; border-radius: 7px; background: #fffdf5; color: #514f44; font: inherit; }
+#admin select:focus-visible { outline: 2px solid #799d91; outline-offset: 2px; }
+#error { position: fixed; bottom: 20px; left: 5%; right: 5%; padding: 16px; background: #fff5e5; color: #714735; font: 16px/1.5 sans-serif; border-radius: 8px; z-index: 3; }

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#dce3df">
+  <title>Wanwan - Metro</title>
+  <script src="../../lifecycle.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./level.js" defer></script>
+</head>
+<body>
+  <main class="scene" aria-label="捷運路線圖">
+    <div class="map-arrival">
+      <svg class="map" viewBox="0 0 480 820" fill="none" aria-label="五色捷運路線與五列列車">
+        <defs>
+          <linearGradient id="paper" x1="20" y1="20" x2="460" y2="600" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#fffaf0"/><stop offset="1" stop-color="#f2ebdb"/>
+          </linearGradient>
+          <linearGradient id="train-shell" x1="0" y1="-17" x2="0" y2="17" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#fffdf3"/><stop offset=".55" stop-color="#f1eee3"/><stop offset="1" stop-color="#d3d8d0"/>
+          </linearGradient>
+          <symbol id="train-art" viewBox="-48 -24 96 48">
+            <path d="M-26-17H23L28-24H34" stroke="#829693" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="-40" y="-15" width="80" height="32" rx="10" fill="#7a9290" opacity=".25" transform="translate(0 4)"/>
+            <rect x="-40" y="-17" width="80" height="32" rx="10" fill="url(#train-shell)" stroke="#9baaa4" stroke-width="1.5"/>
+            <path d="M-38 5H38" stroke="#8baba9" stroke-width="5"/>
+            <path d="M-10-16V14M15-16V14" stroke="#b4bfb5" stroke-width="1.5"/>
+            <rect x="-31" y="-10" width="15" height="10" rx="3" fill="#708c94"/>
+            <rect x="-4" y="-10" width="13" height="10" rx="3" fill="#708c94"/>
+            <path d="M23-10H29Q34-10 34-3V0H23Z" fill="#708c94"/>
+            <path d="M-28-8H-23M-1-8H3M26-8H29" stroke="#d7e7e6" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="-31" cy="9" r="2" fill="#f8e7aa"/><circle cx="31" cy="9" r="2" fill="#f8e7aa"/>
+          </symbol>
+        </defs>
+        <g aria-hidden="true">
+          <rect x="15" y="24" width="450" height="582" rx="32" fill="#9eafa3" opacity=".24"/>
+          <rect x="15" y="15" width="450" height="582" rx="32" fill="url(#paper)" stroke="#fffcf5" stroke-width="3"/>
+          <path d="M22 401Q109 374 181 399T320 393T459 405" stroke="#d8e7e5" stroke-width="28"/>
+          <path d="M22 401Q109 374 181 399T320 393T459 405" stroke="#e7f0ed" stroke-width="10"/>
+          <path d="M34 78Q45 35 81 48L100 76 75 109 38 111ZM391 214Q447 191 446 246L420 269 392 254ZM224 514Q257 489 284 519L275 567 230 565Z" fill="#dce4ce"/>
+          <g class="railways"></g>
+          <g class="stations"></g>
+          <rect x="27" y="624" width="426" height="175" rx="35" fill="#b8cac1" opacity=".45"/>
+          <path d="M65 665H415M125 746H355" stroke="#94ada3" stroke-opacity=".4" stroke-width="4" stroke-linecap="round" stroke-dasharray="5 9"/>
+        </g>
+        <g class="trains"></g>
+      </svg>
+    </div>
+    <p id="instructions" class="sr-only">按住列車聽聲音，拖到你選的路線。可重複移動。鍵盤按住空白鍵或 Enter 聽聲音，方向鍵選擇路線。</p>
+    <p id="status" class="sr-only" role="status"></p>
+  </main>
+</body>
+</html>

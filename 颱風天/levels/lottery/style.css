@@ -1,0 +1,37 @@
+:root { color-scheme: light; background: #ffe39a; -webkit-tap-highlight-color: transparent; }
+* { box-sizing: border-box; }
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+body { display: grid; place-items: center; user-select: none; -webkit-user-select: none; }
+.embedded, .embedded body { background: transparent; }
+.scene { width: min(98vw, 71svh, 580px); aspect-ratio: 30 / 41; position: relative; }
+[data-phase="ready"] .scene, [data-phase="hidden"] .scene { visibility: hidden; }
+.stage { position: absolute; inset: 0; touch-action: none; }
+.art, .top { position: absolute; inset: 0; display: block; width: 100%; height: 100%; overflow: visible; }
+.top { pointer-events: none; }
+/* Foil covers the prize window: x 120–480, y 335–545 of the 600×820 viewBox. */
+.foil {
+  position: absolute;
+  left: 20%;
+  top: 40.8537%;
+  width: 60%;
+  height: 25.6098%;
+  border-radius: 2.2% / 3.8%;
+  pointer-events: none;
+}
+.sixes text {
+  font: 900 150px/1 "Arial Black", "Helvetica Neue", Arial, sans-serif;
+  text-anchor: middle;
+  fill: url(#gold-six);
+  stroke: #c62828;
+  stroke-width: 7px;
+  stroke-linejoin: round;
+  paint-order: stroke;
+}
+.sixes text:first-child { fill: #c25b08; stroke: none; }
+.six-art { transform-box: fill-box; transform-origin: 50% 70%; }
+.coin { pointer-events: auto; cursor: grab; outline: none; }
+.coin.held { cursor: grabbing; }
+.focus-ring { opacity: 0; stroke: #fff5d5; stroke-width: 4; }
+.coin:focus-visible .focus-ring { opacity: 1; }
+.complete .coin { cursor: default; pointer-events: none; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

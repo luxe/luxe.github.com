@@ -1,0 +1,39 @@
+:root { color-scheme: light; background: #232444; -webkit-tap-highlight-color: transparent; }
+* { box-sizing: border-box; }
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+body { display: grid; place-items: center; user-select: none; -webkit-user-select: none; }
+.embedded, .embedded body { background: transparent; }
+.scene { width: min(98vw, 71svh, 580px); aspect-ratio: 30 / 41; position: relative; }
+[data-phase="ready"] .scene, [data-phase="hidden"] .scene { visibility: hidden; }
+.stand { display: block; width: 100%; height: 100%; touch-action: manipulation; overflow: visible; }
+.bowl, .wok, .ladle { outline: none; }
+.bowl, .wok { cursor: pointer; }
+.bowl-art { transition: filter .2s ease; }
+.bowl:hover .bowl-art { filter: brightness(1.05); }
+.ladle { pointer-events: none; }
+.can-fry .ladle, .cooked .ladle { pointer-events: auto; cursor: pointer; }
+.busy .bowl, .busy .wok, .busy .ladle, .complete .bowl, .complete .wok, .complete .ladle { cursor: default; pointer-events: none; }
+.cooked .ready-ring { animation: ready 1s ease-in-out infinite alternate; }
+@keyframes ready { from { opacity: 0; } to { opacity: .8; } }
+.focus-ring { opacity: 0; stroke: #fff6d0; stroke-width: 4; fill: none; }
+.bowl:focus-visible .focus-ring, .wok:focus-visible .focus-ring, .ladle:focus-visible .focus-ring { opacity: 1; }
+.pointer .focus-ring { display: none; }
+.lights > g { animation: twinkle 1.6s ease-in-out var(--delay) infinite alternate; }
+@keyframes twinkle { from { opacity: .7; } to { opacity: 1; } }
+.flame-glow { animation: glow 1.1s ease-in-out infinite alternate; }
+@keyframes glow { from { opacity: .7; } to { opacity: 1; } }
+.shimmer path { animation: shimmer 2.4s ease-in-out infinite alternate; }
+.shimmer path:nth-child(2n) { animation-delay: -1.2s; }
+@keyframes shimmer { from { opacity: .2; transform: translateX(-6px); } to { opacity: 1; transform: translateX(6px); } }
+.steam path { opacity: 0; transform-box: fill-box; transform-origin: 50% 100%; animation: steam 2.4s ease-out var(--delay) infinite; }
+@keyframes steam {
+  0% { opacity: 0; transform: translateY(6px) scaleY(.6); }
+  30% { opacity: .65; }
+  100% { opacity: 0; transform: translateY(-46px) scaleY(1.2); }
+}
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) {
+  .lights > g, .flame-glow, .shimmer path, .cooked .ready-ring { animation: none; }
+  .cooked .ready-ring { opacity: .7; }
+  .steam path { animation: none; opacity: .4; }
+}

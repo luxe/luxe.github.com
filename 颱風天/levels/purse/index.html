@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#e6d1b0">
+  <title>Wanwan - Coin purse</title>
+  <script src="../../lifecycle.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./level.js" defer></script>
+</head>
+<body>
+  <main class="scene" aria-label="茄芷袋零錢包和硬幣">
+    <svg class="table" viewBox="0 0 600 820" fill="none">
+      <defs>
+        <clipPath id="purse-clip">
+          <path d="M118 424H482Q500 424 499 460L494 600Q490 656 432 658H168Q110 656 106 600L101 460Q100 424 118 424Z"/>
+        </clipPath>
+        <clipPath id="card-clip"><rect x="-100" y="-63" width="200" height="126" rx="13"/></clipPath>
+        <pattern id="mesh" width="5" height="5" patternUnits="userSpaceOnUse">
+          <path d="M0 .5H5M.5 0V5" stroke="#fff" stroke-opacity=".22" stroke-width=".8"/>
+        </pattern>
+        <g id="stripes">
+          <rect x="96" y="418" width="408" height="38" fill="#3e7fd4"/>
+          <rect x="96" y="456" width="408" height="36" fill="#38ad6c"/>
+          <rect x="96" y="492" width="408" height="36" fill="#d65a6c"/>
+          <rect x="96" y="528" width="408" height="36" fill="#3e7fd4"/>
+          <rect x="96" y="564" width="408" height="36" fill="#38ad6c"/>
+          <rect x="96" y="600" width="408" height="36" fill="#d65a6c"/>
+          <rect x="96" y="636" width="408" height="26" fill="#3e7fd4"/>
+          <path d="M96 456H504M96 492H504M96 528H504M96 564H504M96 600H504M96 636H504" stroke="#fbf6ee" stroke-width="3"/>
+        </g>
+      </defs>
+      <g aria-hidden="true">
+        <rect x="-400" y="-400" width="1400" height="1620" fill="#e6d1b0"/>
+        <path d="M-400 96H1000M-400 268H1000M-400 444H1000M-400 612H1000M-400 780H1000" stroke="#d2b78f" stroke-width="3"/>
+        <path d="M120 96V268M420 268V444M260 444V612M520 612V780M60 780V950M330 -80V96" stroke="#d2b78f" stroke-width="2.5"/>
+        <path d="M30 150Q140 140 260 156M300 330Q420 322 560 336M40 520Q120 512 210 524M330 690Q440 682 570 694" stroke="#dcc39d" stroke-width="2" stroke-linecap="round"/>
+      </g>
+      <g class="purse">
+        <path class="strap" d="M452 432C462 330 572 318 566 400C562 432 520 440 486 436" stroke="#2c428f" stroke-width="15" stroke-linecap="round"/>
+        <path d="M452 432C462 330 572 318 566 400C562 432 520 440 486 436" stroke="#f3a3bf" stroke-width="6" stroke-dasharray="5 5" stroke-linecap="round"/>
+        <path d="M452 432C462 330 572 318 566 400C562 432 520 440 486 436" stroke="#fff" stroke-width="2" stroke-dasharray="2 8" stroke-dashoffset="-3"/>
+        <ellipse cx="300" cy="664" rx="190" ry="14" fill="#a98a62" opacity=".3"/>
+        <g class="purse-body">
+          <g clip-path="url(#purse-clip)">
+            <use href="#stripes" opacity=".3"/>
+            <rect x="96" y="418" width="408" height="250" fill="#40364d" opacity=".18"/>
+            <g class="easycard" transform="translate(330 548) rotate(-9) scale(.86)" aria-hidden="true" pointer-events="none">
+              <g clip-path="url(#card-clip)">
+                <rect x="-100" y="-63" width="200" height="126" fill="#fffef9"/>
+                <path d="M-100-63H-32Q-12-48-10-27Q-38-16-69-29Q-88-37-100-31Z" fill="#f2ad52"/>
+                <path d="M-1-63H69Q53-32 35-23Q25-17 23-5Q17 9 8 17Q-3-2-4-24Q-6-46-1-63Z" fill="#0b78c4"/>
+                <path d="M-100 63V18Q-82-7-51-15Q-34-18-24-6Q-14 0-7 8Q-10 25-18 36Q-30 51-37 63Z" fill="#df0b82"/>
+                <path d="M1 32Q22 5 63 1Q85-1 100 4V63H1Q-4 49 1 32Z" fill="#109a3a"/>
+                <circle cx="49" cy="-35" r="2.5" fill="#f2ad52" opacity=".8"/>
+                <circle cx="58" cy="-38" r="2.5" fill="#0b78c4" opacity=".8"/>
+                <circle cx="66" cy="-31" r="2.5" fill="#df0b82" opacity=".8"/>
+                <circle cx="58" cy="-24" r="2.5" fill="#109a3a" opacity=".8"/>
+              </g>
+              <rect x="-100" y="-63" width="200" height="126" rx="13" stroke="#d8ded8" stroke-width="2"/>
+            </g>
+            <g class="inside"></g>
+            <use href="#stripes" opacity=".42"/>
+            <rect x="96" y="418" width="408" height="250" fill="url(#mesh)"/>
+          </g>
+          <path d="M118 424H482Q500 424 499 460L494 600Q490 656 432 658H168Q110 656 106 600L101 460Q100 424 118 424Z" stroke="#fbf6ee" stroke-width="4"/>
+          <path d="M104 420H496Q504 420 504 428V434Q504 442 496 442H104Q96 442 96 434V428Q96 420 104 420Z" fill="#2c428f"/>
+          <path d="M104 438H496" stroke="#f3a3bf" stroke-width="2" stroke-dasharray="6 4"/>
+          <path class="mouth" fill="#2b2838" opacity=".82"/>
+          <path class="lip-top" stroke="#e9e3d2" stroke-width="4" stroke-dasharray="2 2.5"/>
+          <path class="lip-bottom" stroke="#e9e3d2" stroke-width="4" stroke-dasharray="2 2.5"/>
+          <path class="teeth" stroke="#e9e3d2" stroke-width="6" stroke-dasharray="2 2.5"/>
+          <g class="zipper" tabindex="0" role="slider" aria-label="拉鍊" aria-valuemin="0" aria-valuemax="100" aria-describedby="instructions">
+            <circle class="focus-ring" r="30" cy="18"/>
+            <circle r="38" cy="16" fill="transparent"/>
+            <g class="pull-art" pointer-events="none">
+              <rect x="-11" y="-9" width="22" height="18" rx="5" fill="#ddd7c8" stroke="#8d8676" stroke-width="2"/>
+              <rect x="-6" y="5" width="12" height="30" rx="6" fill="#d2ccbb" stroke="#8d8676" stroke-width="2"/>
+              <rect x="-2.5" y="22" width="5" height="9" rx="2.5" fill="#8d8676"/>
+              <path d="M0 35V42" stroke="#e05f7d" stroke-width="3"/>
+              <circle cy="47" r="7" fill="#f08aa6"/>
+              <circle cx="-2" cy="45" r="2" fill="#fff" opacity=".6"/>
+            </g>
+          </g>
+        </g>
+      </g>
+      <g class="coins"></g>
+    </svg>
+    <p id="instructions" class="sr-only">把拉鍊從左拉到右打開零錢包，把每個硬幣放進去，再把拉鍊從右拉回左關上。鍵盤：拉鍊用方向鍵或 Enter；硬幣按 Enter 放進打開的零錢包。</p>
+    <p id="status" class="sr-only" role="status"></p>
+  </main>
+</body>
+</html>

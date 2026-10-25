@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#d9c1a5">
+  <title>Wanwan</title>
+  <link rel="preload" href="./assets/lxgw-wenkai-tc-sign.ttf" as="font" type="font/ttf" crossorigin>
+  <script src="../../lifecycle.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./level.js" defer></script>
+</head>
+<body>
+  <div class="grass-ground" aria-hidden="true"></div>
+  <main class="scene" aria-label="小店招牌">
+    <svg class="door" viewBox="0 0 480 800" fill="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="glass" x1="0" y1="0" x2="480" y2="800" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#e8f0e8"/>
+          <stop offset=".55" stop-color="#cedfd8"/>
+          <stop offset="1" stop-color="#b7cec6"/>
+        </linearGradient>
+        <filter id="carved" x="-15%" y="-30%" width="130%" height="160%" color-interpolation-filters="sRGB">
+          <feOffset in="SourceAlpha" dx="0" dy=".65" result="lower-edge"/>
+          <feFlood flood-color="#fff0c9" flood-opacity=".7"/>
+          <feComposite in2="lower-edge" operator="in" result="highlight"/>
+          <feComposite in="SourceAlpha" in2="lower-edge" operator="out" result="inner-edge"/>
+          <feFlood flood-color="#5f351e" flood-opacity=".35"/>
+          <feComposite in2="inner-edge" operator="in" result="shade"/>
+          <feMerge>
+            <feMergeNode in="highlight"/>
+            <feMergeNode in="SourceGraphic"/>
+            <feMergeNode in="shade"/>
+          </feMerge>
+        </filter>
+        <linearGradient id="frame-wood" x1="22" y1="0" x2="458" y2="800" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#d8b184"/>
+          <stop offset=".5" stop-color="#bf946a"/>
+          <stop offset="1" stop-color="#aa7d55"/>
+        </linearGradient>
+      </defs>
+      <rect x="22" y="8" width="436" height="782" rx="8" fill="#936d4d"/>
+      <rect x="24" y="8" width="432" height="776" rx="7" fill="url(#frame-wood)"/>
+      <rect x="51" y="36" width="378" height="718" rx="3" fill="#9c7857"/>
+      <rect x="56" y="41" width="368" height="708" rx="2" fill="url(#glass)"/>
+      <path d="M92 41h77L56 308v-96L128 41m177 0h28L56 663v-62Z" fill="#fffdf4" opacity=".26"/>
+      <path d="M28 18h420M29 20v751M55 752h371" stroke="#edcba1" stroke-opacity=".6" stroke-width="3" stroke-linecap="round"/>
+      <path d="M39 74q-4 59 0 113m1 289q-4 60 0 122M442 113q4 74 0 148m0 360q-3 49 0 91M97 770q81-4 152 0m42-750h91" stroke="#946b47" stroke-opacity=".28" stroke-width="2" stroke-linecap="round"/>
+      <rect x="400" y="465" width="12" height="99" rx="6" fill="#9eab9e"/>
+      <rect x="396" y="460" width="12" height="99" rx="6" fill="#eee9d9"/>
+      <g fill="#91a980">
+        <path d="M13 800q8-21 0-43 17 10 19 34 4-32 18-45-8 28-9 45 11-19 25-21-13 14-17 30Z"/>
+        <path d="M388 800q-4-23-17-35 18 3 26 25-1-31 11-49-3 29 1 48 8-22 24-32-10 23-12 43Z"/>
+        <path d="M440 800q0-17-9-30 14 6 18 22 4-25 18-36-7 26-6 36 7-10 16-11-8 10-10 19Z"/>
+      </g>
+      <path d="M24 800q1-13-3-23m17 23 8-33m354 33 4-35m47 35 9-25" stroke="#b3c59b" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+    <div class="sign-arrival">
+      <div class="sign" role="slider" tabindex="0" aria-label="歡迎光臨. Rotate the wooden sign until it is straight"
+           aria-valuemin="-45" aria-valuemax="45" aria-valuenow="-14"
+           aria-valuetext="Tilted 14 degrees left" aria-describedby="instructions">
+        <svg class="board" viewBox="0 0 360 120" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="wood" x1="0" y1="0" x2="360" y2="120" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#e3bd88"/>
+              <stop offset=".5" stop-color="#efd0a0"/>
+              <stop offset="1" stop-color="#d5a870"/>
+            </linearGradient>
+          </defs>
+          <rect x="4" y="9" width="352" height="107" rx="10" fill="#799086" opacity=".15"/>
+          <rect x="4" y="5" width="352" height="107" rx="10" fill="#996b46"/>
+          <rect x="4" y="2" width="352" height="104" rx="10" fill="url(#wood)" stroke="#ad8056" stroke-width="2"/>
+          <path d="M17 8h326" stroke="#fae1b9" stroke-width="2" stroke-linecap="round"/>
+          <path d="M18 29q35-4 69 0m183-4h69M20 85q39 4 74 0m170 4q38-4 74 0" stroke="#bc905e" stroke-opacity=".3" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="22" cy="54" r="3" fill="#a77d54"/>
+          <circle cx="338" cy="54" r="3" fill="#a77d54"/>
+          <text x="180" y="72" text-anchor="middle" fill="#8c5c36" font-size="45" letter-spacing="4" filter="url(#carved)">歡迎光臨</text>
+        </svg>
+      </div>
+    </div>
+    <p id="instructions" class="sr-only">Drag either end of the sign to straighten it, then let go. You can also use the left and right arrow keys, then release to check.</p>
+    <p class="sr-only" role="status" id="status"></p>
+  </main>
+</body>
+</html>

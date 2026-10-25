@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#6e1f19">
+  <title>Wanwan - Fortune</title>
+  <script src="../../lifecycle.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./fortunes.js" defer></script>
+  <script src="./level.js" defer></script>
+</head>
+<body>
+  <main class="scene" aria-label="廟裡的籤詩櫃，有很多小抽屜">
+    <svg class="shrine" viewBox="0 0 600 820" fill="none">
+      <defs>
+        <pattern id="wall-lattice" width="36" height="36" patternUnits="userSpaceOnUse">
+          <rect width="36" height="36" fill="#8f2b22"/>
+          <path d="M18 4L32 18L18 32L4 18Z" stroke="#a23a2e" stroke-width="2"/>
+        </pattern>
+        <pattern id="floor" width="80" height="80" patternUnits="userSpaceOnUse" x="20" y="730">
+          <rect width="80" height="80" fill="#d8c6a2"/>
+          <rect x="2" y="2" width="76" height="76" rx="3" fill="#e2d2b0"/>
+          <path d="M14 18Q30 12 44 20" stroke="#d3c09b" stroke-width="2" stroke-linecap="round"/>
+        </pattern>
+        <linearGradient id="lacquer" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#7e2416"/>
+          <stop offset="1" stop-color="#5c170e"/>
+        </linearGradient>
+        <linearGradient id="drawer-wood" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#c2533a"/>
+          <stop offset="1" stop-color="#93301f"/>
+        </linearGradient>
+        <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#f6d27a"/>
+          <stop offset="1" stop-color="#c4902e"/>
+        </linearGradient>
+        <linearGradient id="rod" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#8a4a26"/>
+          <stop offset=".45" stop-color="#5a2a14"/>
+          <stop offset="1" stop-color="#3a1a0c"/>
+        </linearGradient>
+        <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#fbedc8"/>
+          <stop offset="1" stop-color="#f1d9a2"/>
+        </linearGradient>
+        <radialGradient id="candle-glow" cx=".5" cy=".5" r=".5">
+          <stop offset="0" stop-color="#ffd27a" stop-opacity=".7"/>
+          <stop offset="1" stop-color="#ffd27a" stop-opacity="0"/>
+        </radialGradient>
+        <clipPath id="paper-clip"><rect class="paper-clip-rect" x="-160" y="0" width="320" height="0"/></clipPath>
+      </defs>
+
+      <!-- Wall -->
+      <rect x="-2000" y="-1000" width="4600" height="1740" fill="#6e1f19"/>
+      <rect x="-2000" y="-1000" width="4600" height="1740" fill="url(#wall-lattice)" opacity=".8"/>
+      <rect x="-2000" y="22" width="4600" height="8" fill="#e3b04a"/>
+
+      <!-- Lanterns -->
+      <g class="lantern" style="--delay: 0s">
+        <path d="M30 30V58" stroke="#3a1a10" stroke-width="3"/>
+        <rect x="16" y="54" width="28" height="7" rx="2" fill="#e9b93a"/>
+        <ellipse cx="30" cy="82" rx="26" ry="22" fill="#e0402f"/>
+        <path d="M16 82Q20 64 30 61M44 82Q40 64 30 61M16 82Q20 100 30 103M44 82Q40 100 30 103" stroke="#a8241b" stroke-width="2"/>
+        <rect x="16" y="101" width="28" height="7" rx="2" fill="#e9b93a"/>
+        <path d="M24 108V124M30 108V128M36 108V124" stroke="#e9b93a" stroke-width="2"/>
+      </g>
+      <g class="lantern" style="--delay: -1.6s">
+        <path d="M570 30V58" stroke="#3a1a10" stroke-width="3"/>
+        <rect x="556" y="54" width="28" height="7" rx="2" fill="#e9b93a"/>
+        <ellipse cx="570" cy="82" rx="26" ry="22" fill="#e0402f"/>
+        <path d="M556 82Q560 64 570 61M584 82Q580 64 570 61M556 82Q560 100 570 103M584 82Q580 100 570 103" stroke="#a8241b" stroke-width="2"/>
+        <rect x="556" y="101" width="28" height="7" rx="2" fill="#e9b93a"/>
+        <path d="M564 108V124M570 108V128M576 108V124" stroke="#e9b93a" stroke-width="2"/>
+      </g>
+
+      <!-- Floor -->
+      <rect x="-2000" y="730" width="4600" height="1090" fill="url(#floor)"/>
+      <rect x="-2000" y="730" width="4600" height="8" fill="#b9a37a"/>
+
+      <!-- Cabinet -->
+      <g class="cabinet">
+        <ellipse cx="300" cy="752" rx="270" ry="14" fill="#3b2414" opacity=".22"/>
+        <!-- Crown -->
+        <path d="M36 150L74 112H526L564 150Z" fill="#5c170e"/>
+        <path d="M52 140L82 118H518L548 140" stroke="url(#gold)" stroke-width="4" stroke-linejoin="round"/>
+        <path d="M24 150H576V170H24Z" fill="#4a120b"/>
+        <path d="M24 152H576" stroke="url(#gold)" stroke-width="4"/>
+        <path d="M24 168H576" stroke="#e3b04a" stroke-width="2" opacity=".6"/>
+        <path d="M16 150Q10 136 22 132Q30 140 36 150Z M584 150Q590 136 578 132Q570 140 564 150Z" fill="url(#gold)"/>
+        <!-- Plaque without text -->
+        <rect x="232" y="70" width="136" height="52" rx="6" fill="#2b1a12" stroke="url(#gold)" stroke-width="5"/>
+        <rect x="244" y="80" width="112" height="32" rx="3" stroke="#e3b04a" stroke-width="2" opacity=".55"/>
+        <circle cx="300" cy="96" r="9" fill="#e3b04a"/>
+        <path d="M262 96Q272 88 282 96M318 96Q328 104 338 96" stroke="#e3b04a" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- Body -->
+        <rect x="40" y="170" width="520" height="532" fill="url(#lacquer)"/>
+        <rect x="52" y="180" width="496" height="512" rx="3" stroke="url(#gold)" stroke-width="3"/>
+        <rect x="40" y="170" width="12" height="532" fill="#9a3020" opacity=".5"/>
+        <!-- Plinth and feet -->
+        <rect x="30" y="700" width="540" height="20" rx="3" fill="#4a120b"/>
+        <path d="M30 702H570" stroke="url(#gold)" stroke-width="3"/>
+        <path d="M48 720H96L90 744H54Z M504 720H552L546 744H510Z" fill="#3e0f09"/>
+      </g>
+      <g class="drawers"></g>
+
+      <!-- Reading overlay -->
+      <rect class="backdrop" x="-2000" y="-1000" width="4600" height="2820" fill="#1c0806" opacity="0"/>
+      <g class="scroll" role="button" aria-label="收起籤詩" aria-describedby="status" opacity="0">
+        <rect class="hit" x="-180" y="-16" width="360" height="0" fill="transparent"/>
+        <g clip-path="url(#paper-clip)">
+          <rect x="-150" y="0" width="300" height="500" fill="url(#paper)"/>
+          <rect x="-138" y="12" width="276" height="476" stroke="#c0392b" stroke-width="3"/>
+          <rect x="-130" y="20" width="260" height="460" stroke="#c0392b" stroke-width="1.5"/>
+          <!-- Cloud motif across the top -->
+          <path d="M-112 46Q-100 32 -86 42Q-74 30 -60 42M60 42Q74 30 86 42Q100 32 112 46" stroke="#c0392b" stroke-width="3" stroke-linecap="round"/>
+          <path d="M-40 40H40" stroke="#c0392b" stroke-width="2" stroke-dasharray="2 8" stroke-linecap="round"/>
+          <g class="poem" fill="#3a1a0f"></g>
+          <!-- Seal without text -->
+          <g transform="translate(-96 432)">
+            <rect x="-18" y="-18" width="36" height="36" rx="4" fill="#c0392b" opacity=".85"/>
+            <rect x="-11" y="-11" width="22" height="22" rx="3" stroke="#fbedc8" stroke-width="2.5"/>
+            <path d="M-5 -2Q0 -8 5 -2Q0 4 -5 -2ZM-5 5H5" stroke="#fbedc8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <path d="M60 440Q74 428 86 438Q100 428 112 440" stroke="#c0392b" stroke-width="3" stroke-linecap="round"/>
+        </g>
+        <!-- Rolled paper edge and rods -->
+        <rect class="roll" x="-150" y="-9" width="300" height="18" rx="9" fill="#ead09a" stroke="#c9a868" stroke-width="1.5"/>
+        <g class="rod rod-top">
+          <rect x="-166" y="-7" width="332" height="14" rx="7" fill="url(#rod)"/>
+          <rect x="-178" y="-9" width="16" height="18" rx="5" fill="url(#gold)"/>
+          <rect x="162" y="-9" width="16" height="18" rx="5" fill="url(#gold)"/>
+        </g>
+        <g class="rod rod-bottom">
+          <rect x="-166" y="-7" width="332" height="14" rx="7" fill="url(#rod)"/>
+          <rect x="-178" y="-9" width="16" height="18" rx="5" fill="url(#gold)"/>
+          <rect x="162" y="-9" width="16" height="18" rx="5" fill="url(#gold)"/>
+        </g>
+        <rect class="focus-ring" x="-188" y="-20" width="376" height="40" rx="12"/>
+      </g>
+    </svg>
+    <p id="instructions" class="sr-only">點一個抽屜抽一支籤詩，讀完後點籤詩把它收回抽屜。</p>
+    <p id="status" class="sr-only" role="status"></p>
+  </main>
+</body>
+</html>

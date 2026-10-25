@@ -1,0 +1,10 @@
+Walking green man pedestrian signal (Xiaolüren)
+File: https://commons.wikimedia.org/wiki/File:Walkingman.gif
+Original: https://upload.wikimedia.org/wikipedia/commons/2/27/Walkingman.gif
+Author: Caveranger (own work)
+License: CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0/
+
+walkingman-display.gif is a modified version: every frame was cropped to the
+signal's display (pixels 36,28 to 150,142 of the 171x176 original), removing
+the housing and the upper lamp. Frame timing and looping are unchanged.
+This modified file is shared under the same CC BY-SA 4.0 license.

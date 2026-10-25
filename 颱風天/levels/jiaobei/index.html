@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#6e1f19">
+  <title>Wanwan - Jiaobei</title>
+  <script src="../../lifecycle.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./level.js" defer></script>
+</head>
+<body>
+  <main class="scene" aria-label="廟裡的供桌前，地上有兩個紅色的筊杯">
+    <svg class="shrine" viewBox="0 0 600 820" fill="none">
+      <defs>
+        <radialGradient id="bei-red" cx=".35" cy=".4" r=".8">
+          <stop offset="0" stop-color="#f05a43"/>
+          <stop offset=".55" stop-color="#cf2f25"/>
+          <stop offset="1" stop-color="#93191a"/>
+        </radialGradient>
+        <radialGradient id="win-glow" cx=".5" cy=".5" r=".5">
+          <stop offset="0" stop-color="#ffe58a" stop-opacity=".9"/>
+          <stop offset=".6" stop-color="#ffcf4a" stop-opacity=".35"/>
+          <stop offset="1" stop-color="#ffcf4a" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="candle-glow" cx=".5" cy=".5" r=".5">
+          <stop offset="0" stop-color="#ffd27a" stop-opacity=".7"/>
+          <stop offset="1" stop-color="#ffd27a" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="bronze" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#e2b453"/>
+          <stop offset="1" stop-color="#8f6420"/>
+        </linearGradient>
+        <pattern id="floor" width="80" height="80" patternUnits="userSpaceOnUse" x="20" y="370">
+          <rect width="80" height="80" fill="#d8c6a2"/>
+          <rect x="2" y="2" width="76" height="76" rx="3" fill="#e2d2b0"/>
+          <path d="M14 18Q30 12 44 20" stroke="#d3c09b" stroke-width="2" stroke-linecap="round"/>
+        </pattern>
+        <pattern id="wall-lattice" width="36" height="36" patternUnits="userSpaceOnUse">
+          <rect width="36" height="36" fill="#8f2b22"/>
+          <path d="M18 4L32 18L18 32L4 18Z" stroke="#a23a2e" stroke-width="2"/>
+        </pattern>
+        <!-- A half-moon block: the flat face is the right edge (+x). -->
+        <symbol id="bei" viewBox="-34 -66 68 132" overflow="visible">
+          <path d="M28 -60C22 -30 22 30 28 60C2 62 -26 40 -29 0C-26 -40 2 -62 28 -60Z" fill="url(#bei-red)" stroke="#7a1512" stroke-width="2.5" stroke-linejoin="round"/>
+          <path d="M28 -60C22 -30 22 30 28 60C16 36 15 -36 28 -60Z" fill="#f47a5e" opacity=".75"/>
+          <path d="M-14 -34C-22 -18 -22 12 -16 30" stroke="#ff9c82" stroke-width="5" stroke-linecap="round" opacity=".45"/>
+        </symbol>
+      </defs>
+
+      <!-- Wall -->
+      <rect x="-2000" y="-1000" width="4600" height="1380" fill="#6e1f19"/>
+      <rect x="40" y="-1000" width="520" height="1380" fill="url(#wall-lattice)"/>
+      <rect x="-2000" y="40" width="4600" height="10" fill="#e3b04a"/>
+      <!-- Pillars -->
+      <rect x="22" y="-1000" width="46" height="1380" fill="#b8352a"/>
+      <rect x="532" y="-1000" width="46" height="1380" fill="#b8352a"/>
+      <rect x="22" y="-1000" width="10" height="1380" fill="#d24a3b"/>
+      <rect x="532" y="-1000" width="10" height="1380" fill="#d24a3b"/>
+      <!-- Plaque without text -->
+      <rect x="196" y="78" width="208" height="64" rx="6" fill="#2b1a12" stroke="#e3b04a" stroke-width="6"/>
+      <rect x="212" y="92" width="176" height="36" rx="3" stroke="#e3b04a" stroke-width="2" opacity=".6"/>
+      <circle cx="300" cy="110" r="10" fill="#e3b04a"/>
+
+      <!-- Lanterns -->
+      <g class="lantern" style="--delay: 0s">
+        <path d="M110 50V92" stroke="#3a1a10" stroke-width="3"/>
+        <rect x="94" y="88" width="32" height="8" rx="2" fill="#e9b93a"/>
+        <ellipse cx="110" cy="120" rx="30" ry="26" fill="#e0402f"/>
+        <path d="M94 120Q98 100 110 96M126 120Q122 100 110 96M94 120Q98 140 110 144M126 120Q122 140 110 144" stroke="#a8241b" stroke-width="2"/>
+        <rect x="94" y="142" width="32" height="8" rx="2" fill="#e9b93a"/>
+        <path d="M104 150V170M110 150V174M116 150V170" stroke="#e9b93a" stroke-width="2"/>
+      </g>
+      <g class="lantern" style="--delay: -1.6s">
+        <path d="M490 50V92" stroke="#3a1a10" stroke-width="3"/>
+        <rect x="474" y="88" width="32" height="8" rx="2" fill="#e9b93a"/>
+        <ellipse cx="490" cy="120" rx="30" ry="26" fill="#e0402f"/>
+        <path d="M474 120Q478 100 490 96M506 120Q502 100 490 96M474 120Q478 140 490 144M506 120Q502 140 490 144" stroke="#a8241b" stroke-width="2"/>
+        <rect x="474" y="142" width="32" height="8" rx="2" fill="#e9b93a"/>
+        <path d="M484 150V170M490 150V174M496 150V170" stroke="#e9b93a" stroke-width="2"/>
+      </g>
+
+      <!-- Altar table -->
+      <g class="altar">
+        <circle class="candle-halo" cx="160" cy="204" r="40" fill="url(#candle-glow)"/>
+        <circle class="candle-halo" cx="440" cy="204" r="40" fill="url(#candle-glow)"/>
+        <rect x="150" y="214" width="20" height="56" rx="3" fill="#d9352a"/>
+        <rect x="430" y="214" width="20" height="56" rx="3" fill="#d9352a"/>
+        <path class="candle-flame" d="M160 214C152 204 156 196 160 186C164 196 168 204 160 214Z" fill="#ffc23d"/>
+        <path class="candle-flame" d="M440 214C432 204 436 196 440 186C444 196 448 204 440 214Z" fill="#ffc23d"/>
+        <!-- Censer with incense -->
+        <path d="M290 254V176M300 254V168M310 254V178" stroke="#6b3f26" stroke-width="3"/>
+        <circle cx="290" cy="176" r="2.5" fill="#ff7a2a"/>
+        <circle cx="300" cy="168" r="2.5" fill="#ff7a2a"/>
+        <circle cx="310" cy="178" r="2.5" fill="#ff7a2a"/>
+        <g class="smoke">
+          <circle cx="290" cy="170" r="4" style="--delay: 0s"/>
+          <circle cx="300" cy="162" r="4" style="--delay: -1.3s"/>
+          <circle cx="310" cy="172" r="4" style="--delay: -2.6s"/>
+        </g>
+        <path d="M262 244H338L330 270H270Z" fill="url(#bronze)"/>
+        <ellipse cx="300" cy="244" rx="38" ry="6" fill="#bdb5aa"/>
+        <rect x="100" y="268" width="400" height="16" rx="3" fill="#6a3218"/>
+        <rect x="112" y="284" width="376" height="86" fill="#c93a2b"/>
+        <path d="M112 292H488M112 360H488" stroke="#e3b04a" stroke-width="3"/>
+        <circle cx="300" cy="326" r="18" stroke="#e3b04a" stroke-width="3"/>
+        <path d="M244 326Q262 312 278 326M322 326Q338 340 356 326" stroke="#e3b04a" stroke-width="3" stroke-linecap="round"/>
+      </g>
+
+      <!-- Floor; the toss target -->
+      <rect x="-2000" y="370" width="4600" height="1450" fill="url(#floor)"/>
+      <rect x="-2000" y="370" width="4600" height="8" fill="#b9a37a"/>
+      <g class="ground" tabindex="0" role="button" aria-label="把筊杯擲在地上">
+        <rect x="-2000" y="378" width="4600" height="1450" fill="transparent"/>
+        <rect class="focus-ring" x="44" y="400" width="512" height="280" rx="20"/>
+      </g>
+
+      <!-- Hand tray: held blocks show here -->
+      <g class="tray">
+        <rect x="200" y="690" width="200" height="118" rx="34" fill="#fff4dc" opacity=".35" stroke="#fff4dc" stroke-width="3" stroke-dasharray="10 8"/>
+        <use href="#bei" x="-34" y="-66" width="68" height="132" transform="translate(272 749) scale(.8)" opacity=".18"/>
+        <use href="#bei" x="-34" y="-66" width="68" height="132" transform="translate(328 749) rotate(180) scale(.8)" opacity=".18"/>
+      </g>
+
+      <g class="shadows"></g>
+      <g class="glows"></g>
+      <g class="dust"></g>
+      <g class="pieces">
+        <g class="bei" tabindex="0" role="button" aria-label="撿起左邊的筊杯">
+          <ellipse class="hit" rx="44" ry="70" fill="transparent"/>
+          <use href="#bei" x="-34" y="-66" width="68" height="132"/>
+          <ellipse class="focus-ring" rx="44" ry="72"/>
+        </g>
+        <g class="bei" tabindex="0" role="button" aria-label="撿起右邊的筊杯">
+          <ellipse class="hit" rx="44" ry="70" fill="transparent"/>
+          <use href="#bei" x="-34" y="-66" width="68" height="132"/>
+          <ellipse class="focus-ring" rx="44" ry="72"/>
+        </g>
+      </g>
+      <g class="sparkles"></g>
+    </svg>
+    <p id="instructions" class="sr-only">點兩個筊杯把它們撿起來，再點地面擲筊。兩個筊杯的平面都朝內時就成功了。</p>
+    <p id="status" class="sr-only" role="status"></p>
+  </main>
+</body>
+</html>

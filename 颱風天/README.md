@@ -315,3 +315,16 @@ See [shared asset credits](assets/CREDITS.txt), the font licenses in
 [cat image credits](levels/cat/assets/CREDITS.txt), and the
 [walking green man GIF credits](levels/bike/assets/CREDITS.txt).
 Previously downloaded sprite packs are retained but not loaded by these levels.
+
+## Publishing
+
+`./publish.sh` copies the game into the GitHub Pages repo
+(`~/Desktop/code/luxe.github.com/颱風天`) with `rsync -a --delete`, so files
+removed here are removed there too. It then commits and pushes that folder only.
+
+- Audio/video over 15 MB (`MAX_MB`) is trimmed from the end so it fits on
+  GitHub; the looping music, rain and TV video just repeat sooner. Trimmed files
+  are only redone when their source changes.
+- `levels/tv/assets/tv-source.mp4` and `publish.sh` are not published.
+- The published `game.js` has `SHOW_ADMIN = false` (`KEEP_ADMIN=1` keeps it).
+- `./publish.sh --dry-run` syncs and shows the change summary without committing.

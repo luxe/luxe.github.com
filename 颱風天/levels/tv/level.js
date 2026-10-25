@@ -18,13 +18,40 @@
   let busy = false;
   let completed = false;
 
+  // iOS pauses all other page audio (the background music) whenever a video
+  // plays with sound, so the picture stays muted and its soundtrack is a
+  // separate audio element kept in step with it.
+  const tvSound = new Audio("./assets/tv-sound.mp3");
+  tvSound.preload = "auto";
+  tvSound.volume = .9;
+  video.muted = true;
+
+  function syncSound() {
+    if (!on || video.paused) return;
+    const target = video.currentTime;
+    if (!Number.isFinite(tvSound.duration) || target >= tvSound.duration) {
+      if (!tvSound.paused) tvSound.pause();
+      return;
+    }
+    if (Math.abs(tvSound.currentTime - target) > .25) tvSound.currentTime = target;
+    if (tvSound.paused) tvSound.play().catch(() => {});
+  }
+  video.addEventListener("timeupdate", syncSound);
+  video.addEventListener("seeked", syncSound);
+  video.addEventListener("playing", syncSound);
+  video.addEventListener("waiting", () => tvSound.pause());
+
   function play() {
-    video.muted = false;
-    video.volume = .9;
-    return video.play().catch(() => {
-      video.muted = true;
-      return video.play().catch(cause => console.warn("TV video could not play", cause));
-    });
+    video.muted = true;
+    try { tvSound.currentTime = video.currentTime; } catch {}
+    // Started inside the tap so iOS allows the sound.
+    tvSound.play().catch(cause => console.warn("TV sound could not play", cause));
+    return video.play().catch(cause => console.warn("TV video could not play", cause));
+  }
+
+  function stop() {
+    video.pause();
+    tvSound.pause();
   }
 
   function run(target, frames, duration) {
@@ -55,7 +82,7 @@
       { transform: "scale(0, .015)", filter: "brightness(5)" },
     ], 380);
     tv.classList.remove("on");
-    video.pause();
+    stop();
     await run(spark, [
       { opacity: 1, transform: "scale(1)" },
       { opacity: 0, transform: "scale(.2)" },
@@ -124,7 +151,7 @@
     background: "#e7dbe8",
     setup: () => animateScene(true),
     teardown: () => {
-      video.pause();
+      stop();
       return animateScene(false);
     },
   });

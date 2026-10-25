@@ -30,7 +30,11 @@ plays first.
   button (top left of the remote) plays `assets/click.mp3` on every press,
   turns the TV on, and plays
   `levels/tv/assets/tv.mp4`. Pressing it again turns the TV off and completes
-  the level. The background music keeps playing at its normal volume.
+  the level. The background music keeps playing at its normal volume. The
+  video itself is always muted; its soundtrack is `assets/tv-sound.mp3`, a
+  separate audio element kept within 0.25 s of the picture. iOS pauses every
+  other sound on the page when a video plays with sound, so this keeps the
+  music going on iPhones.
 - [sandwich](levels/sandwich/index.html): a crustless Taiwanese sandwich seen
   from above. Each tap (or Enter/Space) takes a bite with a little shake and
   a crunch (`assets/bite.mp3`) and leaves crumbs on the plate; the fourth
@@ -263,6 +267,12 @@ and `assets/archive/` (unused earlier art kept for reference).
 The TV video `levels/tv/assets/tv.mp4` is a 360×360 crop of the right side
 of `tv-source.mp4` in the same folder, made with:
 `ffmpeg -i tv-source.mp4 -vf "crop=360:360:iw-360:0" -c:v libx264 -crf 25 -c:a copy -movflags +faststart tv.mp4`
+and its soundtrack with:
+`ffmpeg -i tv.mp4 -vn -ac 1 -c:a libmp3lame -b:a 64k tv-sound.mp3`
+
+The music and rain loops are resumed by `game.js` if the browser pauses them
+on its own (iOS does this for calls, Siri or other media). This happens on
+the next tap or key press in any level, or when the page becomes visible again.
 
 ## Engine contract
 

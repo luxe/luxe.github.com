@@ -55,13 +55,41 @@
     musicFade = requestAnimationFrame(fade);
   };
 
+  // Loops that should keep going. iOS can pause them on its own (another
+  // video with sound, a call, Siri, leaving the app); they are resumed on
+  // the next tap or key, or when the page is visible again.
+  const keepPlaying = new Set();
+  function resumeLoops() {
+    for (const loop of keepPlaying) {
+      if (loop.paused) loop.play().catch(() => {});
+    }
+  }
+  function watchForResume(doc) {
+    for (const type of ["pointerup", "touchend", "keydown"]) {
+      doc.addEventListener(type, resumeLoops, { capture: true, passive: true });
+    }
+  }
+  watchForResume(document);
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") resumeLoops();
+  });
+  for (const loop of [music, rain]) {
+    loop.addEventListener("pause", () => {
+      if (keepPlaying.has(loop) && document.visibilityState === "visible") {
+        setTimeout(resumeLoops, 400);
+      }
+    });
+  }
+
   // Called synchronously from the intro's click so browsers allow playback.
   window.startMusic = () => {
+    keepPlaying.add(music);
     if (!music.paused) return;
     music.volume = 0.6;
     music.play().catch(cause => console.warn("Background music could not start", cause));
   };
   window.startRain = () => {
+    keepPlaying.add(rain);
     if (!rain.paused) return;
     rain.play().catch(cause => console.warn("Rain sound could not start", cause));
   };
@@ -100,6 +128,7 @@
                 throw new Error(`Invalid level: ${level.url}`);
               }
               frame.title = doc.title || level.name;
+              watchForResume(doc);
               await Promise.all([
                 doc.fonts.ready,
                 ...Array.from(doc.images, image => image.decode()),

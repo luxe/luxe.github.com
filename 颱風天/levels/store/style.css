@@ -1,72 +1,34 @@
 @font-face {
   font-family: "LXGW WenKai TC";
   src: url("./assets/lxgw-wenkai-tc-sign.ttf") format("truetype");
-  font-style: normal;
-  font-weight: 400;
   font-display: swap;
 }
-
-:root {
-  color-scheme: light;
-  background: #d9c1a5;
-  font-family: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
-  -webkit-tap-highlight-color: transparent;
-}
-
+:root { color-scheme: light; background: #dbe7e6; -webkit-tap-highlight-color: transparent; }
 * { box-sizing: border-box; }
-html, body { margin: 0; width: 100%; min-height: 100%; }
-
-body {
-  min-height: 100svh;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-  user-select: none;
-  -webkit-user-select: none;
-  background: #d9c1a5;
-}
-
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+body { display: grid; place-items: center; user-select: none; -webkit-user-select: none; }
 .embedded, .embedded body { background: transparent; }
-[data-phase="ready"] .scene, [data-phase="hidden"] .scene,
-[data-phase="ready"] .grass-ground, [data-phase="hidden"] .grass-ground { visibility: hidden; }
-.grass-ground {
-  position: fixed;
-  top: calc(50svh + min(83.3333vw, 50svh) - 30px);
-  bottom: 0;
-  width: 100%;
-  background: #a7bd91;
-  pointer-events: none;
-}
+.scene { width: min(98vw, 71svh, 580px); aspect-ratio: 30 / 41; position: relative; }
+[data-phase="ready"] .scene, [data-phase="hidden"] .scene { visibility: hidden; }
+.store { display: block; width: 100%; height: 100%; overflow: visible; }
 
-.scene {
-  width: min(100vw, 60svh);
-  aspect-ratio: 3 / 5;
-  position: relative;
-  isolation: isolate;
-}
-
-.door { display: block; width: 100%; height: 100%; pointer-events: none; }
-
-.sign-arrival {
-  position: absolute;
-  left: 12.5%;
-  top: 37%;
-  width: 75%;
-}
-
-.sign {
-  --angle: -14deg;
-  width: 100%;
-  transform: rotate(var(--angle));
-  cursor: grab;
-  touch-action: none;
-  outline: none;
-}
-
-.board { display: block; width: 100%; height: auto; pointer-events: none; }
-.board text { font-family: "LXGW WenKai TC", "Noto Serif TC", serif; font-weight: 400; }
+.sign { cursor: grab; touch-action: none; outline: none; }
+.sign text { font-family: "LXGW WenKai TC", "Noto Serif TC", serif; }
 .sign.dragging { cursor: grabbing; }
-.sign:focus-visible { outline: 3px solid #6a876d; outline-offset: 7px; }
-.scene.complete .sign { cursor: default; }
+.complete .sign { cursor: default; }
+.sign .focus-ring { stroke: #3274b6; stroke-width: 3; opacity: 0; }
+.sign:focus-visible .focus-ring { opacity: 1; }
+
+.leaf { transition: transform .9s cubic-bezier(.45, 0, .2, 1); }
+.open .leaf-left { transform: translateX(-92px); }
+.open .leaf-right { transform: translateX(92px); }
+.sensor-led { transition: fill .2s; }
+.open .sensor-led { fill: #6fd28f; }
+.warm, .light-spill { transition: opacity 1s ease-out .2s; }
+.open .warm { opacity: .22; }
+.open .light-spill { opacity: .8; }
 
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) {
+  .leaf, .warm, .light-spill { transition: none; }
+}

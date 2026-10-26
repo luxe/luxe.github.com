@@ -8,6 +8,7 @@
   const scene = document.querySelector(".scene");
   const status = document.querySelector("#status");
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+  const gateSound = wanwanAudio.sound("./asset/gate.mp3");
   const home = { x: 165, y: 640, angle: -9 };
   const sensorCenter = { x: 451, y: 429 };
   let position = { ...home };
@@ -59,6 +60,8 @@
     status.textContent = "閘門打開了";
     await moveCard({ ...sensorCenter, angle: 0 }, 260);
     const duration = reducedMotion.matches ? 0 : 520;
+    gateSound.currentTime = 0;
+    gateSound.play().catch(cause => console.warn("Gate sound could not play", cause));
     doors.forEach((door, index) => track(door.animate([
       { transform: "translateX(0)" },
       { transform: `translateX(${index === 0 ? -88 : 88}px)` },

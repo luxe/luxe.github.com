@@ -13,7 +13,23 @@
 <body>
   <main class="scene">
     <h1 class="title">颱風天</h1>
-    <button class="start" type="button" autofocus>開始吧！</button>
+    <button class="start" type="button" aria-label="開始" autofocus>
+      <svg class="wave" viewBox="0 0 220 150" fill="none" aria-hidden="true">
+        <g class="wave-art">
+          <!-- Rolling wave: a teal body curling over to the right, foam on the crest -->
+          <path class="wave-body" d="M8 132C46 130 70 112 80 88C94 54 122 26 160 24C192 22 212 46 210 72C208 96 188 108 170 104C154 100 148 86 156 76C162 68 174 70 176 78C168 74 162 80 166 88C172 96 190 92 196 76C202 58 188 38 162 40C132 42 112 70 108 96C104 118 116 128 140 132Z" fill="#5f9fae"/>
+          <path d="M8 132C46 130 70 112 80 88C88 70 100 54 116 42C104 62 96 84 96 104C96 120 104 128 116 132Z" fill="#7cb6c2"/>
+          <path d="M126 36C140 28 156 26 170 28C156 32 142 40 132 52C130 46 128 40 126 36Z" fill="#a9d4dc"/>
+          <path class="foam" d="M162 40C188 38 202 58 196 76C190 92 172 96 166 88C162 80 168 74 176 78C174 70 162 68 156 76M110 56C114 50 120 46 126 44" stroke="#fffaf0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+          <g fill="#fffaf0">
+            <circle cx="150" cy="22" r="5"/><circle cx="166" cy="18" r="4"/><circle cx="182" cy="22" r="4.5"/><circle cx="196" cy="30" r="3.5"/><circle cx="206" cy="42" r="3"/>
+          </g>
+          <!-- Water line beneath -->
+          <path d="M4 134C24 126 40 126 58 134S94 142 112 134S148 126 166 134S200 142 216 134V146H4Z" fill="#4c8b9b"/>
+          <path d="M22 140C34 136 44 136 56 140M128 140C140 136 150 136 162 140" stroke="#cfe6ea" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+        </g>
+      </svg>
+    </button>
     <p id="status" class="sr-only" role="status"></p>
   </main>
 </body>

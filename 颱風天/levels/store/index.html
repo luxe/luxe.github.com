@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#d9c1a5">
-  <title>Wanwan</title>
+  <meta name="theme-color" content="#dbe7e6">
+  <title>Wanwan - Store</title>
   <link rel="preload" href="./assets/lxgw-wenkai-tc-sign.ttf" as="font" type="font/ttf" crossorigin>
   <script src="../../audio.js"></script>
   <script src="../../lifecycle.js"></script>
@@ -12,74 +12,172 @@
   <script src="./level.js" defer></script>
 </head>
 <body>
-  <div class="grass-ground" aria-hidden="true"></div>
-  <main class="scene" aria-label="小店招牌">
-    <svg class="door" viewBox="0 0 480 800" fill="none" aria-hidden="true">
+  <main class="scene" aria-label="便利商店門口">
+    <svg class="store" viewBox="0 0 600 820" fill="none">
       <defs>
-        <linearGradient id="glass" x1="0" y1="0" x2="480" y2="800" gradientUnits="userSpaceOnUse">
-          <stop stop-color="#e8f0e8"/>
-          <stop offset=".55" stop-color="#cedfd8"/>
-          <stop offset="1" stop-color="#b7cec6"/>
-        </linearGradient>
-        <filter id="carved" x="-15%" y="-30%" width="130%" height="160%" color-interpolation-filters="sRGB">
-          <feOffset in="SourceAlpha" dx="0" dy=".65" result="lower-edge"/>
-          <feFlood flood-color="#fff0c9" flood-opacity=".7"/>
-          <feComposite in2="lower-edge" operator="in" result="highlight"/>
-          <feComposite in="SourceAlpha" in2="lower-edge" operator="out" result="inner-edge"/>
-          <feFlood flood-color="#5f351e" flood-opacity=".35"/>
-          <feComposite in2="inner-edge" operator="in" result="shade"/>
-          <feMerge>
-            <feMergeNode in="highlight"/>
-            <feMergeNode in="SourceGraphic"/>
-            <feMergeNode in="shade"/>
-          </feMerge>
-        </filter>
-        <linearGradient id="frame-wood" x1="22" y1="0" x2="458" y2="800" gradientUnits="userSpaceOnUse">
-          <stop stop-color="#d8b184"/>
-          <stop offset=".5" stop-color="#bf946a"/>
-          <stop offset="1" stop-color="#aa7d55"/>
+        <clipPath id="door-opening"><rect x="204" y="250" width="192" height="430"/></clipPath>
+        <clipPath id="glass-area">
+          <rect x="34" y="196" width="162" height="484"/>
+          <rect x="204" y="196" width="192" height="484"/>
+          <rect x="404" y="196" width="162" height="484"/>
+        </clipPath>
+        <linearGradient id="spill" x1="0" y1="0" x2="0" y2="1">
+          <stop stop-color="#fff3c8" stop-opacity=".9"/><stop offset="1" stop-color="#fff3c8" stop-opacity="0"/>
         </linearGradient>
       </defs>
-      <rect x="22" y="8" width="436" height="782" rx="8" fill="#936d4d"/>
-      <rect x="24" y="8" width="432" height="776" rx="7" fill="url(#frame-wood)"/>
-      <rect x="51" y="36" width="378" height="718" rx="3" fill="#9c7857"/>
-      <rect x="56" y="41" width="368" height="708" rx="2" fill="url(#glass)"/>
-      <path d="M92 41h77L56 308v-96L128 41m177 0h28L56 663v-62Z" fill="#fffdf4" opacity=".26"/>
-      <path d="M28 18h420M29 20v751M55 752h371" stroke="#edcba1" stroke-opacity=".6" stroke-width="3" stroke-linecap="round"/>
-      <path d="M39 74q-4 59 0 113m1 289q-4 60 0 122M442 113q4 74 0 148m0 360q-3 49 0 91M97 770q81-4 152 0m42-750h91" stroke="#946b47" stroke-opacity=".28" stroke-width="2" stroke-linecap="round"/>
-      <rect x="400" y="465" width="12" height="99" rx="6" fill="#9eab9e"/>
-      <rect x="396" y="460" width="12" height="99" rx="6" fill="#eee9d9"/>
-      <g fill="#91a980">
-        <path d="M13 800q8-21 0-43 17 10 19 34 4-32 18-45-8 28-9 45 11-19 25-21-13 14-17 30Z"/>
-        <path d="M388 800q-4-23-17-35 18 3 26 25-1-31 11-49-3 29 1 48 8-22 24-32-10 23-12 43Z"/>
-        <path d="M440 800q0-17-9-30 14 6 18 22 4-25 18-36-7 26-6 36 7-10 16-11-8 10-10 19Z"/>
+
+      <!-- Sky and building shell -->
+      <rect width="600" height="820" fill="#dbe7e6"/>
+      <rect x="12" y="34" width="576" height="664" rx="6" fill="#e8ebe8"/>
+      <rect x="12" y="34" width="576" height="12" rx="6" fill="#f5f6f3"/>
+
+      <!-- Fascia: green over white over blue, with a wordless badge -->
+      <rect x="12" y="58" width="576" height="26" fill="#4aa86c"/>
+      <rect x="12" y="84" width="576" height="70" fill="#fbfcf8"/>
+      <rect x="12" y="154" width="576" height="20" fill="#3274b6"/>
+      <rect x="12" y="174" width="576" height="10" fill="#c8cfcd"/>
+      <g class="badge">
+        <path d="M58 101h452" stroke="#4aa86c" stroke-width="5" stroke-linecap="round"/>
+        <path d="M90 137h452" stroke="#3274b6" stroke-width="5" stroke-linecap="round"/>
+        <rect x="258" y="94" width="84" height="50" rx="12" fill="#fbfcf8"/>
+        <rect x="264" y="98" width="72" height="42" rx="10" fill="#3274b6"/>
+        <path d="M264 124c18-8 36-8 54 0s18 6 18 6v0c0 6-4 10-10 10h-52c-6 0-10-4-10-10Z" fill="#4aa86c"/>
+        <path d="M266 122c18-8 34-8 52 0s16 6 16 6" stroke="#fbfcf8" stroke-width="4" stroke-linecap="round"/>
       </g>
-      <path d="M24 800q1-13-3-23m17 23 8-33m354 33 4-35m47 35 9-25" stroke="#b3c59b" stroke-width="3" stroke-linecap="round"/>
+
+      <!-- Interior seen through the glass -->
+      <g class="interior" clip-path="url(#glass-area)">
+        <rect x="34" y="196" width="532" height="484" fill="#f6f0e1"/>
+        <rect x="34" y="196" width="532" height="30" fill="#ece5d3"/>
+        <g class="ceiling-lights" fill="#fffbe6">
+          <rect x="60" y="204" width="110" height="7" rx="3.5"/>
+          <rect x="245" y="204" width="110" height="7" rx="3.5"/>
+          <rect x="430" y="204" width="110" height="7" rx="3.5"/>
+        </g>
+        <!-- Back fridge row -->
+        <rect x="222" y="292" width="156" height="210" rx="4" fill="#d3dcdc"/>
+        <g class="fridge" fill="#eaf3f2" opacity=".85">
+          <rect x="228" y="298" width="46" height="198" rx="2"/>
+          <rect x="277" y="298" width="46" height="198" rx="2"/>
+          <rect x="326" y="298" width="46" height="198" rx="2"/>
+        </g>
+        <g class="fridge-goods"></g>
+        <path d="M34 560h532v120H34Z" fill="#e6dfcf"/>
+        <path d="M222 502 150 680M378 502l72 178M300 502v178" stroke="#d8d0be" stroke-width="2"/>
+        <!-- Side shelves -->
+        <g class="shelves" fill="#cdbfa6">
+          <rect x="42" y="318" width="146" height="320" rx="4"/>
+          <rect x="412" y="318" width="146" height="320" rx="4"/>
+        </g>
+        <g class="shelf-goods"></g>
+        <rect class="warm" x="34" y="196" width="532" height="484" fill="#ffe7a8" opacity="0"/>
+      </g>
+
+      <!-- Fixed windows -->
+      <g class="window-glass">
+        <rect x="34" y="196" width="162" height="484" fill="#cfe5e8" opacity=".32"/>
+        <rect x="404" y="196" width="162" height="484" fill="#cfe5e8" opacity=".32"/>
+        <rect x="204" y="196" width="192" height="54" fill="#cfe5e8" opacity=".4"/>
+        <path d="M70 196 34 260v40l92-104Zm86 0L34 336v24l140-164ZM450 196l-46 52v40l70-92Zm84 0L404 344v22l146-170Z" fill="#fff" opacity=".28"/>
+      </g>
+      <!-- Waist stripe on the fixed windows -->
+      <g class="band">
+        <rect x="34" y="448" width="162" height="9" fill="#4aa86c"/>
+        <rect x="34" y="457" width="162" height="5" fill="#fbfcf8"/>
+        <rect x="34" y="462" width="162" height="9" fill="#3274b6"/>
+        <rect x="404" y="448" width="162" height="9" fill="#4aa86c"/>
+        <rect x="404" y="457" width="162" height="5" fill="#fbfcf8"/>
+        <rect x="404" y="462" width="162" height="9" fill="#3274b6"/>
+      </g>
+      <!-- A little drink poster -->
+      <g class="poster">
+        <rect x="438" y="268" width="94" height="124" rx="6" fill="#fffaf0"/>
+        <rect x="438" y="268" width="94" height="22" rx="6" fill="#3274b6"/>
+        <rect x="438" y="282" width="94" height="8" fill="#3274b6"/>
+        <path d="M466 312h38l-6 60h-26Z" fill="#c9e2e6"/>
+        <path d="M468 330h34l-4 42h-26Z" fill="#9b6b49"/>
+        <circle cx="479" cy="350" r="4" fill="#3d2a1f"/><circle cx="492" cy="358" r="4" fill="#3d2a1f"/><circle cx="484" cy="364" r="4" fill="#3d2a1f"/>
+        <rect x="462" y="304" width="46" height="9" rx="4" fill="#eef7f6"/>
+        <path d="M490 304 500 280" stroke="#4aa86c" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="516" cy="300" r="5" fill="#f6c15a"/>
+      </g>
+
+      <!-- Sliding door leaves, pocketed into the opening -->
+      <g clip-path="url(#door-opening)">
+        <g class="leaf leaf-left">
+          <rect x="207" y="253" width="90" height="424" fill="#cfe5e8" fill-opacity=".38" stroke="#b9c3c5" stroke-width="6"/>
+          <path d="M226 256 210 290v44l60-78Zm46 0-62 92v20l76-112Z" fill="#fff" opacity=".3"/>
+          <rect x="210" y="448" width="84" height="9" fill="#4aa86c"/>
+          <rect x="210" y="457" width="84" height="5" fill="#fbfcf8"/>
+          <rect x="210" y="462" width="84" height="9" fill="#3274b6"/>
+          <rect x="282" y="380" width="6" height="120" rx="3" fill="#8f9a9d"/>
+        </g>
+        <g class="leaf leaf-right">
+          <rect x="303" y="253" width="90" height="424" fill="#cfe5e8" fill-opacity=".38" stroke="#b9c3c5" stroke-width="6"/>
+          <path d="M330 256 306 296v44l66-84Zm44 0-68 100v20l84-120Z" fill="#fff" opacity=".3"/>
+          <rect x="306" y="448" width="84" height="9" fill="#4aa86c"/>
+          <rect x="306" y="457" width="84" height="5" fill="#fbfcf8"/>
+          <rect x="306" y="462" width="84" height="9" fill="#3274b6"/>
+          <rect x="312" y="380" width="6" height="120" rx="3" fill="#8f9a9d"/>
+        </g>
+      </g>
+
+      <!-- Aluminium frames -->
+      <g class="frames" fill="#a9b3b6">
+        <rect x="12" y="184" width="22" height="506"/>
+        <rect x="566" y="184" width="22" height="506"/>
+        <rect x="196" y="184" width="8" height="506"/>
+        <rect x="396" y="184" width="8" height="506"/>
+        <rect x="34" y="184" width="532" height="12"/>
+        <rect x="204" y="242" width="192" height="8"/>
+        <rect x="34" y="680" width="532" height="10"/>
+      </g>
+      <path d="M34 196h532" stroke="#c6cfd1" stroke-width="2"/>
+      <!-- Door sensor -->
+      <rect x="276" y="212" width="48" height="20" rx="5" fill="#5d686b"/>
+      <circle class="sensor-led" cx="312" cy="222" r="3.5" fill="#d4675d"/>
+
+      <!-- Sidewalk -->
+      <rect x="0" y="690" width="600" height="130" fill="#d8d2c4"/>
+      <rect x="0" y="690" width="600" height="8" fill="#c3bdb0"/>
+      <path d="M0 740h600M0 790h600M80 698v122M200 698v122M320 698v122M440 698v122M560 698v122" stroke="#c9c2b3" stroke-width="2"/>
+      <path class="light-spill" d="M210 690h180l44 80H166Z" fill="url(#spill)" opacity="0"/>
+      <rect x="218" y="700" width="164" height="40" rx="6" fill="#3f8d61"/>
+      <rect x="226" y="707" width="148" height="26" rx="4" stroke="#7cc297" stroke-width="3"/>
+
+      <!-- Plant and umbrella stand -->
+      <g class="plant">
+        <path d="M60 640c-14-26-6-52 8-60 0 20 6 34 10 50-2-24 6-46 22-52-6 22-6 42-6 60 6-14 18-24 32-24-10 12-16 24-18 34Z" fill="#6f9d6a"/>
+        <path d="M70 636c-2-16 2-30 10-38M96 632c2-12 10-22 20-26" stroke="#8fbc84" stroke-width="3" stroke-linecap="round"/>
+        <path d="M54 640h86l-10 52H64Z" fill="#c98b5f"/>
+        <rect x="50" y="636" width="94" height="12" rx="4" fill="#b2774f"/>
+      </g>
+      <g class="umbrellas">
+        <path d="M486 600c4-30 14-50 26-58M512 604c0-28 6-48 14-58" stroke="#7a5a45" stroke-width="4" stroke-linecap="round"/>
+        <path d="M478 598c4-30 22-48 34-50-6 18-8 32-10 52Z" fill="#e7a1a1"/>
+        <path d="M506 600c2-26 14-46 26-50-6 18-6 32-6 52Z" fill="#93b8d8"/>
+        <path d="M470 600h80l-8 92h-64Z" fill="#8a9598"/>
+        <rect x="466" y="596" width="88" height="10" rx="4" fill="#6f7a7d"/>
+      </g>
+
+      <!-- The sign, hung crookedly on the left window -->
+      <g class="sign-arrival">
+        <g class="sign" role="slider" tabindex="0" aria-label="歡迎光臨。轉動招牌直到擺正"
+           aria-valuemin="-45" aria-valuemax="45" aria-valuenow="-14" aria-valuetext="向左傾斜 14 度"
+           aria-describedby="instructions">
+          <rect class="hit" x="10" y="350" width="210" height="140" fill="transparent"/>
+          <rect x="42" y="391" width="146" height="66" rx="10" fill="#2f4a3c" opacity=".14"/>
+          <rect x="40" y="385" width="150" height="68" rx="10" fill="#fffaf0"/>
+          <path d="M50 385h130a10 10 0 0 1 10 10v5H40v-5a10 10 0 0 1 10-10Z" fill="#4aa86c"/>
+          <path d="M40 440h150v3a10 10 0 0 1-10 10H50a10 10 0 0 1-10-10Z" fill="#3274b6"/>
+          <rect x="40" y="385" width="150" height="68" rx="10" stroke="#d9dcd2" stroke-width="2"/>
+          <text x="115" y="432" text-anchor="middle" fill="#2f6b4a" font-size="29" letter-spacing="2">歡迎光臨</text>
+          <rect class="focus-ring" x="32" y="377" width="166" height="84" rx="14"/>
+        </g>
+      </g>
+      <g class="sparkles"></g>
     </svg>
-    <div class="sign-arrival">
-      <div class="sign" role="slider" tabindex="0" aria-label="歡迎光臨. Rotate the wooden sign until it is straight"
-           aria-valuemin="-45" aria-valuemax="45" aria-valuenow="-14"
-           aria-valuetext="Tilted 14 degrees left" aria-describedby="instructions">
-        <svg class="board" viewBox="0 0 360 120" fill="none" aria-hidden="true">
-          <defs>
-            <linearGradient id="wood" x1="0" y1="0" x2="360" y2="120" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#e3bd88"/>
-              <stop offset=".5" stop-color="#efd0a0"/>
-              <stop offset="1" stop-color="#d5a870"/>
-            </linearGradient>
-          </defs>
-          <rect x="4" y="9" width="352" height="107" rx="10" fill="#799086" opacity=".15"/>
-          <rect x="4" y="5" width="352" height="107" rx="10" fill="#996b46"/>
-          <rect x="4" y="2" width="352" height="104" rx="10" fill="url(#wood)" stroke="#ad8056" stroke-width="2"/>
-          <path d="M17 8h326" stroke="#fae1b9" stroke-width="2" stroke-linecap="round"/>
-          <path d="M18 29q35-4 69 0m183-4h69M20 85q39 4 74 0m170 4q38-4 74 0" stroke="#bc905e" stroke-opacity=".3" stroke-width="2" stroke-linecap="round"/>
-          <circle cx="22" cy="54" r="3" fill="#a77d54"/>
-          <circle cx="338" cy="54" r="3" fill="#a77d54"/>
-          <text x="180" y="72" text-anchor="middle" fill="#8c5c36" font-size="45" letter-spacing="4" filter="url(#carved)">歡迎光臨</text>
-        </svg>
-      </div>
-    </div>
-    <p id="instructions" class="sr-only">Drag either end of the sign to straighten it, then let go. You can also use the left and right arrow keys, then release to check.</p>
+    <p id="instructions" class="sr-only">拖曳招牌兩端把它轉正後放開；也可以用左右方向鍵轉動，放開按鍵時檢查。</p>
     <p class="sr-only" role="status" id="status"></p>
   </main>
 </body>

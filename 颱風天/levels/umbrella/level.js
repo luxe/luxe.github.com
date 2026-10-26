@@ -28,11 +28,11 @@
   let drag = null;
   let completed = false;
 
+  // In the game the engine owns background loops (rain is not part of this
+  // level's soundscape); opened on its own, the level plays its own rain.
   function playRain() {
-    if (!rainActive) return;
-    if (parent !== window) {
-      parent.startRain();
-    } else if (rainSound.paused) {
+    if (!rainActive || parent !== window) return;
+    if (rainSound.paused) {
       rainSound.play().catch(cause => console.warn("Rain sound could not play", cause));
     }
   }

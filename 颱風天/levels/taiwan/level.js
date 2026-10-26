@@ -49,43 +49,60 @@
     return target;
   }
 
-  function settle(group) {
-    if (completed || group.locked) return;
-    let nearest = null;
-    let gap = SNAP;
-    for (const other of groups) {
-      if (other === group) continue;
-      const distance = Math.hypot(group.x - other.x, group.y - other.y);
-      if (distance < gap) {
-        nearest = other;
-        gap = distance;
-      }
-    }
-    // Match relative geography first; the faint silhouette also anchors pieces.
-    if (Math.hypot(group.x, group.y) < gap) {
+  // Locks a group for good and glides it onto the map silhouette.
+  function lockOntoMap(group) {
+    group.locked = true;
+    const from = { x: group.x, y: group.y };
+    const distance = Math.hypot(from.x, from.y);
+    if (reducedMotion.matches || distance < 0.5) {
       group.x = 0;
       group.y = 0;
-      group.locked = true;
-    } else if (nearest) {
-      group = merge(group, nearest);
+      render(group);
+      return;
     }
+    render(group);
+    const duration = Math.min(420, 160 + distance * 2);
+    const start = performance.now();
+    function step(now) {
+      if (disposed || group.x === 0 && group.y === 0) return;
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - (1 - t) ** 3;
+      group.x = from.x * (1 - eased);
+      group.y = from.y * (1 - eased);
+      render(group);
+      if (t < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function settle(group) {
+    if (completed || group.locked) return;
+    // A piece dropped in place on the silhouette, or in its correct position
+    // next to any other piece (loose or placed), counts as matched. Every
+    // match goes onto the map and stays locked, so pieces never end up
+    // joined together while still loose.
+    let matched = Math.hypot(group.x, group.y) < SNAP;
     let changed = true;
     while (changed) {
       changed = false;
       for (const other of groups) {
         if (other !== group && Math.hypot(group.x - other.x, group.y - other.y) < SNAP) {
-          group = group.locked ? merge(other, group) : merge(group, other);
+          matched = true;
+          // Placed pieces never move; loose partners travel with this group.
+          if (other.locked) continue;
+          group = merge(other, group);
           changed = true;
           break;
         }
       }
     }
-    if (group.members.length === pieces.length) {
-      group.x = 0;
-      group.y = 0;
-      group.locked = true;
+    if (!matched) {
+      render(group);
+      return;
     }
-    render(group);
+    // Overlapping play so quick successive snaps each get their own click.
+    wanwanAudio.play("../elevator/assets/click.mp3");
+    lockOntoMap(group);
     if ([...groups].every(part => part.locked)) finish();
   }
 

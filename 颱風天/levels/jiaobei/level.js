@@ -107,6 +107,8 @@
         let i = 0;
         while (i < arcs.length - 1 && t > arcs[i].duration) t -= arcs[i++].duration;
         if (i > impacts) {
+          // The clack only on first contact; later bounces just puff dust.
+          if (!impacts) playDrop();
           impacts = i;
           puff(piece.x, piece.y, 1 / i);
         }
@@ -127,6 +129,7 @@
         piece.rot = from.rot + (endRot - from.rot) * settle;
         piece.tumble = .25 + .75 * Math.abs(Math.cos(Math.PI * flips * settle));
       }, done() {
+        if (!impacts) playDrop();
         piece.tumble = 1;
         piece.z = 0;
         piece.rot = norm(piece.rot);
@@ -135,6 +138,11 @@
         resolve();
       } };
     });
+  }
+
+  function playDrop() {
+    // Fire-and-forget so the two blocks' clacks overlap instead of cutting each other off.
+    wanwanAudio.play("./assets/dropped.mp3");
   }
 
   function puff(x, y, strength) {

@@ -226,6 +226,8 @@
   const engine = {
     watch,
     unlock,
+    // The shared AudioContext (created on demand), for routing <audio> loops.
+    context: () => getContext(),
     sound(url, options) {
       return new Sound(resolveUrl(url, options?.base), options);
     },

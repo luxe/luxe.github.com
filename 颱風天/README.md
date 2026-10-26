@@ -9,23 +9,26 @@ Set `const SHOW_ADMIN = false` near the top of [game.js](game.js) before publish
 to hide it and disable its controls. Options follow `ORDER` automatically and
 include the intro. Choosing a level loads a fresh scene with the normal clean
 teardown/setup transitions; controls are disabled while a transition runs.
-The picker also works after the final level is beaten. Existing rain ambience
-continues across jumps, and using the picker starts the background music.
+The picker also works after the final level is beaten. Using the picker
+starts the background music, and each jump crossfades to that level's
+soundscape (see Background music and rain).
 
 The play order is the `ORDER` list at the top of [game.js](game.js):
 
 ```js
-const ORDER = ["tv", "sandwich", "elevator", "umbrella", "puddles", "cones", "taiwan", "bike", "card", "metro", "store", "money", "purse", "cat", "tea", "temple", "incense", "jiaobei", "fruit", "fortune", "fish", "ufo", "lottery"];
+const ORDER = ["tv", "sandwich", "elevator", "umbrella", "puddles", "cones", "taiwan", "bike", "powerlines", "card", "metro", "store", "money", "purse", "cat", "tea", "fruit", "incense", "jiaobei", "fortune", "temple", "fish", "ufo", "lottery"];
 ```
 
 Each name is a folder under `levels/`. To reorder levels, edit the list.
 To add a level, create `levels/<name>/` and add its name. The intro always
 plays first.
 
-- [intro](levels/intro/index.html): the title 颱風天 and a rounded
-  開始吧！ button. Tapping the button starts the looping background music
-  (`assets/snd/bg.mp3`, owned by the root page so it continues across levels)
-  and moves on to the first level.
+- [intro](levels/intro/index.html): the title 颱風天 and a small curling
+  ocean-wave symbol (an SVG button labelled 開始) that gently bobs. Tapping it
+  starts the looping background music (`assets/snd/bg.mp3`, owned by the root
+  page so it continues across levels), the wave rears back, rolls forward off
+  screen flinging foam spray, then the first level loads. Reduced motion skips
+  the roll.
 - [tv](levels/tv/index.html): a square retro TV with a remote. The red power
   button (top left of the remote) plays `assets/click.mp3` on every press,
   turns the TV on, and plays
@@ -55,13 +58,21 @@ plays first.
   (it is primed on touch for iOS); letting go before it is fully open fades
   it out, and the next swipe starts it again. Once open, it plays out.
   Rain falls around the umbrella and stops at its expanding canopy, leaving
-  the area underneath dry. Looping `assets/rain.mp3` starts with the scene
-  and keeps playing across all later levels, including transitions and the end
-  of the game. The main page owns that audio so unloading the umbrella does
-  not interrupt it. If autoplay is blocked, the first umbrella interaction
-  retries playback. Reduced-motion mode disables falling rain. The recording contains
+  the area underneath dry. In the game the rain is visual only; the
+  `assets/rain.mp3` loop is played by the engine on the outdoor levels (see
+  Background music and rain). Opened on its own, the level plays that loop
+  itself. Reduced-motion mode disables falling rain. The recording contains
   only the original's first 30 minutes, encoded as a 96 kbps MP3.
-- [store](levels/store/index.html): straighten the wooden door sign 歡迎光臨.
+- [store](levels/store/index.html): a convenience-store front in
+  FamilyMart-style green, white, and blue (no lettering): a striped fascia
+  with a wordless badge, aluminium-framed glass showing lit shelves and a
+  drinks fridge, a striped waist band on the glass, a drink poster, a plant,
+  an umbrella stand, and a green mat. A crooked 歡迎光臨 sign drops in with a
+  bounce onto the left window. Drag either end to rotate it; releasing within
+  6° springs it straight. Then the sliding glass doors part into their
+  pockets, the door sensor turns green, warm light spills onto the mat,
+  `assets/chime.mp3` plays (left ringing into the next level), and the level
+  completes. Keyboard: left/right arrows rotate, release to check.
 - [cat](levels/cat/index.html): pull the lucky cat's raised paw down far
   enough and release it to start a springy, forward-facing wave.
   Pressing the paw plays `assets/meow.mp3`; keyboard arrow presses also meow.
@@ -85,9 +96,8 @@ plays first.
 - [metro](levels/metro/index.html): an original abstract, text-free metro map
   with blue, green, orange, red, and yellow routes. Five visually identical
   trains receive shuffled audio clues from `assets/<color>.mp3` on each visit.
-  Hold a train to hear its looping clue; the main background music fades from
-  0.6 to 0.12 while held and returns on release, cancellation, blur, or teardown.
-  Rain is unchanged. Drag near any route to snap onto it, regardless of whether
+  Hold a train to hear its looping clue. All background music and rain fade out
+  for this level so the clues are easy to hear. Drag near any route to snap onto it, regardless of whether
   it matches; crowded placements find a nearby free spot on that same route.
   Trains can be picked up and reassigned. No correctness feedback appears until
   all five match. Tap-and-hold without moving only previews the sound.
@@ -95,16 +105,17 @@ plays first.
   map before the level completes (a short fade replaces travel in reduced motion).
   Keyboard: hold Space/Enter to listen, release to stop, and use arrow keys to
   cycle through routes. Reduced motion skips the arrival and snap bounce.
-  Each level owns its clue playback; only metro holds lower the background music.
+  Each level owns its clue playback.
 - [taiwan](levels/taiwan/index.html): all 22 county/city regions from the
   [Simplemaps Taiwan map](https://simplemaps.com/svg/country/tw), including
   offshore islands, on a soft sea-colored board. The seven tiny regions
   (Kinmen, Matsu, Penghu, Keelung, Hsinchu City, Chiayi City, and Taipei)
   start already placed; the other 15 are scrambled. Placed regions render
   in a separate layer behind loose pieces and are skipped by keyboard focus.
-  Drag pieces
-  near their relative positions to join them into movable groups, or onto
-  the faint geographic silhouette to anchor them. All regions must be assembled
+  Drag a piece onto the faint geographic silhouette, or into its correct
+  position next to any other piece. Any match plays the elevator's
+  `levels/elevator/assets/click.mp3`, glides onto the map and stays
+  locked for good; loose pieces never join into movable groups. All regions must be assembled
   before the internal borders fade and the level completes. Geometry remains
   at one consistent scale, with no text on the map. Arrow keys move a piece
   (Shift for larger steps), Enter/Space attempts to join it, and Escape
@@ -117,11 +128,12 @@ plays first.
   are `[4, 1]`, `[3]`, `[2]` (bottom to top; 4 is largest).
   Move only a stack's top cone, and never put a larger cone on a smaller one.
   Finish by collecting all four, largest to smallest, on the center spot.
+  The center spot is circled in pale green chalk (a grainy SVG filter) as a
+  subtle hint that the stack belongs there.
   Drag a cone, or tap it then a destination. Keyboard: Enter/Space selects,
   Left/Right chooses a spot, Enter/Space places, Escape cancels.
   `assets/truck.mp3` loops from setup until completion or teardown; if autoplay
-  is blocked, interaction retries. The existing background rain and music
-  continue unchanged. Reduced motion uses static rain and skips bounce motion.
+  is blocked, interaction retries. The engine's rain and music keep playing. Reduced motion uses static rain and skips bounce motion.
 
 - [puddles](levels/puddles/index.html): four scattered leaves match four rainy
   street puddles by size. Each leaf placed in a puddle plays `assets/splash.mp3`
@@ -129,12 +141,13 @@ plays first.
   Incorrect matches stay movable; occupied puddles do not accept another leaf.
   All four size matches are needed to finish. Keyboard: Enter/Space selects,
   arrows choose a puddle, Enter/Space places, Escape cancels. Rain and music
-  continue from earlier levels; reduced motion uses a brief splash fade.
+  are played by the engine; reduced motion uses a brief splash fade.
 
 - [card](levels/card/index.html): an original text-free stored-value card,
   inspired by the white Taiwan EasyCard with yellow, blue, pink, and green
   corner shapes. Drag it over the right-hand metro gate sensor; the sensor
-  lights and the gate doors open. Releasing elsewhere returns the card.
+  lights and the gate doors open with a gate sound
+  (`asset/gate.mp3`, converted from `gate.wav`). Releasing elsewhere returns the card.
   Keyboard: focus the card and press Enter/Space.
 
 - [bike](levels/bike/index.html): a rainy street where ten parked cars form a
@@ -144,6 +157,8 @@ plays first.
   top lane to the crosswalk, without touching a car. Other gaps are dead ends.
   Touching one wobbles the bike and sends it back to the start. Movement is
   checked along the whole drag path, so fast swipes can't skip through cars.
+  While the bike is held, `assets/bell.mp3` rings on a loop; it stops when
+  the bike is let go, crashes or arrives.
   Letting go mid-street leaves the bike where it is. The pedestrian signal
   across the street stays dark until the bike arrives, then shows the walking
   green man (Xiaolüren) from `assets/walkingman-display.gif`, a cropped
@@ -151,14 +166,32 @@ plays first.
   the bike, and Shift moves it farther. The focus border shows only for
   keyboard use, never while dragging.
 
+- [powerlines](levels/powerlines/index.html): a rainy street with two wooden
+  telephone poles, each with two crossarms of green glass insulators. Two of
+  the lines have snapped: each hangs from one pole with a frayed copper end
+  lying in the street, crackling with little sparks. Drag a loose end up to
+  the matching insulator on the other pole (it glows while you drag, brighter
+  when close) and let go to reconnect it; a wire can only stretch as far as
+  its length, and a missed drop falls back to the ground. Each reconnection
+  plays `assets/jolt.mp3`, and a distant ambulance siren
+  (`assets/ambulance.mp3`) loops at half volume under the rain for the whole
+  level, stopping on teardown. A construction
+  worker in a hard hat and orange raincoat watches from behind in the
+  foreground. Once both lines are fixed, the dark windows light up, the street
+  lamp comes on, the worker raises an arm, and the level completes. Keyboard:
+  focus a loose end and press Enter/Space to reconnect it. Reduced motion
+  skips sparks and tweens.
+
 - [purse](levels/purse/index.html): a translucent coin purse inspired by the
   striped Taiwanese gaji bag, with a braided wrist strap, on a wooden table
   with six scattered NT-style coins. The EasyCard-style card from the card
   level already sits inside the purse as decoration; coins settle in front of it.
   Drag the zipper pull left to right to open
   it, drop every coin inside, then drag the pull right to left to close it.
-  Releasing the zipper past halfway snaps it fully open or closed. Coins
-  dropped on a closed purse bounce back. Coins inside follow simple physics
+  Releasing the zipper past halfway snaps it fully open or closed, and
+  `assets/zipper.mp3` plays each time it reaches fully open or fully closed. Coins
+  dropped on a closed purse bounce back. Each coin that lands inside plays
+  `assets/coin.mp3`. Coins inside follow simple physics
   and slosh, and the purse wobbles, whenever a new coin lands. The level
   completes when all coins are inside and the purse is zipped. Keyboard:
   arrows or Enter/Space move the zipper; Enter/Space on a coin drops it into
@@ -168,8 +201,10 @@ plays first.
   with no lettering. The cup is yellow with blue dots and white stripes, and
   translucent enough to show its contents. In order: drag the three small
   heaps of boba into the cup, drag the cup under the tea dispenser and tap
-  the dispenser to pour, then drag the cup into the seal-and-shake machine.
-  The machine seals the cup, shakes it left and right, and sends the drink
+  the dispenser to pour (`assets/pour.mp3` plays with the stream and fades
+  out as it stops), then drag the cup into the seal-and-shake machine.
+  The machine seals the cup, shakes it left and right (`assets/shake.mp3`
+  loops for the length of the shake), and sends the drink
   off to complete the level. Out-of-order steps (cup to the dispenser before
   all boba is in, boba after the tea, sealing before the tea) empty the cup
   and start over. Keyboard: arrows or Enter/Space move the cup between
@@ -201,7 +236,8 @@ plays first.
   red half-moon blocks lie on the stone floor. Tap each to pick it up; it
   hops into the hand tray at the bottom, held flat-face to flat-face. With
   both held, tap the floor to throw. Each block flies up, spins, tumbles,
-  and bounces a random number of times with dust puffs, landing with its flat
+  and bounces a random number of times with dust puffs (each block plays
+  `assets/dropped.mp3` when it first hits the floor; the two clacks overlap), landing with its flat
   face pointing either inward or outward. The first throw never passes; after
   that each block's facing is random (a 1-in-4 chance). When both flat faces
   point inward the blocks glow, sparkles burst, and the level completes;
@@ -236,15 +272,18 @@ plays first.
   fish to select it (it glows and wiggles), tap it again to deselect, or tap
   another fish to swap the two with an arcing animation. When the fish run
   smallest-to-largest or largest-to-smallest, they all flop, sparkles burst,
-  and the level completes. Keyboard: Enter/Space on a fish selects or swaps.
+  `assets/bubbles.mp3` (converted from `bubbles.wav`) plays, and the level
+  completes. Keyboard: Enter/Space on a fish selects or swaps.
   Reduced motion swaps instantly.
 - [ufo](levels/ufo/index.html): a night-market 蚵炱 (oyster fritter) stall
   with three bowls (green onion, oysters, batter), a ladle on the counter and a
-  wok of hot oil. Tap the bowls in order: green onion, oyster, green onion
-  again, then batter; each ingredient flies into the ladle. A wrong bowl shakes
+  wok of hot oil. Tap the bowls in order: batter first (a thin raw layer
+  spreads across the ladle), then green onion, oyster, green onion again, and
+  batter once more on top; each ingredient flies into the ladle. A wrong bowl shakes
   the ladle, empties it and starts over. Then tap the wok or ladle to fry: the
   ladle dips into the oil, bubbles rise, and the fritter turns from raw batter
-  to crispy brown. Tap it once it glows to lift it out onto the plate, where
+  to crispy brown. When it is done, `assets/ready.mp3` (converted from
+  `ready.wav`) plays. Tap it once it glows to lift it out onto the plate, where
   it steams and sparkles, and the level completes. Keyboard: Enter/Space on the
   bowls, wok and ladle. Reduced motion skips bubbles and tweens.
 
@@ -270,7 +309,26 @@ of `tv-source.mp4` in the same folder, made with:
 and its soundtrack with:
 `ffmpeg -i tv.mp4 -vn -ac 1 -c:a libmp3lame -b:a 64k tv-sound.mp3`
 
-The music and rain loops are resumed by `game.js` if the browser pauses them
+### Background music and rain
+
+`game.js` owns three looping `<audio>` tracks and picks them per level. When
+the next level begins, it crossfades over 1.5 s, and a track that fades out is
+paused where it is so it resumes from there later.
+
+| Levels | Music | Rain (`levels/umbrella/assets/rain.mp3`) |
+| --- | --- | --- |
+| puddles, cones, taiwan, bike, powerlines | `assets/snd/bg.mp3` | yes |
+| metro | none, so the train clues are easy to hear | no |
+| fruit, incense, jiaobei, fortune, temple | `assets/snd/temple.mp3` | no |
+| every other level | `assets/snd/bg.mp3` | no |
+
+Edit `RAIN_LEVELS`, `TEMPLE_LEVELS` and `QUIET_LEVELS` in `game.js` to
+change this. Nothing plays until the intro's start tap, which also starts
+every loop silently once so iOS lets them play later without a tap. iOS
+ignores `<audio>.volume`, so there the loops are routed through Web Audio
+gain nodes to keep the fades.
+
+The loops are resumed by `game.js` if the browser pauses them
 on its own (iOS does this for calls, Siri or other media). This happens on
 the next tap or key press in any level, or when the page becomes visible again.
 

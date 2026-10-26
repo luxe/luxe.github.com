@@ -12,6 +12,7 @@ body { display: grid; place-items: center; user-select: none; -webkit-user-selec
 .rain i { position: absolute; top: -30px; width: 1.5px; height: 15px; border-radius: 2px; background: #779c9d; opacity: .4; animation: falling linear infinite; }
 @keyframes falling { to { transform: translate(-20px, calc(100svh + 60px)); } }
 .spot { fill: #8eaaa1; fill-opacity: .28; stroke: #d3dfc9; stroke-width: 2; stroke-dasharray: 5 8; cursor: pointer; outline: none; }
+.spot[data-spot="1"] { fill-opacity: .12; stroke: #ddf3d3; }
 .spot.chosen, .spot:focus-visible { stroke: #fff6d5; stroke-width: 4; fill-opacity: .55; }
 .cone { outline: none; cursor: grab; }
 .cone[data-top="false"] { cursor: default; }

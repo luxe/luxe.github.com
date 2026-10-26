@@ -108,10 +108,6 @@
   }
   trains.forEach(render);
 
-  function setQuiet(quiet) {
-    if (parent !== window) parent.setMetroListening(quiet);
-  }
-
   function stopListening() {
     listeningAttempt++;
     if (listening) {
@@ -120,7 +116,6 @@
       listening.node.classList.remove("held");
       listening = null;
     }
-    setQuiet(false);
   }
 
   function listen(train) {
@@ -128,7 +123,6 @@
     const attempt = ++listeningAttempt;
     listening = train;
     train.node.classList.add("held");
-    setQuiet(true);
     train.sound.play().catch(cause => {
       // A released or superseded hold can abort its pending playback.
       if (attempt !== listeningAttempt) return;

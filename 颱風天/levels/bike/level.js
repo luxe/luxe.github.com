@@ -31,6 +31,14 @@
   ];
   const bike = { ...START, node: null, art: null };
   let drag = null;
+  // Rings on a loop for as long as the rider is held.
+  const bell = wanwanAudio.sound("./assets/bell.mp3", { loop: true });
+  function ringBell(on) {
+    if (on === !bell.paused) return;
+    if (!on) { bell.pause(); return; }
+    bell.currentTime = 0;
+    bell.play().catch(cause => console.warn("Bell could not play", cause));
+  }
   let crashing = false;
   let completed = false;
   let timer = 0;
@@ -136,6 +144,7 @@
       if (focused) bike.node.focus({ preventScroll: true });
     }
     bike.node.classList.toggle("held", Boolean(drag));
+    ringBell(Boolean(drag));
     bike.node.setAttribute("aria-disabled", String(completed || crashing));
   }
   // Moves along the whole path in small steps so quick swipes cannot tunnel through a car.
@@ -273,6 +282,7 @@
     teardown: () => {
       clearTimeout(timer);
       release();
+      ringBell(false);
       for (const animation of animations) animation.cancel();
       rain.classList.remove("active");
       window.removeEventListener("blur", blur);

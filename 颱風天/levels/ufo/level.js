@@ -12,6 +12,8 @@
   const batterRim = batter.querySelector(".batter-rim");
   const crisp = batter.querySelector(".crisp");
   const peek = batter.querySelector(".peek");
+  const lining = food.querySelector(".lining");
+  const liningPool = lining.querySelector(".lining-pool");
   const layers = {
     onion1: food.querySelector(".onion-1"),
     oysters: food.querySelector(".oysters"),
@@ -26,8 +28,12 @@
   const bowls = [...document.querySelectorAll(".bowl")];
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
   const NS = "http://www.w3.org/2000/svg";
+  const readySound = wanwanAudio.sound("./assets/ready.mp3");
 
-  const SEQUENCE = ["onion", "oyster", "onion", "batter", "fry"];
+  // Batter lines the ladle first, then the fillings, then batter on top.
+  const SEQUENCE = ["batter", "onion", "oyster", "onion", "batter", "fry"];
+  // What each step adds to the ladle.
+  const ADDS = ["lining", "onion1", "oysters", "onion2", "batter"];
   const BOWLS = { onion: { x: 105, y: 422 }, oyster: { x: 300, y: 422 }, batter: { x: 495, y: 422 } };
   const REST = { x: 300, y: 560 };
   const FRY = { x: 300, y: 708 };
@@ -126,6 +132,7 @@
     batterDome.setAttribute("fill", shade(SHADES.dome, p));
     batterBase.setAttribute("fill", shade(SHADES.base, p));
     batterRim.setAttribute("stroke", shade(SHADES.rim, p));
+    liningPool.setAttribute("fill", shade(SHADES.base, p));
     crisp.setAttribute("opacity", r1(Math.max(0, (p - .35) / .65) * 100) / 100);
     peek.setAttribute("opacity", r1((.95 - p * .25) * 100) / 100);
     scene.dataset.fry = (Math.round(p * 100) / 100).toString();
@@ -169,8 +176,8 @@
 
   async function add(item) {
     setBusy(true);
-    const which = item === "onion" ? (step === 0 ? "onion1" : "onion2") : item === "oyster" ? "oysters" : "batter";
-    status.textContent = { onion1: "加了蔥花。", oysters: "加了蚵仔。", onion2: "再加一次蔥花。", batter: "淋上麵糊，可以下鍋炸了。" }[which];
+    const which = ADDS[step];
+    status.textContent = { lining: "先在圓勺裡鋪一層麵糊。", onion1: "加了蔥花。", oysters: "加了蚵仔。", onion2: "再加一次蔥花。", batter: "淋上麵糊，可以下鍋炸了。" }[which];
     const bowl = BOWLS[item];
     const blob = element("g", {}, flyingLayer);
     if (item === "onion") for (const point of scatter(6, 14, 8)) piece(blob, "#ring", point);
@@ -182,7 +189,18 @@
     blob.remove();
     if (!alive) return;
 
-    if (which === "batter") {
+    if (which === "lining") {
+      // The batter spreads out from where it lands to coat the ladle.
+      lining.style.transformBox = "fill-box";
+      lining.style.transformOrigin = "50% 50%";
+      lining.setAttribute("opacity", "1");
+      await tween(520, p => {
+        lining.style.transform = `scale(${r1((.2 + .8 * p) * 100) / 100})`;
+        lining.setAttribute("opacity", r1(Math.min(1, p * 1.6) * 100) / 100);
+      }, p => 1 + 2.4 * Math.pow(p - 1, 3) + 1.4 * Math.pow(p - 1, 2));
+      lining.style.transform = "";
+      await tween(220, p => placeLadleWith(0, Math.sin(Math.PI * p) * 4));
+    } else if (which === "batter") {
       batter.setAttribute("opacity", ".88");
       paintBatter(0);
       await tween(560, p => batter.setAttribute("transform", `scale(1 ${r1((.15 + .85 * p) * 100) / 100})`), p => 1 + 2.4 * Math.pow(p - 1, 3) + 1.4 * Math.pow(p - 1, 2));
@@ -217,12 +235,14 @@
   async function startOver() {
     setBusy(true);
     resets++;
-    status.textContent = "順序不對，重新開始：先加蔥花。";
+    status.textContent = "順序不對，重新開始：先淋麵糊。";
     await tween(560, p => placeLadleWith(Math.sin(p * Math.PI * 6) * 11 * (1 - p), 0), linear);
     placeLadle();
     if (step > 0) {
       await tween(320, p => food.setAttribute("opacity", r1((1 - p) * 100) / 100));
       for (const layer of Object.values(layers)) layer.replaceChildren();
+      lining.setAttribute("opacity", "0");
+      liningPool.setAttribute("fill", SHADES.base[0]);
       batter.setAttribute("opacity", "0");
       batter.removeAttribute("transform");
       food.removeAttribute("opacity");
@@ -289,6 +309,8 @@
     bubbleRate = 2;
     setBusy(false);
     setStage("cooked");
+    readySound.currentTime = 0;
+    readySound.play().catch(cause => console.warn("Ready sound could not play", cause));
     status.textContent = "炸得金黃酥脆了，點它起鍋。";
     if (usedKeyboard) ladle.focus();
   }

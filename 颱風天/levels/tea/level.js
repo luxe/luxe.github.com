@@ -170,6 +170,36 @@
     });
   }
 
+  const pourSound = wanwanAudio.sound("./assets/pour.mp3");
+  const shakeSound = wanwanAudio.sound("./assets/shake.mp3", { loop: true });
+  let fadeFrame = 0;
+  function startSound(sound) {
+    cancelAnimationFrame(fadeFrame);
+    sound.volume = 1;
+    sound.currentTime = 0;
+    sound.play().catch(() => {});
+  }
+  // The pour clip is longer than the pour, so ease it out instead of cutting it.
+  function fadeOut(sound, ms = 260) {
+    cancelAnimationFrame(fadeFrame);
+    if (sound.paused) return;
+    const from = sound.volume;
+    const begin = performance.now();
+    const step = now => {
+      const t = Math.min(1, (now - begin) / ms);
+      sound.volume = from * (1 - t);
+      if (t < 1) fadeFrame = requestAnimationFrame(step);
+      else { sound.pause(); sound.volume = 1; }
+    };
+    fadeFrame = requestAnimationFrame(step);
+  }
+  function stopSounds() {
+    cancelAnimationFrame(fadeFrame);
+    pourSound.pause();
+    shakeSound.pause();
+    pourSound.volume = 1;
+  }
+
   async function pour() {
     if (busy || completed || drag) return;
     play(pourButton, [{ transform: "scale(1)" }, { transform: "scale(.88)" }, { transform: "scale(1)" }], 220);
@@ -182,11 +212,13 @@
     setBusy(true);
     status.textContent = "倒茶中……";
     stream.style.opacity = "1";
+    startSound(pourSound);
     if (!await play(stream, [{ transform: "scaleY(0)" }, { transform: "scaleY(1)" }], 220, "ease-in") || id !== run) return;
     if (!await play(teaFill, [{ transform: teaOffset(0) }, { transform: teaOffset(1) }], 1700, "cubic-bezier(.3, .1, .4, 1)") || id !== run) return;
     teaFill.style.transform = teaOffset(1);
     if (!await play(stream, [{ transform: "translateY(0) scaleY(1)" }, { transform: "translateY(188px) scaleY(0)" }], 240, "ease-in") || id !== run) return;
     stream.style.opacity = "0";
+    fadeOut(pourSound);
     stream.getAnimations().forEach(animation => animation.cancel());
     teaFill.getAnimations().forEach(animation => animation.cancel());
     tea = true;
@@ -245,12 +277,16 @@
     if (!await play(press, [{ transform: "translateY(29px)" }, { transform: "translateY(0)" }], 280, "ease-out") || id !== run) return;
     press.getAnimations().forEach(animation => animation.cancel());
     status.textContent = "搖一搖！";
+    shakeSound.currentTime = 0;
+    shakeSound.play().catch(() => {});
     const sway = [0, -14, 14, -14, 14, -10, 10, -5, 0];
     const shakes = [
       play(cupArt, sway.map(x => ({ transform: `translateX(${x}px) rotate(${x * .35}deg)` })), 1150),
       ...sealers.map(node => play(node, sway.map(x => ({ transform: `translateX(${x}px)` })), 1150)),
     ];
-    if ((await Promise.all(shakes)).includes(false) || id !== run) return;
+    const shaken = !(await Promise.all(shakes)).includes(false);
+    shakeSound.pause();
+    if (!shaken || id !== run) return;
     cupArt.getAnimations().forEach(animation => animation.cancel());
     sealers.forEach(node => node.getAnimations().forEach(animation => animation.cancel()));
     lamp.setAttribute("fill", "#7fd38f");
@@ -366,6 +402,7 @@
     setup: () => animateScene(true),
     teardown: () => {
       run++;
+      stopSounds();
       timers.forEach(clearTimeout);
       timers.clear();
       for (const animation of [...animations]) animation.cancel();

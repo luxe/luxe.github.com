@@ -216,6 +216,8 @@
     coin.vy = 380;
     drawCoin(coin);
     slosh(1);
+    // Overlapping play so coins dropped in quick succession each clink.
+    wanwanAudio.play("./assets/coin.mp3");
     const count = coins.filter(c => c.inside).length;
     status.textContent = `${count} / ${coins.length} 個硬幣在零錢包裡。`;
     if (focused) (coins.find(c => !c.inside)?.node ?? zipper).focus({ preventScroll: true });
@@ -233,8 +235,17 @@
   }
 
   // ---------- Zipper ----------
+  const zipSound = wanwanAudio.sound("./assets/zipper.mp3");
+  // Last fully reached end (0 closed, 1 open); the sound plays only when the
+  // zipper arrives at the opposite end, never while hovering partway.
+  let zipEnd = 0;
   function setZip(value, announce = true) {
     zip = clamp(value, 0, 1);
+    if ((zip === 0 || zip === 1) && zip !== zipEnd) {
+      zipEnd = zip;
+      zipSound.currentTime = 0;
+      zipSound.play().catch(() => {});
+    }
     drawZipper();
     if (announce && (zip === 0 || zip === 1)) checkWin();
   }
@@ -368,6 +379,7 @@
       clearTimeout(timer);
       cancelAnimationFrame(frame);
       cancelAnimationFrame(zipFrame);
+      zipSound.pause();
       frame = 0;
       for (const animation of animations) animation.cancel();
       return animateScene(false);

@@ -12,7 +12,7 @@
     "tv", "sandwich", "elevator", "umbrella",
     
     // travel outside
-    "puddles", "cones", "taiwan", "bike",
+    "puddles", "cones", "taiwan", "bike", "powerlines",
     
     // go to metro
     "card", "metro",
@@ -38,9 +38,18 @@
     "./levels/elevator/assets/click.mp3", "./levels/elevator/assets/ding.mp3", "./levels/elevator/assets/elevator.mp3",
     "./levels/umbrella/assets/open.mp3",
     "./levels/puddles/assets/splash.mp3",
+    "./levels/bike/assets/bell.mp3",
+    "./levels/card/asset/gate.mp3",
     "./levels/money/assets/register.mp3",
     "./levels/cat/assets/meow.mp3",
     "./levels/temple/assets/flame.mp3",
+    "./levels/jiaobei/assets/dropped.mp3",
+    "./levels/purse/assets/zipper.mp3", "./levels/purse/assets/coin.mp3",
+    "./levels/powerlines/assets/ambulance.mp3", "./levels/powerlines/assets/jolt.mp3",
+    "./levels/store/assets/chime.mp3",
+    "./levels/tea/assets/pour.mp3", "./levels/tea/assets/shake.mp3",
+    "./levels/fish/assets/bubbles.mp3",
+    "./levels/ufo/assets/ready.mp3",
     "./levels/lottery/assets/win.mp3",
   ];
   // Long loops stay <audio> elements (decoding them would cost tens of MB);
@@ -55,8 +64,7 @@
     window.wanwanAudio.preload(SOUND_EFFECTS).then(() => {
       window.wanwanAudio.prefetch(PREFETCH);
       // Let the browser buffer the start of the long loops ahead of time.
-      music.preload = "auto";
-      rain.preload = "auto";
+      for (const loop of [music, templeMusic, rain]) loop.preload = "auto";
     });
   }
 
@@ -65,26 +73,81 @@
   const error = document.querySelector("#error");
   const music = document.querySelector("#music");
   const rain = document.querySelector("#rain");
+  const templeMusic = document.querySelector("#temple-music");
   const winSound = window.wanwanAudio.sound("./assets/snd/win1.mp3");
   const admin = document.querySelector("#admin");
   const levelPicker = document.querySelector("#admin-level");
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
-  let musicFade = 0;
 
-  window.setMetroListening = listening => {
-    if (listening && game.dataset.level !== "metro") return;
-    cancelAnimationFrame(musicFade);
-    const from = music.volume;
-    const target = listening ? 0.12 : 0.6;
-    const start = performance.now();
-    function fade(now) {
-      const progress = Math.max(0, Math.min(1, (now - start) / 240));
-      music.volume = from + (target - from) * progress;
-      if (progress < 1) musicFade = requestAnimationFrame(fade);
+  // Background loops for each level, crossfaded during transitions.
+  const RAIN_LEVELS = new Set(["puddles", "cones", "taiwan", "bike", "powerlines"]);
+  const TEMPLE_LEVELS = new Set(["fruit", "incense", "jiaobei", "fortune", "temple"]);
+  // The metro's train songs are easier to hear with no music at all.
+  const QUIET_LEVELS = new Set(["metro"]);
+  const FADE_MS = 1500;
+  const tracks = [
+    { element: music, volume: 0.6, wanted: name => !TEMPLE_LEVELS.has(name) && !QUIET_LEVELS.has(name) },
+    { element: templeMusic, volume: 0.6, wanted: name => TEMPLE_LEVELS.has(name) },
+    { element: rain, volume: 1, wanted: name => RAIN_LEVELS.has(name) },
+  ].map(track => ({ ...track, level: 0, target: 0, gain: null, fade: 0 }));
+  let soundStarted = false;
+  let soundLevel = "intro";
+  // iOS ignores <audio>.volume, so there the loops are routed through Web
+  // Audio gain nodes to keep fades and per-track volume working.
+  const volumeWorks = (() => { const probe = new Audio(); probe.volume = 0.5; return probe.volume === 0.5; })();
+  function routeThroughWebAudio(track) {
+    if (volumeWorks || track.gain) return;
+    try {
+      const context = window.wanwanAudio.engine.context();
+      if (!context) return;
+      track.gain = context.createGain();
+      track.gain.gain.value = 0;
+      context.createMediaElementSource(track.element).connect(track.gain).connect(context.destination);
+    } catch (cause) {
+      track.gain = null;
+      console.warn("Background loop could not use Web Audio", cause);
     }
-    musicFade = requestAnimationFrame(fade);
-  };
-
+  }
+  function applyLevel(track) {
+    const value = Math.max(0, Math.min(1, track.level * track.volume));
+    if (track.gain) track.gain.gain.value = value;
+    else track.element.volume = value;
+  }
+  function fadeTrack(track, target, duration) {
+    track.target = target;
+    cancelAnimationFrame(track.fade);
+    if (target > 0) {
+      keepPlaying.add(track.element);
+      if (track.element.paused) {
+        track.element.play().catch(cause => console.warn("Background loop could not start", track.element.id, cause));
+      }
+    } else {
+      keepPlaying.delete(track.element);
+    }
+    const from = track.level;
+    const start = performance.now();
+    const step = now => {
+      const progress = duration > 0 ? Math.min(1, (now - start) / duration) : 1;
+      track.level = from + (target - from) * progress;
+      applyLevel(track);
+      if (progress < 1) {
+        track.fade = requestAnimationFrame(step);
+      } else if (target === 0) {
+        // Paused, not rewound, so the music picks up where it left off.
+        track.element.pause();
+      }
+    };
+    if (duration > 0 && document.visibilityState === "visible") track.fade = requestAnimationFrame(step);
+    else step(start + duration);
+  }
+  function setSoundscape(name, duration = FADE_MS) {
+    soundLevel = name;
+    if (!soundStarted) return;
+    for (const track of tracks) {
+      const target = track.wanted(name) ? 1 : 0;
+      if (target !== track.target) fadeTrack(track, target, duration);
+    }
+  }
   // Loops that should keep going. iOS can pause them on its own (another
   // video with sound, a call, Siri, leaving the app); they are resumed on
   // the next tap or key, or when the page is visible again.
@@ -103,26 +166,33 @@
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "visible") resumeLoops();
   });
-  for (const loop of [music, rain]) {
-    loop.addEventListener("pause", () => {
-      if (keepPlaying.has(loop) && document.visibilityState === "visible") {
+  for (const { element } of tracks) {
+    element.addEventListener("pause", () => {
+      if (keepPlaying.has(element) && document.visibilityState === "visible") {
         setTimeout(resumeLoops, 400);
       }
     });
   }
 
-  // Called synchronously from the intro's click so browsers allow playback.
+  // Called synchronously from the intro's tap so browsers allow playback.
   window.startMusic = () => {
-    keepPlaying.add(music);
-    if (!music.paused) return;
-    music.volume = 0.6;
-    music.play().catch(cause => console.warn("Background music could not start", cause));
+    if (soundStarted) return;
+    soundStarted = true;
+    window.wanwanAudio.unlock();
+    for (const track of tracks) {
+      routeThroughWebAudio(track);
+      applyLevel(track);
+      // Start every loop inside the tap so iOS lets it play later without one.
+      if (!track.wanted(soundLevel) && track.element.paused) {
+        track.element.muted = true;
+        track.element.play().then(() => {
+          if (track.target === 0) track.element.pause();
+        }, () => {}).finally(() => { track.element.muted = false; });
+      }
+    }
+    setSoundscape(soundLevel, 0);
   };
-  window.startRain = () => {
-    keepPlaying.add(rain);
-    if (!rain.paused) return;
-    rain.play().catch(cause => console.warn("Rain sound could not start", cause));
-  };
+
   function playWinSound() {
     winSound.stop();
     winSound.play().catch(cause => console.warn("Win sound could not play", cause));
@@ -225,6 +295,7 @@
         previous.setAttribute("aria-hidden", "true");
       }
       game.dataset.phase = "background";
+      setSoundscape(levels[nextIndex].name);
       await game.animate([
         { backgroundColor: getComputedStyle(game).backgroundColor },
         { backgroundColor: lifecycle.background },

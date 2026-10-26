@@ -9,6 +9,7 @@
   const sparkleLayer = document.querySelector(".sparkles");
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
   const NS = "http://www.w3.org/2000/svg";
+  const bubbles = wanwanAudio.sound("./assets/bubbles.mp3");
 
   const CENTER_X = 300;
   const SLOT_Y = [246, 316, 386, 456, 526, 596, 666];
@@ -245,6 +246,8 @@
     completed = true;
     scene.classList.add("complete");
     status.textContent = "魚都排好了！";
+    bubbles.currentTime = 0;
+    bubbles.play().catch(cause => console.warn("Bubbles sound could not play", cause));
     for (const fish of fishes) fish.node.style.setProperty("--delay", `${fish.slot * 70}ms`);
     if (document.activeElement?.closest?.(".fish")) document.activeElement.blur();
     if (!reduced.matches) {

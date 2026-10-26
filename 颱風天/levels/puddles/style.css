@@ -15,7 +15,7 @@ body { display: grid; place-items: center; user-select: none; -webkit-user-selec
 .leaf:focus-visible .outline { opacity: 1; }
 .outline { opacity: 0; stroke: #fff5d5; stroke-width: 4; fill: none; }
 .puddle { cursor: pointer; outline: none; }
-.puddle.chosen .rim, .puddle:focus-visible .rim { stroke: #fff5d5; stroke-width: 4; }
+.puddle:focus-visible { outline: 2px dashed #526e65; outline-offset: 6px; }
 .complete .leaf { cursor: default; }
 .splash ellipse { transform-box: fill-box; transform-origin: center; }
 .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

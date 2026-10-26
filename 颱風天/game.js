@@ -12,7 +12,7 @@
     "tv", "sandwich", "elevator", "umbrella",
     
     // travel outside
-    "puddles", "cones", "taiwan", "bike", "powerlines",
+    "puddles", "cones", "taiwan", "bike", "powerlines", "drain",
     
     // go to metro
     "card", "metro",
@@ -27,7 +27,10 @@
     "fruit", "incense", "jiaobei", "fortune", "temple",
 
     // street market
-    "fish", "ufo", "lottery"];
+    "fish", "ufo", "lottery", "mahjong",
+
+    // A quiet cup of tea, then the storm clears.
+    "teacup", "ending"];
 
   // Every short sound effect, decoded at startup so it plays instantly
   // (see audio.js). Add new effects here.
@@ -36,6 +39,7 @@
     "./levels/tv/assets/click.mp3",
     "./levels/sandwich/assets/bite.mp3",
     "./levels/elevator/assets/click.mp3", "./levels/elevator/assets/ding.mp3", "./levels/elevator/assets/elevator.mp3",
+    "./levels/elevator/assets/moving.mp3",
     "./levels/umbrella/assets/open.mp3",
     "./levels/puddles/assets/splash.mp3",
     "./levels/bike/assets/bell.mp3",
@@ -51,6 +55,8 @@
     "./levels/fish/assets/bubbles.mp3",
     "./levels/ufo/assets/ready.mp3",
     "./levels/lottery/assets/win.mp3",
+    "./levels/mahjong/assets/156668__rtb45__mahjong.mp3",
+    "./levels/drain/assets/drain.mp3",
   ];
   // Long loops stay <audio> elements (decoding them would cost tens of MB);
   // downloading them early still lets them start right away.
@@ -80,7 +86,7 @@
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
 
   // Background loops for each level, crossfaded during transitions.
-  const RAIN_LEVELS = new Set(["puddles", "cones", "taiwan", "bike", "powerlines"]);
+  const RAIN_LEVELS = new Set(["umbrella", "puddles", "cones", "taiwan", "bike", "powerlines", "drain", "ending"]);
   const TEMPLE_LEVELS = new Set(["fruit", "incense", "jiaobei", "fortune", "temple"]);
   // The metro's train songs are easier to hear with no music at all.
   const QUIET_LEVELS = new Set(["metro"]);
@@ -212,6 +218,7 @@
     const frame = document.createElement("iframe");
     frame.className = "level-frame";
     frame.title = level.name;
+    frame.allow = "accelerometer; gyroscope";
     frame.inert = true;
     frame.setAttribute("aria-hidden", "true");
     let timer;
@@ -327,12 +334,16 @@
   }
 
   addEventListener("message", async event => {
-    if (event.origin !== location.origin || event.source !== current?.contentWindow ||
-        event.data?.type !== "wanwan:complete" || busy) return;
+    if (event.origin !== location.origin || event.source !== current?.contentWindow) return;
+    if (event.data?.type === "wanwan:clear-weather" && levels[index].name === "ending") {
+      fadeTrack(tracks.find(track => track.element === rain), 0, reducedMotion.matches ? 1000 : 5000);
+      return;
+    }
+    if (event.data?.type !== "wanwan:complete" || busy) return;
     busy = true;
     levelPicker.disabled = true;
     // The intro's start tap is not a beaten level.
-    if (index > 0) playWinSound();
+    if (index > 0 && levels[index].name !== "ending") playWinSound();
     if (index === levels.length - 1) {
       game.dataset.complete = "true";
       if (SHOW_ADMIN) levelPicker.disabled = false;

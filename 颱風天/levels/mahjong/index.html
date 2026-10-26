@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#dcd9c8">
+  <title>Wanwan - Mahjong</title>
+  <script src="../../audio.js"></script>
+  <script src="../../lifecycle.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./level.js" defer></script>
+</head>
+<body>
+  <main class="scene" aria-label="整理麻將聽牌">
+    <div class="table">
+      <div class="felt">
+        <div class="wall wall-top" aria-hidden="true"></div>
+        <div class="wall wall-side" aria-hidden="true"></div>
+        <div class="tea" aria-hidden="true"><span></span></div>
+        <div class="table-mark" aria-hidden="true">◇</div>
+        <button class="draw tile" type="button" aria-label="摸牌" aria-disabled="true"><span class="back"></span><span class="face"></span></button>
+        <div class="hand" role="group" aria-label="手牌，點兩張牌交換位置"></div>
+      </div>
+    </div>
+    <p id="instructions" class="sr-only">點兩張麻將牌交換。把三張相同的牌或同花色連續三張排在一起，東風單獨留下。手牌由左到右排成一列，每組順序不限。整理好後，點發光的牌摸牌。鍵盤用 Tab 選牌，Enter 或空白鍵交換及摸牌。</p>
+    <p id="status" class="sr-only" role="status" aria-live="polite"></p>
+  </main>
+</body>
+</html>

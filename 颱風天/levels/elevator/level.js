@@ -11,13 +11,13 @@
   const status = document.querySelector("#status");
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
   const rideSound = wanwanAudio.sound("./assets/elevator.mp3");
+  const movingSound = wanwanAudio.sound("./assets/moving.mp3");
   const clickSound = wanwanAudio.sound("./assets/click.mp3");
   const dingSound = wanwanAudio.sound("./assets/ding.mp3");
 
   const FLOORS = 20;
   const START = 5;
   const DOOR_MS = 1000;
-  // The ride sound hums for ~7s and chimes at the end; arrive just as it settles.
   const RIDE_MS = 7000;
 
   let firstFloorLit = false;
@@ -60,8 +60,8 @@
     playSound(dingSound);
     await wait(reducedMotion.matches ? 100 : DOOR_MS + 150);
 
-    playSound(rideSound);
     scene.classList.add("moving");
+    playSound(movingSound);
     if (!reducedMotion.matches) {
       car.animate([
         { transform: "translateY(0)" }, { transform: "translateY(.6%)", offset: .04 }, { transform: "translateY(0)", offset: .1 },
@@ -76,14 +76,17 @@
     }
     await wait(step);
     scene.classList.remove("moving");
+    movingSound.stop();
     firstButton.classList.remove("lit");
     firstButton.setAttribute("aria-pressed", "false");
     outside.dataset.floor = "1";
     plaque.textContent = "1樓";
     car.classList.remove("closed");
     playSound(dingSound);
+    playSound(rideSound);
     status.textContent = "1樓，開門";
-    await wait(reducedMotion.matches ? 0 : DOOR_MS + 300);
+    // Long enough for the 2 s door sound to finish before teardown stops it.
+    await wait(reducedMotion.matches ? 0 : Math.max(DOOR_MS + 300, 2100));
     complete();
   }
 
@@ -144,7 +147,7 @@
     background: "#d9e1e8",
     setup: () => animateScene(true),
     teardown: () => {
-      for (const sound of [rideSound, clickSound, dingSound]) sound.stop();
+      for (const sound of [rideSound, movingSound, clickSound, dingSound]) sound.stop();
       return animateScene(false);
     },
   });

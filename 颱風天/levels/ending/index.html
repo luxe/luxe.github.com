@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#cfdcdc">
+  <title>Wanwan - Stay safe</title>
+  <script src="../../lifecycle.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./level.js" defer></script>
+</head>
+<body>
+  <main class="scene" aria-label="注意安全，感謝您的遊玩">
+    <div class="sunlight" aria-hidden="true"></div>
+    <svg class="landscape" viewBox="0 0 600 820" fill="none" aria-hidden="true">
+      <g class="sun">
+        <circle cx="300" cy="280" r="86" fill="#fff1ba" opacity=".35"/>
+        <circle cx="300" cy="280" r="59" fill="#f5d17c"/>
+        <circle cx="283" cy="263" r="16" fill="#ffe8a2" opacity=".6"/>
+      </g>
+      <g class="clouds" fill="#b8cbca">
+        <path d="M-20 240Q15 200 55 216Q67 160 122 177Q165 167 179 213Q227 200 244 240Z"/>
+        <path d="M370 220Q399 174 441 191Q468 143 515 171Q562 164 574 204Q611 199 631 235Z"/>
+      </g>
+      <path d="M-20 668Q80 560 193 648Q305 526 427 640Q532 565 620 658V840H-20Z" fill="#9eb7a0"/>
+      <path d="M-20 729Q115 648 241 715Q377 625 620 724V840H-20Z" fill="#b4c6a4"/>
+      <path d="M0 776Q142 737 293 777T600 768V840H0Z" fill="#cbd4b1"/>
+      <path d="M65 704L65 664M65 682Q40 686 40 665Q60 663 65 682M65 674Q85 677 90 653Q69 650 65 674" stroke="#718e76" stroke-width="4" stroke-linecap="round" fill="#91ad89"/>
+      <path d="M508 750L508 711M508 730Q483 734 483 713Q503 711 508 730M508 722Q528 725 533 701Q512 698 508 722" stroke="#718e76" stroke-width="4" stroke-linecap="round" fill="#91ad89"/>
+    </svg>
+    <div class="rain" aria-hidden="true"></div>
+    <div class="message">
+      <h1>注意安全</h1>
+      <p>感謝您的遊玩</p>
+    </div>
+    <p id="status" class="sr-only" role="status" aria-live="polite"></p>
+  </main>
+</body>
+</html>

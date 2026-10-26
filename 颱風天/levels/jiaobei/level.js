@@ -190,7 +190,7 @@
     piece.node.parentNode.append(piece.node);
     hop(piece, { ...slot, scale: HAND_SCALE }, 520, 70, updateFlags);
     updateFlags();
-    setStatus(held.length === 2 ? "兩個筊杯都拿好了，點地面擲筊。" : "再撿起另一個筊杯。");
+    setStatus(held.length === 2 ? "兩個筊杯都拿好了，點地面或搖一搖手機擲筊。" : "再撿起另一個筊杯。");
   }
 
   // The first toss never passes; after that each block lands either way.
@@ -274,6 +274,56 @@
   });
   document.addEventListener("keydown", () => scene.classList.remove("pointer"));
 
+  // ---------- Shake to throw ----------
+  // Motion is read from the top page when reachable (same origin), which is
+  // the most reliable target on mobile browsers; standalone it uses this one.
+  const motionWindow = (() => {
+    try { return parent !== window && parent.DeviceMotionEvent ? parent : window; } catch { return window; }
+  })();
+  const SHAKE_FORCE = 14;
+  const SHAKE_HITS = 3;
+  const SHAKE_WINDOW = 1000;
+  let shakeHits = [];
+  let motionAsked = false;
+  let listening = false;
+
+  // iOS only allows the permission prompt from a completed tap.
+  function askMotion() {
+    if (motionAsked) return;
+    motionAsked = true;
+    const request = motionWindow.DeviceMotionEvent?.requestPermission;
+    if (typeof request !== "function") return;
+    request.call(motionWindow.DeviceMotionEvent).catch(cause => console.warn("Motion permission unavailable", cause));
+  }
+  document.addEventListener("touchend", askMotion);
+  document.addEventListener("click", askMotion);
+
+  function onMotion(event) {
+    let force;
+    const a = event.acceleration;
+    if (a && a.x != null) force = Math.hypot(a.x, a.y, a.z);
+    else {
+      const g = event.accelerationIncludingGravity;
+      if (!g || g.x == null) return;
+      force = Math.abs(Math.hypot(g.x, g.y, g.z) - 9.81);
+    }
+    if (force < SHAKE_FORCE) return;
+    const now = performance.now();
+    // One jolt spans several samples; count it once.
+    if (shakeHits.length && now - shakeHits[shakeHits.length - 1] < 120) return;
+    shakeHits = shakeHits.filter(t => now - t < SHAKE_WINDOW);
+    shakeHits.push(now);
+    if (shakeHits.length < SHAKE_HITS) return;
+    shakeHits = [];
+    if (held.length === 2) throwAt(300 + rand(-40, 40), 548 + rand(-20, 20));
+  }
+  function listenForShake(on) {
+    if (on === listening) return;
+    listening = on;
+    shakeHits = [];
+    motionWindow[on ? "addEventListener" : "removeEventListener"]("devicemotion", onMotion);
+  }
+
   // ---------- Frame loop ----------
   function tick(now) {
     const dt = last ? Math.min(50, now - last) : 0;
@@ -312,10 +362,12 @@
     background: "#6e1f19",
     setup: () => {
       if (!frame) { last = 0; frame = requestAnimationFrame(tick); }
+      listenForShake(true);
       return animateScene(true);
     },
     teardown: async () => {
       clearTimeout(timer);
+      listenForShake(false);
       await animateScene(false);
       cancelAnimationFrame(frame);
       frame = 0;

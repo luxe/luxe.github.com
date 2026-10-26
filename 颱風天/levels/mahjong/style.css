@@ -1,0 +1,43 @@
+:root { color-scheme: light; background: #dcd9c8; -webkit-tap-highlight-color: transparent; }
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; }
+body { display: grid; place-items: center; user-select: none; -webkit-user-select: none; }
+.embedded, .embedded body { background: transparent; }
+[data-phase="ready"] .scene, [data-phase="hidden"] .scene { visibility: hidden; }
+.scene { width: min(98vw, 71svh, 580px); aspect-ratio: 30 / 41; position: relative; container-type: inline-size; }
+.table { position: absolute; inset: 9% 0 5%; padding: 3.5%; border-radius: 6cqw; background: linear-gradient(135deg, #d7b78e, #bd966e); box-shadow: inset 0 2px 0 #efdbb9, 0 9px 0 #ab8866, 0 18px 24px #7b84631c; }
+.felt { position: relative; width: 100%; height: 100%; border-radius: 3.5cqw; background: radial-gradient(ellipse at 45% 30%, #93b5a1, #749c89); box-shadow: inset 0 0 0 2px #6c937e, inset 0 4px 10px #4c71591c; perspective: 900px; }
+.wall { position: absolute; display: flex; gap: 1%; }
+.wall i { display: block; border-radius: 3px; background: #7faaa0; border: 2px solid #b0cbb4; box-shadow: 0 4px 0 #efe7cc, 0 7px 0 #648d7f; }
+.wall-top { top: 9%; left: 15%; width: 70%; height: 6%; }
+.wall-top i { flex: 1; }
+.wall-side { top: 21%; left: 7%; width: 6%; height: 24%; flex-direction: column; gap: 4%; }
+.wall-side i { flex: 1; }
+.table-mark { position: absolute; top: 26%; left: 43%; color: #b8d0ae; font: 12cqw/1 serif; opacity: .35; }
+.tea { position: absolute; right: 8%; top: 25%; width: 12%; aspect-ratio: 1; border-radius: 50%; background: #d9e0c4; box-shadow: 0 4px 0 #688d77; padding: 1.5%; }
+.tea span { display: block; width: 100%; height: 100%; border-radius: 50%; background: #b18a50; border: 2px solid #f2e4bc; }
+.hand { position: absolute; left: 2%; right: 2%; top: 62%; display: grid; grid-template-columns: repeat(16, minmax(0, 1fr)); gap: .3cqw; perspective: 700px; }
+.tile { padding: 0; border: 0; border-radius: 1cqw; background: #ede4cb; box-shadow: 0 1.3cqw 0 #c8c4a8, 0 2cqw 0 #5d8976, 0 2.5cqw 4px #456d5930; cursor: pointer; touch-action: manipulation; outline: none; }
+.hand .tile { position: relative; width: 100%; aspect-ratio: .66; border-radius: .5cqw; box-shadow: 0 .65cqw 0 #c8c4a8, 0 1cqw 0 #5d8976, 0 1.3cqw 3px #456d5930; transform-origin: center bottom; }
+.face { display: flex; align-items: center; justify-content: center; position: absolute; inset: 0 0 5%; border-radius: inherit; background: linear-gradient(135deg, #fff8e6, #f0e6cb); backface-visibility: hidden; }
+.face svg { width: 86%; height: 91%; }
+.face text { font-family: "Noto Serif TC", "Songti TC", serif; font-weight: 600; }
+.tile.selected { outline: 2px solid #fff0b2; outline-offset: 3px; translate: 0 -5px; }
+.tile:focus-visible { outline: 3px solid #fff4c7; outline-offset: 4px; }
+.tile:disabled { cursor: default; }
+.draw { position: absolute; top: 32%; left: 47%; width: 5.7%; aspect-ratio: .66; z-index: 2; transition: top .7s ease, left .7s ease, transform .7s ease; }
+.draw .back { position: absolute; inset: 0 0 5%; border: 3px solid #c9dbc0; border-radius: inherit; background: #6e9e8e; }
+.draw .face { visibility: hidden; }
+.ready .draw:not(:disabled) { animation: glow 1.6s ease-in-out infinite; }
+.winning .draw { top: 43%; left: 72%; transform: rotate(-8deg); }
+.winning .draw .back { visibility: hidden; }
+.winning .draw .face { visibility: visible; }
+.landed .draw { transform: rotate(0deg) rotateX(52deg); }
+.revealed .hand .tile { transform: rotateX(52deg); transition: transform .65s cubic-bezier(.3,.6,.3,1); transition-delay: calc(var(--slot) * 24ms); }
+.revealed .draw { box-shadow: 0 .7cqw 0 #c8c4a8, 0 1cqw 0 #5d8976; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@keyframes glow { 50% { box-shadow: 0 0 4cqw #fff3b5, 0 0 1cqw #fff8d7, 0 1.3cqw 0 #c8c4a8; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .ready .draw { outline: 3px solid #fff3b5; outline-offset: 4px; }
+}

@@ -32,12 +32,20 @@ body { display: grid; place-items: center; user-select: none; -webkit-user-selec
 .start:focus { outline: none; }
 .start:focus-visible .wave { filter: drop-shadow(0 0 6px #fff8ee) drop-shadow(0 8px 10px rgb(80 98 104 / .2)); }
 .start.rolling { cursor: default; }
-.spray { position: absolute; width: 10px; height: 10px; border-radius: 50%; background: #fffaf0; pointer-events: none; }
+.start.crashed .wave { visibility: hidden; }
+.runoff { opacity: 0; transform-origin: 40px 140px; pointer-events: none; }
+.foam { stroke-dasharray: 65 3 22 2; }
+.play .start:not(.rolling) .foam { animation: foam-flow 3s linear infinite; }
+.play .start:not(.rolling) .foam-flecks { animation: froth 2s ease-in-out infinite; }
+.rolling .water-thread, .rolling .foam-flecks { opacity: 0; transition: opacity .3s; }
+@keyframes foam-flow { to { stroke-dashoffset: -92; } }
+@keyframes froth { 50% { transform: translate(2px, -3px); opacity: .45; } }
 @keyframes bob { 0%, 100% { translate: 0 0; rotate: -2deg; } 50% { translate: 0 -6px; rotate: 2deg; } }
 @keyframes sway { 0%, 100% { rotate: -1.5deg; } 50% { rotate: 1.5deg; } }
 @media (prefers-reduced-motion: reduce) {
   .play .title { animation: none; }
   .start { transition: none; }
   .play .start:not(.rolling) .wave-art { animation: none; }
+  .play .start:not(.rolling) .foam, .play .start:not(.rolling) .foam-flecks { animation: none; }
 }
 .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

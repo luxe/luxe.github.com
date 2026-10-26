@@ -16,7 +16,7 @@ soundscape (see Background music and rain).
 The play order is the `ORDER` list at the top of [game.js](game.js):
 
 ```js
-const ORDER = ["tv", "sandwich", "elevator", "umbrella", "puddles", "cones", "taiwan", "bike", "powerlines", "card", "metro", "store", "money", "purse", "cat", "tea", "fruit", "incense", "jiaobei", "fortune", "temple", "fish", "ufo", "lottery"];
+const ORDER = ["tv", "sandwich", "elevator", "umbrella", "puddles", "cones", "taiwan", "bike", "powerlines", "drain", "card", "metro", "store", "money", "purse", "cat", "tea", "fruit", "incense", "jiaobei", "fortune", "temple", "fish", "ufo", "lottery", "mahjong", "teacup", "ending"];
 ```
 
 Each name is a folder under `levels/`. To reorder levels, edit the list.
@@ -26,10 +26,15 @@ plays first.
 - [intro](levels/intro/index.html): the title 颱風天 and a small curling
   ocean-wave symbol (an SVG button labelled 開始) that gently bobs. Tapping it
   starts the looping background music (`assets/snd/bg.mp3`, owned by the root
-  page so it continues across levels), the wave rears back, rolls forward off
-  screen flinging foam spray, then the first level loads. Reduced motion skips
-  the roll.
-- [tv](levels/tv/index.html): a square retro TV with a remote. The red power
+  page so it continues across levels). The crest rises, curls over, and
+  collapses through interpolated SVG shapes, throwing foam droplets on impact.
+  The broken wave spreads into shallow water and foam drifting off to the
+  right before the first level loads. Idle foam flows along the crest.
+  Reduced motion skips the crash; leaving the scene cancels its animations.
+  After crashing, the wave stays hidden throughout the page transition.
+- [tv](levels/tv/index.html): a slim mint widescreen TV with splayed feet
+  and a remote. The 16:9 picture preserves the full source framing without
+  stretching or cropping, fading in and out on power changes. The red power
   button (top left of the remote) plays `assets/click.mp3` on every press,
   turns the TV on, and plays
   `levels/tv/assets/tv.mp4`. Pressing it again turns the TV off and completes
@@ -48,9 +53,12 @@ plays first.
   with a 20-button panel. Every button press plays `assets/click.mp3`, and
   the doors play `assets/ding.mp3` whenever they close or open. Any button
   lights briefly; only 1 stays lit. With 1
-  lit, the close-door button (>|<) shuts the doors, plays
-  `assets/elevator.mp3`, counts the display down 5→1, and opens the doors on
-  a cozy lobby with rain falling outside its window to complete the level.
+  lit, the close-door button (>|<) shuts the doors, counts the display down
+  5→1, and opens the doors on a cozy lobby with rain falling outside its
+  window, playing `assets/elevator.mp3` (trimmed to its first 2 s) as they
+  open. `assets/moving.mp3` (converted from `moving.wav`) starts as movement
+  and the floor countdown begin, after the doors close, and stops on arrival
+  or teardown. The level completes once the door-opening sound has finished.
 - [umbrella](levels/umbrella/index.html): hold the umbrella and swipe upward
   to open it gradually. Partial progress stays between swipes; fully open
   locks the umbrella and completes the level without an extra pause. Arrow Up
@@ -58,10 +66,10 @@ plays first.
   (it is primed on touch for iOS); letting go before it is fully open fades
   it out, and the next swipe starts it again. Once open, it plays out.
   Rain falls around the umbrella and stops at its expanding canopy, leaving
-  the area underneath dry. In the game the rain is visual only; the
-  `assets/rain.mp3` loop is played by the engine on the outdoor levels (see
-  Background music and rain). Opened on its own, the level plays that loop
-  itself. Reduced-motion mode disables falling rain. The recording contains
+  the area underneath dry. The engine starts the `assets/rain.mp3` loop on
+  level entry, before the umbrella is opened (see Background music and rain).
+  Opened on its own, the level starts that loop during setup, retrying on
+  interaction if autoplay is blocked. Reduced-motion mode disables falling rain. The recording contains
   only the original's first 30 minutes, encoded as a 96 kbps MP3.
 - [store](levels/store/index.html): a convenience-store front in
   FamilyMart-style green, white, and blue (no lettering): a striped fascia
@@ -73,9 +81,13 @@ plays first.
   pockets, the door sensor turns green, warm light spills onto the mat,
   `assets/chime.mp3` plays (left ringing into the next level), and the level
   completes. Keyboard: left/right arrows rotate, release to check.
-- [cat](levels/cat/index.html): pull the lucky cat's raised paw down far
-  enough and release it to start a springy, forward-facing wave.
-  Pressing the paw plays `assets/meow.mp3`; keyboard arrow presses also meow.
+- [cat](levels/cat/index.html): a small cream ceramic lucky cat with fine,
+  warm outlines sits on a cushion on a rounded wooden counter with a drawer.
+  A leafy plant and a miniature mint tray of already-sorted notes (matching
+  the money level's colors and stacking order) decorate the counter.
+  Tap the raised paw, or pull it down and release, to start its springy,
+  forward-facing wave. Enter/Space or the arrow keys also work.
+  Pressing the paw plays `assets/meow.mp3`; keyboard presses also meow.
 - [money](levels/money/index.html): drag five toy New Taiwan dollar notes into
   a mint-green cash tray. Notes retain their 70 mm height and relative lengths
   (145/150/155/160/165 mm) at a common scale. New placements go on top, without
@@ -128,7 +140,8 @@ plays first.
   are `[4, 1]`, `[3]`, `[2]` (bottom to top; 4 is largest).
   Move only a stack's top cone, and never put a larger cone on a smaller one.
   Finish by collecting all four, largest to smallest, on the center spot.
-  The center spot is circled in pale green chalk (a grainy SVG filter) as a
+  The center spot has just a white chalk star, with no surrounding circle,
+  flattened onto the pavement (a grainy SVG filter), as a
   subtle hint that the stack belongs there.
   Drag a cone, or tap it then a destination. Keyboard: Enter/Space selects,
   Left/Right chooses a spot, Enter/Space places, Escape cancels.
@@ -139,9 +152,26 @@ plays first.
   street puddles by size. Each leaf placed in a puddle plays `assets/splash.mp3`
   and makes a splash that bursts outward from the puddle's center.
   Incorrect matches stay movable; occupied puddles do not accept another leaf.
+  Picking up a leaf does not highlight any puddle. Keyboard destination changes
+  are announced by the screen reader; keyboard focus uses a separate dashed outline.
   All four size matches are needed to finish. Keyboard: Enter/Space selects,
   arrows choose a puddle, Enter/Space places, Escape cancels. Rain and music
   are played by the engine; reduced motion uses a brief splash fade.
+
+- [drain](levels/drain/index.html): after powerlines, a flooded Taiwanese
+  residential alley with tiled facades, barred windows, air conditioners,
+  awnings, potted plants, and a parked scooter. Pick up the stick leaning by
+  the left doorway, drag its tip into the water, and swirl in either direction.
+  About two net circles of broad curved movement loosen the leaves over the
+  sewer; straight strokes, tiny jitters, and back-and-forth scrubbing do not
+  count. Releasing leaves the stick in place and preserves clearing progress.
+  Ripples follow the stick, leaves move aside, and the water funnels into the
+  drain before completion. `assets/drain.mp3` (converted from `drain.wav`)
+  plays once as the water starts draining. Rain continues, with engine-owned audio in game
+  and a local loop in standalone play (interaction retries blocked autoplay).
+  Keyboard: Enter/Space picks up the stick, arrows move it (Shift moves farther),
+  Enter/Space stirs while in water, Escape lets go. Reduced motion uses static
+  rain and removes the flood without spinning or shrinking animations.
 
 - [card](levels/card/index.html): an original text-free stored-value card,
   inspired by the white Taiwan EasyCard with yellow, blue, pink, and green
@@ -242,7 +272,10 @@ plays first.
   that each block's facing is random (a 1-in-4 chance). When both flat faces
   point inward the blocks glow, sparkles burst, and the level completes;
   otherwise pick both up and throw again. Keyboard: Enter/Space on a block
-  picks it up, on the floor throws. Reduced motion lands them instantly.
+  picks it up, on the floor throws. Shaking the phone with both blocks held
+  also throws (DeviceMotion: three jolts within a second). On iOS the motion
+  permission prompt appears on the first tap in the level, and motion only
+  works over HTTPS. Reduced motion lands them instantly.
 
 - [fruit](levels/fruit/index.html): the temple courtyard again, with a woven
   bamboo basket on a red offering table and seven fruits scattered on the
@@ -265,6 +298,21 @@ plays first.
   again puts it away. Reduced motion skips the animations. Poems come from
   https://kuanyinlingqian.x10host.com/Home.html, converted from Simplified to
   Traditional with OpenCC (`s2twp`).
+- [mahjong](levels/mahjong/index.html): after lottery, a wooden mahjong table
+  with green felt and a scrambled Taiwanese-style 16-tile waiting hand.
+  All 16 tiles sit in one continuous left-to-right row, scaled to fit the
+  table on phones. Tap two tiles to swap them (Enter/Space also works).
+  Group three identical tiles or three consecutive numbers of the same suit,
+  leaving East as a singleton. The five melds and singleton may appear in any
+  order, and sequence tiles may be ordered either way or internally shuffled.
+  The draw tile glows only while the entire
+  hand is grouped. Tap it to draw the matching East, completing the pair.
+  The drawn tile lands first, then the hand tips forward to show the table;
+  `assets/156668__rtb45__mahjong.mp3` (the first four seconds of the WAV)
+  plays as the hand tips down; completion waits for the clip to finish.
+  Reduced motion skips swapping and tipping
+  animations while preserving the action order.
+
 - [fish](levels/fish/index.html): a street-market fish stall under a striped
   awning, with seven different fish (sardine, tilapia, yellow croaker, red
   snapper, mackerel, milkfish, grouper; 10–28 cm) each lying on a banana leaf
@@ -303,13 +351,27 @@ anything only it uses. Open a level's URL directly to design or test it
 without the engine. Root `assets/` holds only game-wide files (the music and win sounds)
 and `assets/archive/` (unused earlier art kept for reference).
 
-The TV video `levels/tv/assets/tv.mp4` is a 360×360 crop of the right side
-of `tv-source.mp4` in the same folder, made with:
-`ffmpeg -i tv-source.mp4 -vf "crop=360:360:iw-360:0" -c:v libx264 -crf 25 -c:a copy -movflags +faststart tv.mp4`
+The TV video `levels/tv/assets/tv.mp4` is a smaller 480×270 encode of the
+640×360 `tv-source.mp4` in the same folder, preserving its full 16:9 frame:
+`ffmpeg -i tv-source.mp4 -vf "scale=480:270,setsar=1" -c:v libx264 -crf 25 -an -movflags +faststart tv.mp4`
 and its soundtrack with:
-`ffmpeg -i tv.mp4 -vn -ac 1 -c:a libmp3lame -b:a 64k tv-sound.mp3`
+`ffmpeg -i tv-source.mp4 -vn -ac 1 -c:a libmp3lame -b:a 64k tv-sound.mp3`
 
 ### Background music and rain
+
+The final two scenes follow mahjong:
+- [teacup](levels/teacup/index.html): a celadon teapot and handleless tea cup
+  on a bamboo-style tea tray. Drag the pot upward and hold to pour; lowering
+  or releasing pauses the pour without losing progress. Tapping the pot (or
+  Enter/Space) toggles an automatic pour. The stream, filling, and pouring sound
+  start only after the pot finishes lifting and tilting; releasing stops them
+  immediately, including during the lift. Once full, a brown version of Taiwan's typhoon swirls in
+  the tea and steam rises. Tap the cup (or Enter/Space) to drink: the tea,
+  typhoon, and steam disappear before proceeding.
+- [ending](levels/ending/index.html): the terminal scene displays 注意安全
+  and 感謝您的遊玩. Rain falls initially, then fades visually and audibly
+  while the sun rises over green hills. The finished scene stays on screen
+  without a final win sound. Reduced motion uses static rain and a short fade.
 
 `game.js` owns three looping `<audio>` tracks and picks them per level. When
 the next level begins, it crossfades over 1.5 s, and a track that fades out is
@@ -317,7 +379,8 @@ paused where it is so it resumes from there later.
 
 | Levels | Music | Rain (`levels/umbrella/assets/rain.mp3`) |
 | --- | --- | --- |
-| puddles, cones, taiwan, bike, powerlines | `assets/snd/bg.mp3` | yes |
+| umbrella, puddles, cones, taiwan, bike, powerlines, drain | `assets/snd/bg.mp3` | yes |
+| ending | `assets/snd/bg.mp3` | fades out as the sky clears |
 | metro | none, so the train clues are easy to hear | no |
 | fruit, incense, jiaobei, fortune, temple | `assets/snd/temple.mp3` | no |
 | every other level | `assets/snd/bg.mp3` | no |

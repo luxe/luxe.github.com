@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#d3dedb">
+  <title>Wanwan - Rainy alley</title>
+  <script src="../../audio.js"></script>
+  <script src="../../lifecycle.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./level.js" defer></script>
+</head>
+<body>
+  <div class="rain" aria-hidden="true"></div>
+  <main class="scene" aria-label="疏通巷子裡的排水口">
+    <svg class="street" viewBox="0 0 600 820" fill="none">
+      <defs>
+        <linearGradient id="road" x2=".2" y2="1"><stop stop-color="#a1b4ad"/><stop offset="1" stop-color="#869d96"/></linearGradient>
+        <linearGradient id="water" x2=".3" y2="1"><stop stop-color="#9abec0" stop-opacity=".75"/><stop offset="1" stop-color="#72a5ae" stop-opacity=".9"/></linearGradient>
+        <pattern id="tiles" width="20" height="23" patternUnits="userSpaceOnUse"><path d="M0 0H20V23H0Z" stroke="#8c9e91" stroke-width="1" opacity=".16"/></pattern>
+        <pattern id="shutter" width="8" height="11" patternUnits="userSpaceOnUse"><path d="M0 9H8" stroke="#768f86" stroke-width="2"/></pattern>
+        <g id="window">
+          <rect width="68" height="74" rx="3" fill="#79958b"/>
+          <rect x="5" y="5" width="58" height="64" rx="2" fill="#b5c6b7"/>
+          <path d="M4 38H64M18 5V69M34 5V69M50 5V69" stroke="#739286" stroke-width="2"/>
+          <path d="M-4 75H72L68 83H0Z" fill="#d4d9c8"/>
+        </g>
+        <g id="aircon">
+          <rect width="58" height="32" rx="4" fill="#d9dece" stroke="#adbaaa" stroke-width="1.5"/>
+          <circle cx="18" cy="16" r="11" fill="#b2c1b2"/>
+          <path d="M9 10L27 22M9 22L27 10M18 5V27M7 16H29M37 9H51M37 15H51M37 21H51" stroke="#8da293" stroke-width="1.5"/>
+          <path d="M-3 33H60" stroke="#82968b" stroke-width="3"/>
+        </g>
+        <g id="plant">
+          <path d="M0 0V-51M0-20L-19-35M0-30L19-47" stroke="#6e8c73" stroke-width="3" stroke-linecap="round"/>
+          <path d="M0-41C-23-43-24-65-15-69C1-64 7-54 0-41" fill="#86a184"/>
+          <path d="M-8-26C-29-20-39-38-31-46C-15-48-6-40-8-26" fill="#9db594"/>
+          <path d="M6-30C1-51 21-64 31-55C32-40 20-29 6-30" fill="#789e7d"/>
+          <path d="M-22-2L-17 26Q0 35 17 26L22-2Z" fill="#cbac8c"/>
+          <ellipse rx="22" ry="6" cy="-2" fill="#e1c6a5"/>
+          <ellipse rx="17" ry="3.5" cy="-2" fill="#a79476"/>
+        </g>
+        <g id="leaf">
+          <path d="M-16 0Q-2-18 17-3Q9 13-16 0" fill="currentColor"/>
+          <path d="M-13 0L13-3" stroke="#807d56" stroke-width="1.5"/>
+        </g>
+      </defs>
+      <g aria-hidden="true">
+        <rect x="8" y="30" width="584" height="772" rx="35" fill="#c4d3d0"/>
+        <!-- The small buildings at the end of the lane give the alley depth. -->
+        <path d="M198 438V207H285V438M293 438V163H384V438" fill="#b5c5bb"/>
+        <path d="M204 208H281M299 166H380" stroke="#e0e3d3" stroke-width="7"/>
+        <path d="M217 239H236V269H217ZM250 239H269V269H250ZM310 197H334V229H310ZM347 197H371V229H347Z" fill="#8fa99d"/>
+        <path d="M215 297H271V352H215ZM309 260H371V315H309Z" fill="#c9d1bd"/>
+        <path d="M218 307H267M218 318H267M218 329H267M312 270H367M312 282H367M312 294H367" stroke="#98ac9d" stroke-width="2"/>
+        <path d="M215 416V365H271V416M312 416V347H366V416" fill="#8fa99a"/>
+        <path d="M198 398H285L278 409H205Z" fill="#81a799"/>
+        <path d="M297 337H381L373 349H305Z" fill="#bda394"/>
+        <path d="M192 437H395L592 802H8Z" fill="url(#road)"/>
+        <!-- Tiled residential facades, window cages, pipes, and awnings. -->
+        <path d="M8 72Q8 30 42 30H158L211 201V445L161 593L8 669Z" fill="#d8d6bf"/>
+        <path d="M8 72Q8 30 42 30H158L211 201V445L161 593L8 669Z" fill="url(#tiles)"/>
+        <path d="M592 77Q592 30 558 30H465L386 207V443L444 596L592 683Z" fill="#c2ccc0"/>
+        <path d="M592 77Q592 30 558 30H465L386 207V443L444 596L592 683Z" fill="url(#tiles)"/>
+        <path d="M8 331L180 367L211 350M592 342L418 371L386 352" stroke="#a3b6a5" stroke-width="7"/>
+        <use href="#window" x="37" y="110"/>
+        <use href="#window" transform="translate(132 192) scale(.8)"/>
+        <use href="#window" x="484" y="123"/>
+        <use href="#window" transform="translate(402 204) scale(.8)"/>
+        <use href="#aircon" x="53" y="211"/>
+        <use href="#aircon" transform="translate(417 290) scale(.75)"/>
+        <path d="M21 85V537Q21 559 43 559M578 97V572M180 220V415" stroke="#93a79a" stroke-width="6" stroke-linecap="round"/>
+        <path d="M24 88V532M581 99V570" stroke="#e3e4d3" stroke-width="2"/>
+        <rect x="54" y="394" width="100" height="182" rx="5" fill="#728c7f"/>
+        <rect x="63" y="401" width="82" height="164" rx="3" fill="#91a99a"/>
+        <rect x="75" y="414" width="58" height="70" rx="2" fill="#b0c3ac"/>
+        <path d="M88 414V484M104 414V484M120 414V484M75 448H133" stroke="#799789" stroke-width="2"/>
+        <circle cx="131" cy="511" r="4" fill="#dfc28f"/>
+        <path d="M38 574H166V589H38Z" fill="#c7c8b0"/>
+        <path d="M37 588H166" stroke="#e4dfc5" stroke-width="3"/>
+        <path d="M38 383H168L155 399H45Z" fill="#81a896"/>
+        <path d="M38 383H168" stroke="#d5dfc9" stroke-width="4"/>
+        <path d="M454 408H566V620H454Z" fill="#92a89c"/>
+        <path d="M454 408H566V620H454Z" fill="url(#shutter)"/>
+        <path d="M442 392H578L567 413H450Z" fill="#b8a596"/>
+        <path d="M445 391H579" stroke="#d9c7b0" stroke-width="4"/>
+        <use href="#plant" transform="translate(42 589) scale(.8)"/>
+        <use href="#plant" transform="translate(183 423) scale(.5)"/>
+        <use href="#plant" transform="translate(553 634)"/>
+        <!-- Warm lights and overhead utility cables, with no written signage. -->
+        <path d="M48 368H67V380H48Z" fill="#f5df9f"/>
+        <path d="M426 385H442V395H426Z" fill="#e9d7a7"/>
+        <path d="M8 66Q234 239 592 106M8 94Q293 279 592 142M129 30Q268 257 483 30" stroke="#82988f" stroke-width="2.5" opacity=".65"/>
+        <path d="M8 669L161 593L210 445M592 683L444 596L388 444" stroke="#d3d5be" stroke-width="12" stroke-linejoin="round"/>
+        <path d="M29 675L178 600L222 451M574 690L428 603L378 451" stroke="#c6a196" stroke-width="3" opacity=".7"/>
+        <!-- A scooter tucked beside the shutter. -->
+        <g transform="translate(490 570) rotate(-8)">
+          <ellipse cy="73" rx="41" ry="11" fill="#637e74" opacity=".2"/>
+          <rect x="-17" y="38" width="18" height="40" rx="8" fill="#6c8079"/>
+          <rect x="22" y="18" width="12" height="42" rx="6" fill="#6c8079"/>
+          <path d="M-29 21Q-30-6 2-6Q29-3 29 27L19 58H-19Z" fill="#b3bfac" stroke="#8fa391" stroke-width="2"/>
+          <rect x="-24" y="7" width="47" height="14" rx="7" fill="#788f84"/>
+          <path d="M14 9L25-30M13-30H37" stroke="#799184" stroke-width="5" stroke-linecap="round"/>
+          <path d="M8-30L4-48M35-30L40-45" stroke="#91a395" stroke-width="2"/>
+          <ellipse cx="3" cy="-49" rx="7" ry="4" fill="#cdd8c9"/><ellipse cx="42" cy="-47" rx="7" ry="4" fill="#cdd8c9"/>
+          <rect x="-17" y="30" width="27" height="12" rx="3" fill="#dddcc2"/>
+          <rect x="-10" y="47" width="14" height="5" rx="2" fill="#cf9989"/>
+        </g>
+        <ellipse cx="234" cy="729" rx="66" ry="9" fill="#bdd2c8" opacity=".35"/>
+        <ellipse cx="350" cy="549" rx="24" ry="4" fill="#bdd2c8" opacity=".35"/>
+        <path d="M87 768L112 749M466 758L478 775" stroke="#6e8980" stroke-width="2" opacity=".35"/>
+        <!-- A recessed street drain remains visible beneath the floodwater. -->
+        <g class="drain-grate" transform="translate(413 658) skewX(-15)">
+          <rect x="-51" y="-25" width="102" height="52" rx="7" fill="#637f78"/>
+          <rect x="-46" y="-21" width="92" height="43" rx="5" fill="#869b90" stroke="#bac5b3" stroke-width="2"/>
+          <path d="M-34-14V16M-21-14V16M-8-14V16M5-14V16M18-14V16M31-14V16" stroke="#58756d" stroke-width="6" stroke-linecap="round"/>
+        </g>
+      </g>
+      <g class="flood" aria-hidden="true" pointer-events="none">
+        <path d="M210 473Q303 450 393 474L436 583Q477 624 584 744L590 777Q590 802 565 802H35Q8 802 10 774L172 580Z" fill="url(#water)"/>
+        <g class="reflections" stroke-linecap="round">
+          <path d="M111 691L174 685M207 600L240 596M269 745L333 748M462 710L513 716M278 523L314 523" stroke="#dce9dc" stroke-width="3" opacity=".65"/>
+          <path d="M145 735L213 730M332 581L365 584M378 771L464 771" stroke="#b5d4d1" stroke-width="6" opacity=".45"/>
+          <path d="M207 544L222 543M311 665L337 667M452 742L474 742" stroke="#e3dcae" stroke-width="4" opacity=".4"/>
+        </g>
+        <g class="rain-rings" stroke="#cce3de" stroke-width="1.5" opacity=".5">
+          <ellipse cx="254" cy="655" rx="16" ry="5"/><ellipse cx="349" cy="726" rx="20" ry="6"/>
+          <ellipse cx="217" cy="755" rx="18" ry="5"/><ellipse cx="323" cy="563" rx="11" ry="3"/>
+        </g>
+      </g>
+      <g class="whirlpool" transform="translate(413 658) scale(1 .38)" aria-hidden="true" pointer-events="none">
+        <g class="swirl">
+          <path d="M-64-7C-59-58 47-63 65-12C84 42-22 64-42 25C-64-17 29-38 32-3C37 23-9 24-9 5" stroke="#dcece2" stroke-width="4" stroke-linecap="round"/>
+          <ellipse rx="10" ry="7" fill="#547e7a" opacity=".65"/>
+        </g>
+      </g>
+      <g class="blockage" aria-hidden="true" pointer-events="none">
+        <g class="debris"><use href="#leaf" transform="translate(392 652) rotate(-15)" color="#b6aa73"/></g>
+        <g class="debris"><use href="#leaf" transform="translate(418 665) rotate(20)" color="#a49c66"/></g>
+        <g class="debris"><use href="#leaf" transform="translate(438 650) rotate(-40)" color="#c5ae7e"/></g>
+        <g class="debris"><use href="#leaf" transform="translate(404 675) rotate(50)" color="#92a17d"/></g>
+        <path class="twig" d="M382 667L440 641M406 656L409 644" stroke="#9f8d6f" stroke-width="4" stroke-linecap="round"/>
+      </g>
+      <g class="ripples" aria-hidden="true" pointer-events="none"></g>
+      <g class="stick" role="button" tabindex="0" aria-label="拿起木棍疏通排水口" aria-describedby="instructions" aria-pressed="false">
+        <path class="focus-ring" d="M-10 5L-57-177Q-57-188-45-188Q-37-188-35-177L10-5Z" stroke="#fff6d5" stroke-width="3"/>
+        <path d="M0 0L-42-170" stroke="#9b7e59" stroke-width="9" stroke-linecap="round"/>
+        <path d="M-2-4L-43-170" stroke="#d7b481" stroke-width="3" stroke-linecap="round"/>
+        <path d="M-14-58L-10-61M-29-117L-25-120" stroke="#816b4f" stroke-width="2" stroke-linecap="round"/>
+        <path d="M0 0L-42-170" stroke="transparent" stroke-width="40" stroke-linecap="round"/>
+      </g>
+    </svg>
+    <p id="instructions" class="sr-only">拿起門口的木棍，在積水裡畫圈，疏通落葉堵住的排水口。可放開再繼續。鍵盤按 Enter 或空白鍵拿起木棍，方向鍵移動，在水中按 Enter 或空白鍵攪動，Escape 放下。</p>
+    <p id="status" class="sr-only" role="status" aria-live="polite"></p>
+  </main>
+  <audio class="rain-sound" src="../umbrella/assets/rain.mp3" loop preload="none"></audio>
+</body>
+</html>

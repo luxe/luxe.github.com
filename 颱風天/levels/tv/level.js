@@ -6,7 +6,6 @@
   const remoteArrival = document.querySelector(".remote-arrival");
   const tv = document.querySelector(".tv");
   const picture = document.querySelector(".picture");
-  const spark = document.querySelector(".spark");
   const video = document.querySelector("video");
   const power = document.querySelector(".power");
   const status = document.querySelector("#status");
@@ -58,34 +57,26 @@
     return target.animate(frames, { duration, easing: "cubic-bezier(.3,.7,.4,1)" }).finished;
   }
 
-  // Old-CRT style: the picture blooms out of a bright line, and folds back into a dot.
   async function turnOn() {
     on = true;
     tv.classList.add("on");
     play();
     status.textContent = "電視開了";
     await run(picture, [
-      { transform: "scale(1, .015)", filter: "brightness(4)" },
-      { transform: "scale(1, .015)", filter: "brightness(4)", offset: .25 },
-      { transform: "scale(1, 1.04)", filter: "brightness(1.6)", offset: .8 },
-      { transform: "scale(1, 1)", filter: "brightness(1)" },
-    ], 520);
+      { opacity: 0, filter: "brightness(.6)" },
+      { opacity: 1, filter: "brightness(1)" },
+    ], 420);
   }
 
   async function turnOff() {
     on = false;
     status.textContent = "電視關了";
     await run(picture, [
-      { transform: "scale(1, 1)", filter: "brightness(1)" },
-      { transform: "scale(1, .015)", filter: "brightness(4)", offset: .5 },
-      { transform: "scale(0, .015)", filter: "brightness(5)" },
-    ], 380);
+      { opacity: 1 },
+      { opacity: 0 },
+    ], 420);
     tv.classList.remove("on");
     stop();
-    await run(spark, [
-      { opacity: 1, transform: "scale(1)" },
-      { opacity: 0, transform: "scale(.2)" },
-    ], 520);
   }
 
   function complete() {

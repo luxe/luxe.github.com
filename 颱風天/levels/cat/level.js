@@ -44,6 +44,10 @@
     background: "#ead9c7",
     setup: () => animateScene(true),
     teardown: () => {
+      cancelAnimationFrame(animationFrame);
+      completed = true;
+      drag = null;
+      paw.classList.remove("dragging");
       meow.pause();
       return animateScene(false);
     },
@@ -94,16 +98,18 @@
     event.preventDefault();
     playMeow();
     cat.getAnimations().forEach(animation => animation.finish());
-    drag = { id: event.pointerId, y: event.clientY, height: cat.getBoundingClientRect().height, initial: pull };
+    drag = { id: event.pointerId, x: event.clientX, y: event.clientY, height: cat.getBoundingClientRect().height, initial: pull, moved: false };
     paw.setPointerCapture(event.pointerId);
     paw.classList.add("dragging");
   });
   paw.addEventListener("pointermove", event => {
     if (!drag || drag.id !== event.pointerId) return;
+    if (Math.hypot(event.clientX - drag.x, event.clientY - drag.y) > 8) drag.moved = true;
     setPull(Math.max(0, Math.min(65, drag.initial + (event.clientY - drag.y) / drag.height * 250)));
   });
   function endDrag(event) {
     if (!drag || drag.id !== event.pointerId) return;
+    if (!drag.moved && event.type === "pointerup") setPull(42);
     drag = null;
     paw.classList.remove("dragging");
     if (paw.hasPointerCapture(event.pointerId)) paw.releasePointerCapture(event.pointerId);
@@ -113,6 +119,14 @@
   paw.addEventListener("pointercancel", endDrag);
   paw.addEventListener("lostpointercapture", endDrag);
   paw.addEventListener("keydown", event => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      if (completed || bouncing || drag || event.repeat) return;
+      playMeow();
+      setPull(42);
+      releasePull();
+      return;
+    }
     if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
     event.preventDefault();
     if (completed || bouncing || drag) return;

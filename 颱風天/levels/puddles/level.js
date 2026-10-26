@@ -56,7 +56,6 @@
       leaf.node.classList.toggle("held", selected === leaf.size);
       leaf.node.setAttribute("aria-disabled", String(completed));
     });
-    [...water.children].forEach((node, index) => node.classList.toggle("chosen", selected !== null && destination === index));
   }
   function splash(index) {
     const p = puddles[index];
@@ -145,6 +144,7 @@
         event.preventDefault();
         selected = leaf.size;
         destination = (destination + (["ArrowLeft", "ArrowUp"].includes(event.key) ? 3 : 1)) % 4;
+        status.textContent = `水窪 ${destination + 1}`;
         render();
       }
     });

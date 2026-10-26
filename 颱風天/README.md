@@ -380,6 +380,8 @@ The final two scenes follow mahjong:
 `game.js` owns three looping `<audio>` tracks and picks them per level. When
 the next level begins, it crossfades over 1.5 s, and a track that fades out is
 paused where it is so it resumes from there later.
+Metro instead fades the music out over 3 s starting when its map enters,
+so the fade remains audible after the arrival rather than finishing offscreen.
 
 | Levels | Music | Rain (`levels/umbrella/assets/rain.mp3`) |
 | --- | --- | --- |

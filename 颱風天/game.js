@@ -302,7 +302,9 @@
         previous.setAttribute("aria-hidden", "true");
       }
       game.dataset.phase = "background";
-      setSoundscape(levels[nextIndex].name);
+      const nextName = levels[nextIndex].name;
+      const quietLevel = QUIET_LEVELS.has(nextName);
+      if (!quietLevel) setSoundscape(nextName);
       await game.animate([
         { backgroundColor: getComputedStyle(game).backgroundColor },
         { backgroundColor: lifecycle.background },
@@ -312,6 +314,7 @@
       game.dataset.phase = "setup";
       next.style.opacity = "1";
       next.removeAttribute("aria-hidden");
+      if (quietLevel) setSoundscape(nextName, 3000);
       await lifecycle.setup();
     } catch (cause) {
       next.remove();

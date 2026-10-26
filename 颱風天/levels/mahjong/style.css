@@ -31,7 +31,7 @@ body { display: grid; place-items: center; user-select: none; -webkit-user-selec
 .ready .draw:not(:disabled) { animation: glow 1.6s ease-in-out infinite; }
 .winning .draw { top: 43%; left: 72%; transform: rotate(-8deg); }
 .winning .draw .back { visibility: hidden; }
-.winning .draw .face { visibility: visible; }
+.winning .draw .face { visibility: inherit; }
 .landed .draw { transform: rotate(0deg) rotateX(52deg); }
 .revealed .hand .tile { transform: rotateX(52deg); transition: transform .65s cubic-bezier(.3,.6,.3,1); transition-delay: calc(var(--slot) * 24ms); }
 .revealed .draw { box-shadow: 0 .7cqw 0 #c8c4a8, 0 1cqw 0 #5d8976; }

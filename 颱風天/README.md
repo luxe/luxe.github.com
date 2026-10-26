@@ -312,6 +312,8 @@ plays first.
   plays as the hand tips down; completion waits for the clip to finish.
   Reduced motion skips swapping and tipping
   animations while preserving the action order.
+  The drawn tile inherits scene visibility, and the table stays offscreen
+  after its exit animation so no tile reappears during the transition.
 
 - [fish](levels/fish/index.html): a street-market fish stall under a striped
   awning, with seven different fish (sardine, tilapia, yellow croaker, red

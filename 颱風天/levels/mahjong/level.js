@@ -169,7 +169,7 @@
       animations.clear();
       if (!reduced.matches) await table.animate([
         { transform: "translateY(0)" }, { transform: "translateY(-110vh)" },
-      ], { duration: 700, easing: "ease-in" }).finished;
+      ], { duration: 700, easing: "ease-in", fill: "forwards" }).finished;
     },
   });
 })();

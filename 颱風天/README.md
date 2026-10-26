@@ -282,8 +282,8 @@ teardown → background color change → next setup**. Input stays inert
 throughout transitions. The outgoing frame is removed only after its
 objects have bounced offscreen. The final level stays visible when beaten.
 Every beaten level (not the intro's start tap or admin-picker jumps) plays
-a win sound as its transition begins, including the final level. It cycles
-through `assets/snd/win1.mp3`, `win2.mp3` and `win3.mp3` in order.
+a win sound as its transition begins, including the final level. It is always
+`assets/snd/win1.mp3`.
 Sound effects are played as `.mp3`: this nginx serves `.wav`/`.flac` as
 `application/octet-stream`, which Safari/iOS refuses to play. The original
 `.wav`/`.flac` files are kept next to their `.mp3` conversions.
@@ -300,6 +300,11 @@ the first tap or keypress. Inside a level, use
 overlapping one-shots. **Add every new effect to `SOUND_EFFECTS`.** Long
 loops (music, rain, fire, metro, truck, TV soundtrack) remain `<audio>`
 elements.
+
+While a level is being played, the engine builds the next level in a hidden
+frame, so beating a level goes straight into the transition. Levels must stay
+idle (no animation loops or sounds) until `setup` runs. Sound effects and the
+long loops start downloading once the first screen is up.
 
 Each level loads `../../lifecycle.js` before its stylesheet and calls:
 
@@ -345,9 +350,13 @@ Previously downloaded sprite packs are retained but not loaded by these levels.
 (`~/Desktop/code/luxe.github.com/颱風天`) with `rsync -a --delete`, so files
 removed here are removed there too. It then commits and pushes that folder only.
 
-- Audio/video over 15 MB (`MAX_MB`) is trimmed from the end so it fits on
-  GitHub; the looping music, rain and TV video just repeat sooner. Trimmed files
-  are only redone when their source changes.
-- `levels/tv/assets/tv-source.mp4` and `publish.sh` are not published.
+- Long media in `WEB_ENCODE` is re-encoded smaller for phones first: music
+  at 96 kbps, rain as 48 kbps mono, and the TV video without its unused audio
+  track (its sound is `tv-sound.mp3`).
+- Audio/video still over 15 MB (`MAX_MB`) is trimmed from the end so it fits
+  on GitHub; the looping music and TV video just repeat sooner. Processed files
+  are only redone when their source or settings change.
+- `levels/tv/assets/tv-source.mp4`, the `.wav`/`.flac` originals and
+  `publish.sh` are not published.
 - The published `game.js` has `SHOW_ADMIN = false` (`KEEP_ADMIN=1` keeps it).
 - `./publish.sh --dry-run` syncs and shows the change summary without committing.

@@ -32,7 +32,7 @@
   // Every short sound effect, decoded at startup so it plays instantly
   // (see audio.js). Add new effects here.
   const SOUND_EFFECTS = [
-    "./assets/snd/win1.mp3", "./assets/snd/win2.mp3", "./assets/snd/win3.mp3",
+    "./assets/snd/win1.mp3",
     "./levels/tv/assets/click.mp3",
     "./levels/sandwich/assets/bite.mp3",
     "./levels/elevator/assets/click.mp3", "./levels/elevator/assets/ding.mp3", "./levels/elevator/assets/elevator.mp3",
@@ -50,15 +50,22 @@
     "./levels/temple/assets/fire_bg.mp3",
     ...["red", "orange", "yellow", "green", "blue"].map(color => `./levels/metro/assets/${color}.mp3`),
   ];
-  window.wanwanAudio.preload(SOUND_EFFECTS).then(() => window.wanwanAudio.prefetch(PREFETCH));
+  // Started once the first screen is up so it does not slow that screen down.
+  function preloadSounds() {
+    window.wanwanAudio.preload(SOUND_EFFECTS).then(() => {
+      window.wanwanAudio.prefetch(PREFETCH);
+      // Let the browser buffer the start of the long loops ahead of time.
+      music.preload = "auto";
+      rain.preload = "auto";
+    });
+  }
 
   const levels = ["intro", ...ORDER].map(name => ({ name, url: `./levels/${name}/index.html` }));
   const game = document.querySelector("#game");
   const error = document.querySelector("#error");
   const music = document.querySelector("#music");
   const rain = document.querySelector("#rain");
-  const winSounds = ["win1", "win2", "win3"].map(name => window.wanwanAudio.sound(`./assets/snd/${name}.mp3`));
-  let nextWinSound = 0;
+  const winSound = window.wanwanAudio.sound("./assets/snd/win1.mp3");
   const admin = document.querySelector("#admin");
   const levelPicker = document.querySelector("#admin-level");
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
@@ -117,8 +124,6 @@
     rain.play().catch(cause => console.warn("Rain sound could not start", cause));
   };
   function playWinSound() {
-    const winSound = winSounds[nextWinSound];
-    nextWinSound = (nextWinSound + 1) % winSounds.length;
     winSound.stop();
     winSound.play().catch(cause => console.warn("Win sound could not play", cause));
   }
@@ -177,8 +182,38 @@
     }
   }
 
+  // The next level is built in a hidden frame while the current one is being
+  // played, so beating a level goes straight into the transition. Levels stay
+  // idle until setup, so a waiting frame costs nothing but memory.
+  let preloaded = null;
+  let preloadTimer = 0;
+  function discardPreload() {
+    clearTimeout(preloadTimer);
+    const waiting = preloaded;
+    preloaded = null;
+    waiting?.frame.then(frame => frame.remove(), () => {});
+  }
+  function preloadNext() {
+    const nextIndex = index + 1;
+    if (nextIndex >= levels.length || preloaded?.index === nextIndex) return;
+    discardPreload();
+    const frame = loadLevel(levels[nextIndex]);
+    frame.catch(cause => console.warn("Preloading the next level failed; it will load when needed", cause));
+    preloaded = { index: nextIndex, frame };
+  }
+  function takeLevel(nextIndex) {
+    clearTimeout(preloadTimer);
+    if (preloaded?.index === nextIndex) {
+      const { frame } = preloaded;
+      preloaded = null;
+      return frame.catch(() => loadLevel(levels[nextIndex]));
+    }
+    discardPreload();
+    return loadLevel(levels[nextIndex]);
+  }
+
   async function showLevel(nextIndex) {
-    const next = await loadLevel(levels[nextIndex]);
+    const next = await takeLevel(nextIndex);
     const previous = current;
     const lifecycle = next.contentWindow.levelLifecycle;
     try {
@@ -216,6 +251,8 @@
     error.hidden = true;
     levelPicker.value = String(index);
     if (SHOW_ADMIN) levelPicker.disabled = false;
+    // Wait a moment so building the next level never competes with setup.
+    preloadTimer = setTimeout(preloadNext, 400);
   }
 
   addEventListener("message", async event => {
@@ -259,5 +296,5 @@
     });
   }
 
-  showLevel(0).catch(reportError);
+  showLevel(0).catch(reportError).finally(preloadSounds);
 })();

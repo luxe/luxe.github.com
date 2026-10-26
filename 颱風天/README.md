@@ -83,8 +83,10 @@ plays first.
   completes. Keyboard: left/right arrows rotate, release to check.
 - [cat](levels/cat/index.html): a small cream ceramic lucky cat with fine,
   warm outlines sits on a cushion on a rounded wooden counter with a drawer.
-  A leafy plant and a miniature mint tray of already-sorted notes (matching
-  the money level's colors and stacking order) decorate the counter.
+  A prominent leafy desk plant in a ceramic pot and saucer sits on the left.
+  On the right, `assets/organized-tray.svg` is a static snapshot of the money
+  level's finished tray, with its actual five notes, motifs, colors, sizes,
+  and descending stacking order, rather than a simplified approximation.
   Tap the raised paw, or pull it down and release, to start its springy,
   forward-facing wave. Enter/Space or the arrow keys also work.
   Pressing the paw plays `assets/meow.mp3`; keyboard presses also meow.

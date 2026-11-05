@@ -408,6 +408,19 @@ The loops are resumed by `game.js` if the browser pauses them
 on its own (iOS does this for calls, Siri or other media). This happens on
 the next tap or key press in any level, or when the page becomes visible again.
 
+Only the game in front is ever heard. iOS keeps `<audio>` playing in
+background tabs, so an old copy left on, say, the temple used to play over a
+freshly opened intro. Now all sound stops whenever the page is hidden or
+left (`visibilitychange`, `pagehide`). That covers the music loops, effects
+(the shared AudioContext is suspended) and loops a level made with
+`new Audio()`, which `lifecycle.js` tracks and exposes as `levelMedia`. When
+the page comes back, the music snaps to exactly what the current level
+wants and any other loop is paused at zero volume. Only the level loops that
+were playing resume. Starting or resuming sound in one tab also tells every
+other open copy to go quiet, via a `BroadcastChannel` named `wanwan-audio`.
+Each level change also re-checks that loops meant to be off really are
+stopped.
+
 ## Engine contract
 
 The root `game.js` plays the intro, then each name in `ORDER`. It loads each in a same-origin

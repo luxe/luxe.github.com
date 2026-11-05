@@ -4,6 +4,48 @@
 document.documentElement.classList.toggle("embedded", parent !== window);
 document.documentElement.dataset.phase = "ready";
 
+// Loops a level makes with new Audio() (temple fire, metro noise, ...) keep
+// playing in a background tab on iOS. Remember them so the engine can pause
+// them while the game is hidden and resume exactly the ones that were playing.
+(() => {
+  const created = new Set();
+  const NativeAudio = window.Audio;
+  window.Audio = new Proxy(NativeAudio, {
+    construct(target, args) {
+      const media = new target(...args);
+      created.add(media);
+      return media;
+    },
+  });
+  const pausedByUs = new Set();
+  window.levelMedia = {
+    pause() {
+      for (const media of [...created, ...document.querySelectorAll("audio, video")]) {
+        if (!media.paused) {
+          pausedByUs.add(media);
+          media.pause();
+        }
+      }
+    },
+    resume() {
+      const phase = document.documentElement.dataset.phase;
+      // A level that was torn down meanwhile must stay quiet.
+      if (phase === "play" || phase === "setup") {
+        for (const media of pausedByUs) media.play().catch(() => {});
+      }
+      pausedByUs.clear();
+    },
+  };
+  // Opened directly there is no engine to do this for the level.
+  if (parent === window) {
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") window.levelMedia.resume();
+      else window.levelMedia.pause();
+    });
+    addEventListener("pagehide", () => window.levelMedia.pause());
+  }
+})();
+
 // How far down an element must move (as a CSS length) so everything it
 // paints, including SVG bleed drawn outside its viewBox to fill the screen,
 // clears the bottom edge. Measure it while the element is at rest.

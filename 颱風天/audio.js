@@ -257,6 +257,11 @@
     isLoaded(url, base) {
       return Boolean(buffers.get(resolveUrl(url, base))?.buffer);
     },
+    // Silences every effect at once while the game is in the background;
+    // unlock() (or the next tap) resumes it.
+    suspend() {
+      if (context?.state === "running") context.suspend().catch(() => {});
+    },
     get state() { return context?.state ?? "none"; },
   };
   window.wanwanAudio = facade(engine);

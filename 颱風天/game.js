@@ -139,10 +139,11 @@
       applyLevel(track);
       if (progress < 1) {
         track.fade = requestAnimationFrame(step);
-      } else if (target === 0) {
-        // Paused, not rewound, so the music picks up where it left off.
-        track.element.pause();
+        return;
       }
+      track.fade = 0;
+      // Paused, not rewound, so the music picks up where it left off.
+      if (target === 0) track.element.pause();
     };
     if (duration > 0 && document.visibilityState === "visible") track.fade = requestAnimationFrame(step);
     else step(start + duration);
@@ -153,13 +154,52 @@
     for (const track of tracks) {
       const target = track.wanted(name) ? 1 : 0;
       if (target !== track.target) fadeTrack(track, target, duration);
+      // Already meant to be off: make sure it really is silent and stopped.
+      else if (target === 0 && !track.fade) silenceTrack(track);
+    }
+  }
+  function silenceTrack(track) {
+    cancelAnimationFrame(track.fade);
+    track.fade = 0;
+    track.target = 0;
+    track.level = 0;
+    applyLevel(track);
+    keepPlaying.delete(track.element);
+    if (!track.element.paused) track.element.pause();
+  }
+  // Snaps every loop to exactly what the current level wants, skipping fades.
+  // Used whenever playback restarts after a pause we did not control.
+  function enforceSoundscape() {
+    if (!soundStarted) {
+      for (const track of tracks) silenceTrack(track);
+      return;
+    }
+    for (const track of tracks) {
+      if (!track.wanted(soundLevel)) {
+        silenceTrack(track);
+        continue;
+      }
+      cancelAnimationFrame(track.fade);
+      track.fade = 0;
+      track.target = track.level = 1;
+      applyLevel(track);
+      keepPlaying.add(track.element);
+      if (track.element.paused) track.element.play().catch(() => {});
     }
   }
   // Loops that should keep going. iOS can pause them on its own (another
   // video with sound, a call, Siri, leaving the app); they are resumed on
   // the next tap or key, or when the page is visible again.
   const keepPlaying = new Set();
+  // Set while this copy of the game is in the background or another tab has
+  // taken over the sound; nothing may restart until it is in front again.
+  let silenced = false;
   function resumeLoops() {
+    if (document.visibilityState !== "visible") return;
+    if (silenced) {
+      wake();
+      return;
+    }
     for (const loop of keepPlaying) {
       if (loop.paused) loop.play().catch(() => {});
     }
@@ -170,16 +210,55 @@
     }
   }
   watchForResume(document);
-  document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "visible") resumeLoops();
-  });
   for (const { element } of tracks) {
     element.addEventListener("pause", () => {
-      if (keepPlaying.has(element) && document.visibilityState === "visible") {
+      if (!silenced && keepPlaying.has(element) && document.visibilityState === "visible") {
         setTimeout(resumeLoops, 400);
       }
     });
   }
+
+  // iOS keeps <audio> playing in a background tab, so an old copy of the game
+  // (say, left on the temple) could play over a freshly opened intro. Every
+  // sound stops whenever the page is hidden or left, and only one open copy
+  // of the game may be heard at a time.
+  const audioChannel = "BroadcastChannel" in window ? new BroadcastChannel("wanwan-audio") : null;
+  const tabId = Math.random().toString(36).slice(2);
+  // Every frame, so a level mid-transition is covered too.
+  function frameMedia(action) {
+    for (const frame of document.querySelectorAll(".level-frame")) {
+      try { frame.contentWindow?.levelMedia?.[action](); } catch {}
+    }
+  }
+  function silence() {
+    silenced = true;
+    for (const track of tracks) {
+      cancelAnimationFrame(track.fade);
+      track.fade = 0;
+      track.element.pause();
+    }
+    winSound.stop();
+    frameMedia("pause");
+    window.wanwanAudio.engine.suspend();
+  }
+  function wake() {
+    if (document.visibilityState !== "visible") return;
+    silenced = false;
+    window.wanwanAudio.unlock();
+    enforceSoundscape();
+    frameMedia("resume");
+    if (soundStarted) audioChannel?.postMessage({ type: "claim", from: tabId });
+  }
+  audioChannel?.addEventListener("message", event => {
+    if (event.data?.type === "claim" && event.data.from !== tabId) silence();
+  });
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") wake();
+    else silence();
+  });
+  addEventListener("pagehide", silence);
+  // A page restored from the back/forward cache comes back silenced.
+  addEventListener("pageshow", event => { if (event.persisted) wake(); });
 
   // Called synchronously from the intro's tap so browsers allow playback.
   window.startMusic = () => {
@@ -197,7 +276,9 @@
         }, () => {}).finally(() => { track.element.muted = false; });
       }
     }
+    silenced = false;
     setSoundscape(soundLevel, 0);
+    audioChannel?.postMessage({ type: "claim", from: tabId });
   };
 
   function playWinSound() {

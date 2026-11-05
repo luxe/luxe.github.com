@@ -1,7 +1,8 @@
 (() => {
   "use strict";
   const svg = document.querySelector(".station");
-  const arrival = document.querySelector(".arrival");
+  // The whole SVG moves: vh inside a scaled-down viewBox would fall short of the screen edge.
+  const arrival = document.querySelector(".station");
   const card = document.querySelector(".card");
   const sensor = document.querySelector(".sensor");
   const doors = [...document.querySelectorAll(".door")];

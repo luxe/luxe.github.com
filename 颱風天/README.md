@@ -23,15 +23,20 @@ Each name is a folder under `levels/`. To reorder levels, edit the list.
 To add a level, create `levels/<name>/` and add its name. The intro always
 plays first.
 
-- [intro](levels/intro/index.html): the title 颱風天 and a small curling
-  ocean-wave symbol (an SVG button labelled 開始) that gently bobs. Tapping it
-  starts the looping background music (`assets/snd/bg.mp3`, owned by the root
-  page so it continues across levels). The crest rises, curls over, and
-  collapses through interpolated SVG shapes, throwing foam droplets on impact.
-  The broken wave spreads into shallow water and foam drifting off to the
-  right before the first level loads. Idle foam flows along the crest.
-  Reduced motion skips the crash; leaving the scene cancels its animations.
-  After crashing, the wave stays hidden throughout the page transition.
+- [intro](levels/intro/index.html): the title 颱風天 in the sky above a
+  Taiwan-style shore of layered green mountains, a small city with Taipei 101
+  and a temple with a swallowtail roof. A sea fills the bottom of the screen,
+  and a curling wave (an SVG button labelled 開始) rises out of it and gently
+  swells. `level.js` pins the horizon and sea gradient to the wave's
+  waterline, so its base always blends into the water. Tapping it starts the
+  looping background music (`assets/snd/bg.mp3`, owned by the root page so it
+  continues across levels). The wave is generated each frame as a ribbon whose
+  heading bends from a steep back into a curling lip. Easing those parameters
+  continuously makes the crest pitch forward, roll over, and land, throwing
+  spray where the lip hits. A tumbling barrel of whitewater rolls on as the
+  wave lays down flat into the sea. Idle foam flows along the crest. Reduced
+  motion skips the crash; leaving the scene cancels its animations. After
+  crashing, the wave stays hidden throughout the page transition.
 - [tv](levels/tv/index.html): a slim mint widescreen TV with splayed feet
   and a remote. The 16:9 picture preserves the full source framing without
   stretching or cropping, fading in and out on power changes. The red power
@@ -111,11 +116,13 @@ plays first.
   with blue, green, orange, red, and yellow routes. Five visually identical
   trains receive shuffled audio clues from `assets/<color>.mp3` on each visit.
   Hold a train to hear its looping clue. All background music and rain fade out
-  for this level so the clues are easy to hear. Drag near any route to snap onto it, regardless of whether
+  for this level so the clues are easy to hear; instead the level loops its own
+  station ambience (`assets/noise.mp3`, at half volume) for the whole visit,
+  fading it out on teardown. Drag near any route to snap onto it, regardless of whether
   it matches; crowded placements find a nearby free spot on that same route.
   Trains can be picked up and reassigned. No correctness feedback appears until
   all five match. Tap-and-hold without moving only previews the sound.
-  Once all five match, the trains follow their routes and continue off the
+  Once all five match, `assets/win.mp3` plays and the trains follow their routes and continue off the
   map before the level completes (a short fade replaces travel in reduced motion).
   Keyboard: hold Space/Enter to listen, release to stop, and use arrow keys to
   cycle through routes. Reduced motion skips the arrival and snap bounce.
@@ -387,7 +394,7 @@ so the fade remains audible after the arrival rather than finishing offscreen.
 | --- | --- | --- |
 | umbrella, puddles, cones, taiwan, bike, powerlines, drain | `assets/snd/bg.mp3` | yes |
 | ending | `assets/snd/bg.mp3` | fades out as the sky clears |
-| metro | none, so the train clues are easy to hear | no |
+| metro | none, so the train clues are easy to hear (the level plays its own `noise.mp3` ambience) | no |
 | fruit, incense, jiaobei, fortune, temple | `assets/snd/temple.mp3` | no |
 | every other level | `assets/snd/bg.mp3` | no |
 
@@ -407,7 +414,19 @@ The root `game.js` plays the intro, then each name in `ORDER`. It loads each in 
 iframe and waits for fonts and images. Its sequence is **setup → play →
 teardown → background color change → next setup**. Input stays inert
 throughout transitions. The outgoing frame is removed only after its
-objects have bounced offscreen. The final level stays visible when beaten.
+objects have bounced offscreen. While the background color changes, the old
+frame fades out over the same 650 ms, so anything a level leaves in place (a
+tablecloth, a wall) crossfades instead of vanishing. The next frame fades in
+as its setup starts (250 ms for both fades with reduced motion). Inside the
+game, `lifecycle.js` leaves a torn-down scene visible (`data-phase="gone"`)
+for that fade. Opened directly, it still hides it (`data-phase="hidden"`).
+Exit animations must keep their end state (`fill: "forwards"`, or set the
+final transform) so nothing snaps back into view. Levels whose SVG paints
+bleed far outside its viewBox to cover the screen slide by
+`offscreenDrop(element)` (from `lifecycle.js`) rather than `110vh`, because
+`110vh` would leave the top of the bleed on screen. Likewise, slide the
+`<svg>` element rather than a group inside it: inside a scaled-down viewBox,
+`vh` falls short of the screen edge. The final level stays visible when beaten.
 Every beaten level (not the intro's start tap or admin-picker jumps) plays
 a win sound as its transition begins, including the final level. It is always
 `assets/snd/win1.mp3`.

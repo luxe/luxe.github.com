@@ -200,9 +200,10 @@
       for (const animation of animations) animation.cancel();
       animations.clear();
       ripples.replaceChildren();
+      // Keep the exit position so the alley can't snap back into view.
       if (!reduced.matches) await svg.animate([
         { transform: "translateY(0)" }, { transform: "translateY(-110vh)" },
-      ], { duration: 700, easing: "ease-in" }).finished;
+      ], { duration: 700, easing: "ease-in", fill: "forwards" }).finished;
     },
   });
 })();

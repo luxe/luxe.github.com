@@ -256,13 +256,15 @@
   drawScroll();
 
   async function animateScene(entering) {
+    // The backdrop bleeds far past the viewBox, so 110vh would leave its top on screen.
+    const drop = `translateY(${offscreenDrop(svg)})`;
     const animation = svg.animate(entering ? [
-      { transform: "translateY(110vh)" }, { transform: "translateY(-10px)", offset: .75 }, { transform: "translateY(0)" },
-    ] : [{ transform: "translateY(0)" }, { transform: "translateY(110vh)" }], {
+      { transform: drop }, { transform: "translateY(-10px)", offset: .75 }, { transform: "translateY(0)" },
+    ] : [{ transform: "translateY(0)" }, { transform: drop }], {
       duration: reduced.matches ? 0 : entering ? 1000 : 750, easing: "ease-in-out", fill: "both",
     });
     await animation.finished;
-    svg.style.transform = entering ? "" : "translateY(110vh)";
+    svg.style.transform = entering ? "" : drop;
     animation.cancel();
   }
   registerLevel({

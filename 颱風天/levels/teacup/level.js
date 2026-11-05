@@ -118,9 +118,10 @@
       setPour(false);
       if (drag && pot.hasPointerCapture(drag.id)) pot.releasePointerCapture(drag.id);
       drag = null;
+      // Keep the faded exit state so the tray can't snap back into view.
       if (!reduced.matches) await svg.animate([
         { transform: "translateY(0)", opacity: 1 }, { transform: "translateY(-35px)", opacity: 0 },
-      ], { duration: 650, easing: "ease-in" }).finished;
+      ], { duration: 650, easing: "ease-in", fill: "forwards" }).finished;
     },
   });
 })();

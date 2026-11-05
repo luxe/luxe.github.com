@@ -1,11 +1,34 @@
 (() => {
   "use strict";
 
+  const SVG = "http://www.w3.org/2000/svg";
+  const root = document.documentElement;
   const scene = document.querySelector(".scene");
   const title = document.querySelector(".title");
   const start = document.querySelector(".start");
+  const land = document.querySelector(".land");
+  const sea = document.querySelector(".sea");
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
   let started = false;
+
+  // Wave artwork coordinates: the waterline sits at y = WATERLINE in a 220 x 150 viewBox.
+  const VIEW_HEIGHT = 150;
+  const WATERLINE = 134;
+  const HORIZON = 22;
+
+  // Pin the sea and skyline to the wave so its base always melts into the water.
+  function alignSea() {
+    const height = start.offsetHeight;
+    if (!height) return;
+    // Layout offsets ignore the entrance transforms, unlike getBoundingClientRect.
+    let top = 0;
+    for (let node = start; node; node = node.offsetParent) top += node.offsetTop;
+    root.style.setProperty("--waterline", `${top + height * WATERLINE / VIEW_HEIGHT}px`);
+    root.style.setProperty("--horizon", `${top + height * HORIZON / VIEW_HEIGHT}px`);
+  }
+  alignSea();
+  new ResizeObserver(alignSea).observe(document.body);
+  window.addEventListener("resize", alignSea);
 
   function bounce(element, entering, delay) {
     const frames = entering ? [
@@ -18,8 +41,39 @@
       { transform: "translateY(-16px) scale(1.02)", offset: .25 },
       { transform: "translateY(110vh) scale(.95)", offset: 1 },
     ];
+    return play(element, frames, entering ? 1000 : 700, delay, entering);
+  }
+
+  // The scenery rises into place and later sinks away like the other levels.
+  function slide(element, entering, delay) {
+    const frames = entering ? [
+      { transform: "translateY(100%)", offset: 0 },
+      { transform: "translateY(-6px)", offset: .75 },
+      { transform: "translateY(0)", offset: 1 },
+    ] : [
+      { transform: "translateY(0)" },
+      { transform: "translateY(110vh)" },
+    ];
+    return play(element, frames, entering ? 950 : 750, delay, entering);
+  }
+
+  // The wave swells up out of the water instead of dropping from the sky.
+  function surface(element, entering, delay) {
+    const frames = entering ? [
+      { transform: "scale(.5, 0)", offset: 0 },
+      { transform: "scale(1.04, 1.1)", offset: .65 },
+      { transform: "scale(.99, .97)", offset: .85 },
+      { transform: "scale(1)", offset: 1 },
+    ] : [
+      { transform: "scale(1)" },
+      { transform: "scale(.6, 0)" },
+    ];
+    return play(element, frames, entering ? 900 : 450, delay, entering);
+  }
+
+  function play(element, frames, duration, delay, entering) {
     const animation = element.animate(frames, {
-      duration: reducedMotion.matches ? 0 : entering ? 1000 : 700,
+      duration: reducedMotion.matches ? 0 : duration,
       delay: reducedMotion.matches ? 0 : delay,
       easing: "cubic-bezier(.4,0,.2,1)", fill: "both",
     });
@@ -31,102 +85,188 @@
 
   async function animateScene(entering) {
     scene.classList.remove("play");
-    await Promise.all([
-      bounce(title, entering, entering ? 0 : 120),
-      bounce(start, entering, entering ? 160 : 0),
+    alignSea();
+    await Promise.all(entering ? [
+      slide(land, true, 0),
+      slide(sea, true, 80),
+      bounce(title, true, 120),
+      surface(start, true, 650),
+    ] : [
+      surface(start, false, 0),
+      bounce(title, false, 120),
+      slide(sea, false, 200),
+      slide(land, false, 280),
     ]);
     if (entering) scene.classList.add("play");
   }
 
-  const waveArt = start.querySelector(".wave-art");
   const body = start.querySelector(".wave-body");
   const foam = start.querySelector(".foam");
-  const runoff = start.querySelector(".runoff");
   const shade = start.querySelector(".wave-shade");
+  const thread = start.querySelector(".water-thread");
+  const flecks = start.querySelectorAll(".foam-flecks circle");
+  const whitewater = start.querySelector(".whitewater");
+  const splashLayer = start.querySelector(".splash-layer");
   const animations = new Set();
-  const morphs = new Set();
+  let rollFrame = 0;
+  let cancelRoll = null;
 
-  function animate(node, frames, options) {
-    const animation = node.animate(frames, { fill: "both", ...options });
-    animations.add(animation);
-    return animation.finished.then(() => true, () => false);
+  const DEG = Math.PI / 180;
+  const clamp01 = value => Math.max(0, Math.min(1, value));
+  const smooth = (from, to, value) => {
+    const t = clamp01((value - from) / (to - from));
+    return t * t * (3 - 2 * t);
+  };
+  const mix = (a, b, t) => a + (b - a) * t;
+  const fmt = value => value.toFixed(1);
+  const line = points => "M" + points.map(point => `${fmt(point.x)} ${fmt(Math.min(WATERLINE, point.y))}`).join("L");
+
+  // The wave is a ribbon whose heading bends smoothly from a steep back to a
+  // curling lip. Easing every shape parameter continuously lets the crest pitch
+  // forward, roll over and lay down into the sea with no stop between poses.
+  function waveShape(progress) {
+    const pitch = smooth(0, .55, progress);
+    const fall = smooth(.25, .85, progress);
+    const settle = smooth(.5, 1, progress);
+    const startX = 4 + 100 * smooth(0, 1, progress);
+    const length = mix(mix(310, 330, pitch), 280, settle);
+    const back = mix(62, 0, fall) * DEG;
+    const curl = mix(mix(225, 275, pitch), 0, settle) * DEG;
+    const tightness = mix(2.3, 3, pitch);
+    const thickness = mix(mix(26, 20, pitch), 9, settle);
+    const steps = 160;
+    const center = [];
+    let x = startX;
+    let y = WATERLINE;
+    for (let i = 0; i <= steps; i++) {
+      const u = i / steps;
+      const heading = -back + (back + curl) * u ** tightness;
+      if (i) {
+        x += Math.cos(heading) * length / steps;
+        y += Math.sin(heading) * length / steps;
+      }
+      center.push({ x, y, heading, width: thickness * (1 - .8 * u ** 2.5) });
+    }
+    const outer = center.map(c => ({ x: c.x + Math.sin(c.heading) * c.width / 2, y: c.y - Math.cos(c.heading) * c.width / 2 }));
+    const inner = center.map(c => ({ x: c.x - Math.sin(c.heading) * c.width / 2, y: c.y + Math.cos(c.heading) * c.width / 2 }));
+    let faceIndex = center.findIndex(c => c.heading >= -12 * DEG);
+    if (faceIndex < 0) faceIndex = steps;
+    const top = inner[faceIndex];
+    const rise = Math.max(0, WATERLINE - top.y);
+    // The concave face tucks back under the lip, then flares into the trough.
+    const bodyPath = `M${fmt(startX)} ${WATERLINE}` + line([...outer, ...inner.slice(faceIndex).reverse()]).replace("M", "L") +
+      `C${fmt(top.x - rise * .22)} ${fmt(top.y + rise * .35)} ${fmt(top.x - rise * .05)} ${fmt(WATERLINE - rise * .12)} ${fmt(top.x + rise * .55)} ${WATERLINE}Z`;
+
+    // A pale crescent of light along the back of the swell.
+    const shadeEnd = Math.max(2, Math.floor(faceIndex * .9));
+    const shadeOuter = outer.slice(Math.floor(steps * .08), shadeEnd);
+    const shadeInner = shadeOuter.map((point, i) => {
+      const c = center[Math.floor(steps * .08) + i];
+      const depth = thickness * .9 * Math.sin(Math.PI * i / Math.max(1, shadeOuter.length - 1));
+      return { x: point.x - Math.sin(c.heading) * depth, y: point.y + Math.cos(c.heading) * depth };
+    });
+    const shadePath = shadeOuter.length > 1 ? line([...shadeOuter, ...shadeInner.reverse()]) + "Z" : "";
+
+    const threadPath = line(center.slice(Math.floor(steps * .12), Math.floor(steps * .45)).map(c => ({
+      x: c.x - Math.sin(c.heading) * thickness * 1.1,
+      y: c.y + Math.cos(c.heading) * thickness * 1.1,
+    })));
+    const foamPath = line(outer.slice(Math.floor(steps * .5), Math.floor(steps * .95)));
+    const crest = outer.reduce((best, point) => point.y < best.y ? point : best, outer[0]);
+    const front = outer.reduce((best, point) => point.x > best.x ? point : best, outer[0]);
+    return { body: bodyPath, shade: shadePath, thread: threadPath, foam: foamPath, tip: center[steps], crest, front };
   }
 
-  // Matching cubic segments let the crest physically fold over instead of rotating the icon.
-  function morph(node, paths, times, duration) {
-    const numbers = paths.map(path => path.match(/-?\d*\.?\d+/g).map(Number));
-    return new Promise(resolve => {
-      const beginning = performance.now();
-      const motion = { frame: 0, cancel: () => resolve(false) };
-      morphs.add(motion);
-      function step(now) {
-        const t = Math.min(1, (now - beginning) / duration);
-        let segment = times.findIndex((end, i) => i > 0 && t <= end) - 1;
-        segment = Math.max(0, segment);
-        const progress = (t - times[segment]) / (times[segment + 1] - times[segment]);
-        const eased = progress * progress * (3 - 2 * progress);
-        let n = 0;
-        node.setAttribute("d", paths[segment].replace(/-?\d*\.?\d+/g, () => {
-          const from = numbers[segment][n];
-          return (from + (numbers[segment + 1][n++] - from) * eased).toFixed(2);
-        }));
-        if (t < 1) motion.frame = requestAnimationFrame(step);
-        else { morphs.delete(motion); resolve(true); }
-      }
-      motion.frame = requestAnimationFrame(step);
+  function drawWave(progress) {
+    const shape = waveShape(progress);
+    body.setAttribute("d", shape.body);
+    shade.setAttribute("d", shape.shade);
+    thread.setAttribute("d", shape.thread);
+    foam.setAttribute("d", shape.foam);
+    return shape;
+  }
+
+  const restingWave = drawWave(0);
+  // Spray flecks hover just above the resting crest.
+  flecks.forEach((fleck, i) => {
+    fleck.setAttribute("cx", fmt(restingWave.crest.x - 14 + i * 16));
+    fleck.setAttribute("cy", fmt(restingWave.crest.y - 8 + (i % 2) * 3));
+  });
+
+  const foamBalls = Array.from({ length: 9 }, (_, i) => {
+    const ball = document.createElementNS(SVG, "circle");
+    ball.setAttribute("fill", i % 3 ? "#fffaf0" : "#cfe8ea");
+    whitewater.append(ball);
+    return ball;
+  });
+
+  function spray(x) {
+    for (let i = 0; i < 26; i++) {
+      const drop = document.createElementNS(SVG, "ellipse");
+      drop.setAttribute("cx", fmt(x - 10 + Math.random() * 20));
+      drop.setAttribute("cy", String(WATERLINE - 4));
+      drop.setAttribute("rx", fmt(1.5 + Math.random() * 2.5));
+      drop.setAttribute("ry", fmt(2 + Math.random() * 3));
+      drop.setAttribute("fill", i % 3 ? "#fffaf0" : "#9dcdd4");
+      splashLayer.append(drop);
+      const distance = (Math.random() * 1.1 - .1) * 90;
+      const height = 12 + Math.random() * 40;
+      const animation = drop.animate([
+        { transform: "translate(0,0) scale(.4)", opacity: 0 },
+        { transform: `translate(${distance * .4}px,${-height}px) scale(1)`, opacity: .9, offset: .4 },
+        { transform: `translate(${distance}px,14px) scale(.5)`, opacity: 0 },
+      ], { duration: 500 + Math.random() * 250, delay: Math.random() * 60, fill: "both" });
+      animations.add(animation);
+      animation.finished.then(() => animations.delete(animation), () => {});
+    }
+  }
+
+  // A tumbling barrel of whitewater carries the broken lip forward as it fades.
+  function drawWhitewater(progress, landing) {
+    const q = smooth(.5, 1, progress);
+    const fade = 1 - smooth(.78, 1, progress);
+    whitewater.style.opacity = String(smooth(.5, .58, progress) * fade);
+    if (!landing) return;
+    const radius = 3 + 18 * (1 - q) ** .7;
+    const cx = landing.x + 110 * q;
+    const cy = WATERLINE - radius * .75;
+    const spin = q * Math.PI * 5;
+    foamBalls.forEach((ball, i) => {
+      const angle = spin + i * Math.PI * 2 / foamBalls.length;
+      const reach = radius * (i % 2 ? .65 : 1);
+      ball.setAttribute("cx", fmt(cx + Math.cos(angle) * reach));
+      ball.setAttribute("cy", fmt(Math.min(WATERLINE + 2, cy + Math.sin(angle) * reach * .8)));
+      ball.setAttribute("r", fmt(radius * (i % 2 ? .45 : .6)));
     });
   }
 
-  async function roll() {
-    if (reducedMotion.matches) return true;
-    const bodyPaths = [
-      body.getAttribute("d"),
-      "M8 134C49 130 67 112 80 78C97 29 129 7 167 15C207 22 229 56 215 88C206 111 180 112 167 97C151 76 174 63 188 82C163 72 176 104 198 87C224 58 180 17 143 47C110 75 104 116 140 134Z",
-      "M8 134C49 131 75 111 95 87C123 57 161 47 194 69C222 87 234 112 221 131C213 141 191 143 181 132C168 118 181 104 196 113C180 107 189 129 207 123C223 112 197 79 163 89C129 98 127 123 158 137Z",
-      "M8 138C61 131 88 126 114 125C149 122 185 126 212 132C239 135 255 137 270 141C268 145 243 149 226 145C208 143 200 139 187 139C203 137 225 142 239 140C223 134 194 132 170 134C136 133 116 142 158 145Z",
-    ];
-    const foamPaths = [
-      foam.getAttribute("d"),
-      "M131 24C165 5 201 27 211 54C227 87 201 113 179 102C161 93 170 75 185 80",
-      "M148 68C180 57 212 86 219 110C228 135 205 145 187 133C173 124 182 109 195 115",
-      "M140 130C177 126 207 135 232 137C257 136 274 143 292 143C304 142 316 147 326 147",
-    ];
-    for (let i = 0; i < 28; i++) {
-      const drop = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
-      const x = 190 + Math.random() * 30;
-      drop.setAttribute("cx", String(x));
-      drop.setAttribute("cy", "124");
-      drop.setAttribute("rx", String(1.5 + Math.random() * 2.5));
-      drop.setAttribute("ry", String(2 + Math.random() * 3));
-      drop.setAttribute("fill", i % 3 ? "#fffaf0" : "#9dcdd4");
-      start.querySelector(".splash-layer").append(drop);
-      const distance = 35 + Math.random() * 100;
-      const height = 15 + Math.random() * 65;
-      animate(drop, [
-        { transform: "translate(0,0) scale(.4)", opacity: 0 },
-        { transform: `translate(${distance * .35}px,${-height}px) scale(1)`, opacity: .9, offset: .4 },
-        { transform: `translate(${distance}px,16px) scale(.5)`, opacity: 0 },
-      ], { duration: 650 + Math.random() * 300, delay: 650 + Math.random() * 180 });
-    }
-    const times = [0, .23, .56, 1];
-    // Each morph has its own frame loop; all are cancelled together on teardown.
-    const results = await Promise.all([
-      morph(body, bodyPaths, times, 1250),
-      morph(foam, foamPaths, times, 1250),
-      animate(shade, [{ opacity: .8 }, { opacity: 0 }], { duration: 500, delay: 200 }),
-      animate(waveArt, [
-        { transform: "translateX(0)", opacity: 1 },
-        { transform: "translateX(8px)", opacity: 1, offset: .6 },
-        { transform: "translateX(145px)", opacity: 0 },
-      ], { duration: 1750 }),
-      animate(runoff, [
-        { opacity: 0, transform: "translateX(60px) scale(.3,.5)" },
-        { opacity: .85, transform: "translateX(80px) scale(1,.85)", offset: .25 },
-        { opacity: .6, transform: "translateX(240px) scale(1.7,.45)", offset: .65 },
-        { opacity: 0, transform: "translateX(620px) scale(2.4,.2)" },
-      ], { duration: 1450, delay: 650, easing: "ease-in" }),
-    ]);
-    return results.every(Boolean);
+  function roll() {
+    if (reducedMotion.matches) return Promise.resolve(true);
+    const duration = 2400;
+    const began = performance.now();
+    let landing = null;
+    return new Promise(resolve => {
+      cancelRoll = () => resolve(false);
+      function step(now) {
+        const t = clamp01((now - began) / duration);
+        // Gather speed as the lip pitches, then glide out as it settles.
+        const progress = mix(t, t * t * (3 - 2 * t), .55);
+        const shape = drawWave(progress);
+        if (!landing && shape.tip.y >= WATERLINE - 6 && progress > .3) {
+          landing = { x: shape.front.x };
+          spray(landing.x);
+        }
+        drawWhitewater(progress, landing);
+        foam.style.opacity = String(1 - smooth(.6, .95, progress));
+        shade.style.opacity = String(.8 * (1 - smooth(.35, .7, progress)));
+        if (t < 1) rollFrame = requestAnimationFrame(step);
+        else {
+          cancelRoll = null;
+          resolve(true);
+        }
+      }
+      rollFrame = requestAnimationFrame(step);
+    });
   }
 
   start.addEventListener("click", async () => {
@@ -147,14 +287,12 @@
     setup: () => animateScene(true),
     teardown: () => {
       if (started) start.classList.add("crashed");
-      for (const motion of morphs) {
-        cancelAnimationFrame(motion.frame);
-        motion.cancel();
-      }
-      morphs.clear();
+      cancelAnimationFrame(rollFrame);
+      cancelRoll?.();
+      cancelRoll = null;
       for (const animation of animations) animation.cancel();
       animations.clear();
-      start.querySelector(".splash-layer").replaceChildren();
+      splashLayer.replaceChildren();
       return animateScene(false);
     },
   });

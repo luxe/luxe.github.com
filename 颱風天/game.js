@@ -55,6 +55,7 @@
     "./levels/fish/assets/bubbles.mp3",
     "./levels/ufo/assets/ready.mp3",
     "./levels/lottery/assets/win.mp3",
+    "./levels/metro/assets/win.mp3",
     "./levels/mahjong/assets/156668__rtb45__mahjong.mp3",
     "./levels/drain/assets/drain.mp3",
   ];
@@ -63,7 +64,7 @@
   const PREFETCH = [
     "./levels/cones/assets/truck.mp3",
     "./levels/temple/assets/fire_bg.mp3",
-    ...["red", "orange", "yellow", "green", "blue"].map(color => `./levels/metro/assets/${color}.mp3`),
+    ...["red", "orange", "yellow", "green", "blue", "noise"].map(name => `./levels/metro/assets/${name}.mp3`),
   ];
   // Started once the first screen is up so it does not slow that screen down.
   function preloadSounds() {
@@ -289,6 +290,9 @@
     return loadLevel(levels[nextIndex]);
   }
 
+  const FRAME_FADE_IN_MS = 450;
+  const FRAME_FADE_REDUCED_MS = 250;
+
   async function showLevel(nextIndex) {
     const next = await takeLevel(nextIndex);
     const previous = current;
@@ -305,14 +309,25 @@
       const nextName = levels[nextIndex].name;
       const quietLevel = QUIET_LEVELS.has(nextName);
       if (!quietLevel) setSoundscape(nextName);
-      await game.animate([
-        { backgroundColor: getComputedStyle(game).backgroundColor },
-        { backgroundColor: lifecycle.background },
-      ], { duration: reducedMotion.matches || !previous ? 0 : 650, easing: "ease-in-out" }).finished;
+      // Whatever is left of the old level fades out while the color changes,
+      // so nothing disappears abruptly when its frame is removed.
+      await Promise.all([
+        game.animate([
+          { backgroundColor: getComputedStyle(game).backgroundColor },
+          { backgroundColor: lifecycle.background },
+        ], { duration: reducedMotion.matches || !previous ? 0 : 650, easing: "ease-in-out" }).finished,
+        previous?.animate([{ opacity: 1 }, { opacity: 0 }], {
+          duration: reducedMotion.matches ? FRAME_FADE_REDUCED_MS : 650, easing: "ease-in-out", fill: "forwards",
+        }).finished,
+      ]);
       game.style.backgroundColor = lifecycle.background;
       previous?.remove();
       game.dataset.phase = "setup";
       next.style.opacity = "1";
+      // Fading the frame in keeps backdrops that do not animate from popping in.
+      next.animate([{ opacity: 0 }, { opacity: 1 }], {
+        duration: reducedMotion.matches ? FRAME_FADE_REDUCED_MS : FRAME_FADE_IN_MS, easing: "ease-out",
+      });
       next.removeAttribute("aria-hidden");
       if (quietLevel) setSoundscape(nextName, 3000);
       await lifecycle.setup();

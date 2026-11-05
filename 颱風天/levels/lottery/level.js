@@ -496,9 +496,11 @@
 
   async function animateScene(entering) {
     const fast = reduced.matches;
+    // The art's sunburst bleeds above the stage, so 110vh would leave it on screen.
+    const drop = `translateY(${offscreenDrop(stage.querySelector(".art"))})`;
     const list = [stage.animate(entering ? [
-      { transform: "translateY(110vh) rotate(-4deg)" }, { transform: "translateY(-12px) rotate(1deg)", offset: .75 }, { transform: "translateY(0)" },
-    ] : [{ transform: "translateY(0)" }, { transform: "translateY(110vh)" }], {
+      { transform: `${drop} rotate(-4deg)` }, { transform: "translateY(-12px) rotate(1deg)", offset: .75 }, { transform: "translateY(0)" },
+    ] : [{ transform: "translateY(0)" }, { transform: drop }], {
       duration: fast ? 0 : entering ? 1000 : 750, easing: "ease-in-out", fill: "both",
     })];
     if (entering) {
@@ -510,7 +512,7 @@
       }));
     }
     await Promise.all(list.map(animation => animation.finished));
-    stage.style.transform = entering ? "" : "translateY(110vh)";
+    stage.style.transform = entering ? "" : drop;
     for (const animation of list) animation.cancel();
   }
   registerLevel({

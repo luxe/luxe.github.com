@@ -91,8 +91,49 @@
     const sound = new Audio(`./assets/${colors[index]}.mp3`);
     sound.preload = "auto";
     sound.loop = true;
-    return { node, body, sound, color: colors[index], x, y, angle: 0, route: null, distance: 0, index };
+    return { node, body, sound, color: colors[index], x, y, angle: 0, route: null, distance: 0, index, wrongTimer: 0 };
   });
+  const WRONG_TRACK_DELAY = 6000;
+  // Station ambience plays under the clues for as long as the level is up.
+  const noise = new Audio("./assets/noise.mp3");
+  noise.preload = "auto";
+  noise.loop = true;
+  const NOISE_VOLUME = .5;
+  const winSound = wanwanAudio.sound("./assets/win.mp3");
+  let active = false;
+  let noiseFade = 0;
+
+  function playNoise() {
+    if (!active || !noise.paused) return;
+    clearTimeout(noiseFade);
+    noise.volume = NOISE_VOLUME;
+    noise.play().catch(cause => console.warn("Metro ambience could not play", cause));
+  }
+  // Timer-driven (not rAF) so teardown can't stall while the iframe is hidden/throttled.
+  function fadeNoise(ms) {
+    clearTimeout(noiseFade);
+    if (noise.paused) return Promise.resolve();
+    const from = noise.volume;
+    const begin = performance.now();
+    return new Promise(resolve => {
+      const step = () => {
+        const p = Math.min(1, (performance.now() - begin) / ms);
+        noise.volume = from * (1 - p);
+        if (p < 1) {
+          noiseFade = setTimeout(step, 30);
+          return;
+        }
+        noise.pause();
+        noise.currentTime = 0;
+        resolve();
+      };
+      step();
+    });
+  }
+  // Retry after a gesture if autoplay was blocked or the browser paused the loop.
+  const resumeNoise = () => playNoise();
+  for (const type of ["pointerdown", "keydown"]) document.addEventListener(type, resumeNoise, { capture: true, passive: true });
+
   let drag = null;
   let listening = null;
   let listeningAttempt = 0;
@@ -100,6 +141,18 @@
   let departureFrame = 0;
   let finishDeparture = null;
   let disposed = false;
+
+  // A train left on another color's line starts wiggling after a short wait.
+  function watchTrack(train) {
+    clearTimeout(train.wrongTimer);
+    train.wrongTimer = 0;
+    train.node.classList.remove("wrong");
+    if (completed || disposed || !train.route || train.route.name === train.color) return;
+    train.wrongTimer = setTimeout(() => {
+      train.wrongTimer = 0;
+      if (!completed && !disposed && train.route && train.route.name !== train.color) train.node.classList.add("wrong");
+    }, WRONG_TRACK_DELAY);
+  }
 
   function render(train) {
     train.node.setAttribute("transform", `translate(${train.x} ${train.y}) rotate(${train.angle})`);
@@ -164,6 +217,7 @@
     train.body.animate([{ transform: "scale(1.08)" }, { transform: "scale(.98)", offset: .65 }, { transform: "scale(1)" }],
       { duration: reducedMotion.matches ? 0 : 260, easing: "ease-out" });
     status.textContent = `列車 ${train.index + 1}，${route.label}`;
+    watchTrack(train);
     checkComplete();
   }
 
@@ -172,8 +226,13 @@
     completed = true;
     stopListening();
     scene.classList.add("complete");
-    for (const train of trains) train.node.setAttribute("aria-disabled", "true");
+    for (const train of trains) {
+      watchTrack(train);
+      train.node.setAttribute("aria-disabled", "true");
+    }
     status.textContent = "列車都到站了";
+    winSound.stop();
+    winSound.play().catch(cause => console.warn("Metro win sound could not play", cause));
     depart().then(() => { if (!disposed) completeLevel(); });
   }
 
@@ -228,8 +287,11 @@
     if (drag && (event?.pointerId === undefined || event.pointerId === drag.id)) {
       const { train, origin, id } = drag;
       drag = null;
+      const wasWrong = train.node.classList.contains("wrong");
       Object.assign(train, origin);
       render(train);
+      // Restoring the same misplaced spot keeps an already-due shake.
+      if (!(wasWrong && train.route === origin.route)) watchTrack(train);
       if (map.hasPointerCapture(id)) map.releasePointerCapture(id);
     }
     if (!drag) stopListening();
@@ -273,7 +335,10 @@
     if (Math.hypot(point.x - drag.start.x, point.y - drag.start.y) > 5) drag.moved = true;
     if (!drag.moved) return;
     const train = drag.train;
-    train.route = null;
+    if (train.route) {
+      train.route = null;
+      watchTrack(train);
+    }
     train.x = Math.max(53, Math.min(427, point.x - drag.offsetX));
     train.y = Math.max(50, Math.min(780, point.y - drag.offsetY));
     train.angle = 0;
@@ -292,6 +357,7 @@
     } else {
       train.route = null;
       render(train);
+      watchTrack(train);
     }
   });
   map.addEventListener("pointercancel", cancelDrag);
@@ -318,15 +384,22 @@
 
   registerLevel({
     background: "#dce3df",
-    setup: () => animateScene(true),
-    teardown: () => {
+    setup: () => {
+      active = true;
+      playNoise();
+      return animateScene(true);
+    },
+    teardown: async () => {
       disposed = true;
+      active = false;
+      for (const train of trains) clearTimeout(train.wrongTimer);
       cancelAnimationFrame(departureFrame);
       finishDeparture?.();
       cancelDrag();
       window.removeEventListener("blur", cancelDrag);
       document.removeEventListener("visibilitychange", visibilityChanged);
-      return animateScene(false);
+      for (const type of ["pointerdown", "keydown"]) document.removeEventListener(type, resumeNoise, { capture: true });
+      await Promise.all([animateScene(false), fadeNoise(700)]);
     },
   });
 })();
